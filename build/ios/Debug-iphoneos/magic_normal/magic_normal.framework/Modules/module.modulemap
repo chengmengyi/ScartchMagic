@@ -1,0 +1,11 @@
+framework module magic_normal {
+  umbrella header "magic_normal-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module magic_normal.Swift {
+  header "magic_normal-Swift.h"
+  requires objc
+}
