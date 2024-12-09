@@ -6,3 +6,4 @@ export 'package:scratcher/scratcher.dart';
 export 'package:applovin_max/applovin_max.dart';
 export 'package:webview_flutter/webview_flutter.dart';
 export 'package:url_launcher/url_launcher.dart';
+export 'package:lottie/lottie.dart';

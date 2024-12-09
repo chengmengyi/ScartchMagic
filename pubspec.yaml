@@ -39,6 +39,8 @@ dependencies:
     path: magic_base
   magic_normal:
     path: magic_normal
+  magic_b:
+    path: magic_b
 
 dev_dependencies:
   flutter_test:
@@ -66,7 +68,7 @@ flutter:
   assets:
     - magic_file/magic_image/
     - magic_file/magic_otf/
-    - magic_file/magic_assets/
+    - magic_file/magic_lottie/
     - assets/
   # assets:
   #   - images/a_dot_burr.jpeg

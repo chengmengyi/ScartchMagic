@@ -11,6 +11,8 @@ PODS:
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
+  - magic_b (0.0.1):
+    - Flutter
   - magic_base (0.0.1):
     - Flutter
   - magic_normal (0.0.1):
@@ -33,6 +35,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_app_lifecycle (from `.symlinks/plugins/flutter_app_lifecycle/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - magic_b (from `.symlinks/plugins/magic_b/ios`)
   - magic_base (from `.symlinks/plugins/magic_base/ios`)
   - magic_normal (from `.symlinks/plugins/magic_normal/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
@@ -56,6 +59,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_app_lifecycle/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  magic_b:
+    :path: ".symlinks/plugins/magic_b/ios"
   magic_base:
     :path: ".symlinks/plugins/magic_base/ios"
   magic_normal:
@@ -76,6 +81,7 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_app_lifecycle: 8dcf95e3e3db994b040426a60863db32d200094d
   fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
+  magic_b: 338b3c5f96f5cdedd044f82017a8eb41dac1e164
   magic_base: c7f255e985e8210b9f5b8e6933436795263718f2
   magic_normal: c94b19a9bf4b8c82177275012dd1ba7bacfdd062
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46

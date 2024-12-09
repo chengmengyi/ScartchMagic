@@ -230,6 +230,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "magic_b",
+      "rootUri": "../magic_b",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "magic_base",
       "rootUri": "../magic_base",
       "packageUri": "lib/",
@@ -494,7 +500,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-12-03T05:55:47.218562Z",
+  "generated": "2024-12-09T08:50:12.106185Z",
   "generator": "pub",
   "generatorVersion": "3.3.3"
 }

@@ -11,7 +11,6 @@
       <root url="file://$PROJECT_DIR$/magic_base" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.0" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_app_lifecycle-0.0.1" />
-      <root url="file://$PROJECT_DIR$/magic_normal" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.14.0" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/webview_flutter_android-3.16.3" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/webview_flutter-4.7.0" />
@@ -24,6 +23,8 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher-6.3.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/audioplayers_web-5.0.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/audioplayers-6.1.0" />
+      <root url="file://$PROJECT_DIR$/magic_normal" />
+      <root url="file://$PROJECT_DIR$/magic_b" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

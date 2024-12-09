@@ -37,4 +37,11 @@ class SmRoutersUtils{
     );
   }
 
+  Map<String, dynamic> getParams() {
+    try {
+      return Get.arguments as Map<String, dynamic>;
+    } catch (e) {
+      return {};
+    }
+  }
 }

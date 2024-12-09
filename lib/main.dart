@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:magic_b/sm_routers/sm_b_routers_list.dart';
+import 'package:magic_b/utils/b_sql/b_sql_utils.dart';
+import 'package:magic_b/utils/b_value/b_value_hep.dart';
 import 'package:magic_base/sm_router/all_routers_name.dart';
 import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_normal/sm_routers/sm_normal_routers_list.dart';
@@ -27,9 +30,15 @@ _initApp()async{
       )
   );
   await GetStorage.init();
+  //init a
   NormalValueHep.instance.initValue();
   NormalSqlUtils.instance.queryPlayList();
   NormalAdUtils.instance.initMax();
+
+  //init b
+  BValueHep.instance.initValue();
+  BSqlUtils.instance.queryPlayList();
+
 }
 
 class SmMyApp extends StatelessWidget {
@@ -52,6 +61,7 @@ class SmMyApp extends StatelessWidget {
         )
     );
     list.addAll(SmNormalRoutersList.list);
+    list.addAll(SmBRoutersList.list);
     return GetMaterialApp(
       title: 'ScratchMagic',
       enableLog: true,
@@ -61,20 +71,6 @@ class SmMyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       getPages: list,
       defaultTransition: Transition.rightToLeft,
-      // builder: (context, widget) => Material(
-      //   child: InkWell(
-      //     onTap: () {
-      //       FocusScopeNode currentFocus = FocusScope.of(context);
-      //       if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-      //         FocusManager.instance.primaryFocus?.unfocus();
-      //       }
-      //     },
-      //     child: MediaQuery(
-      //       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-      //       child: widget!,
-      //     ),
-      //   ),
-      // ),
       builder: (context,widget){
         return  MediaQuery(
           data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

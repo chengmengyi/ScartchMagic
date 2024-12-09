@@ -296,6 +296,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.0"
+  magic_b:
+    dependency: "direct main"
+    description:
+      path: magic_b
+      relative: true
+    source: path
+    version: "0.0.1"
   magic_base:
     dependency: "direct main"
     description:

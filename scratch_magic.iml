@@ -18,6 +18,9 @@
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/magic_normal/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/magic_normal/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/magic_normal/build" />
+      <excludeFolder url="file://$MODULE_DIR$/magic_b/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/magic_b/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/magic_b/build" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="project" />

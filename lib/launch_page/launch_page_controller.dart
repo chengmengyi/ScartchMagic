@@ -15,7 +15,10 @@ class LaunchPageController extends SmBaseController with GetSingleTickerProvider
       update(["progress"]);
     })..addStatusListener((status) {
       if(status==AnimationStatus.completed){
-        SmRoutersUtils.instance.toNextPageAndOffCurrent(routersName: AllRoutersName.homePageA);
+        // SmRoutersUtils.instance.toNextPageAndOffCurrent(routersName: AllRoutersName.homePageA);
+        // SmRoutersUtils.instance.toNextPageAndOffCurrent(routersName: AllRoutersName.homePageB);
+        SmRoutersUtils.instance.toNextPageAndOffCurrent(routersName: AllRoutersName.test);
+
       }
     });
     animation=Tween<double>(begin: 0,end: 1).chain(CurveTween(curve: Curves.ease)).animate(controller);
