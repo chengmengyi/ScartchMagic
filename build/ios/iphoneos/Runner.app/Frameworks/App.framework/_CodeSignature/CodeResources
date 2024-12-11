@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		OHRv+UF052QgTws33jy1j0BS8Vw=
+		gH1pSyQi7XCAE1ju2N4MAtLCP7Y=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		6EjQ9DOl/1QDWVUl5/OVctoQt0k=
+		1hbILLAM/huTDPvlXZRfBhWXYgc=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -46,7 +46,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		F18XAB6l0ke79BTjrNkQiS2f88U=
+		vQ176CY75EPMpolNy/HsUjlLHHY=
 		</data>
 		<key>flutter_assets/magic_file/magic_image/b_bottom_bg.webp</key>
 		<data>
@@ -243,6 +243,14 @@
 		<key>flutter_assets/magic_file/magic_image/old2.webp</key>
 		<data>
 		jz9cnfA+BVLaGiMS2BHQ4PDMPdU=
+		</data>
+		<key>flutter_assets/magic_file/magic_image/old3.webp</key>
+		<data>
+		zAFtDq7+Dy0AtucLcisvccJ+Bbw=
+		</data>
+		<key>flutter_assets/magic_file/magic_image/old4.webp</key>
+		<data>
+		zAFtDq7+Dy0AtucLcisvccJ+Bbw=
 		</data>
 		<key>flutter_assets/magic_file/magic_image/play7.webp</key>
 		<data>
@@ -567,14 +575,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			pAuSzZSx2vQP1Uw+p2P36kLtVvN/cRfin341u6A0Nh0=
+			j575MSBm3NAd3W1IUJZ748d3Sq5nAqjuRToExBH3Gzo=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			nrzEbaphwoD4Zxqt+XrWWvP691sfP87Ozsuteiyq7j8=
+			k72yBOZN5F/jh7FOQlsrbYgkfrNLZ6rv+3+mnrKkQSU=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -630,7 +638,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2IqQkSK+cYtoqY4cGLawyTwwHve4qZlrk6SK8WTeP0g=
+			hS08dZcw2Tm/HZDtfDDOD6tTpBregkWFurY0mK49SPU=
 			</data>
 		</dict>
 		<key>flutter_assets/magic_file/magic_image/b_bottom_bg.webp</key>
@@ -974,6 +982,20 @@
 			<key>hash2</key>
 			<data>
 			o/5g5HXTrOUjIqklmNlKfHLpDqcSsS3MQar9rCWRu7k=
+			</data>
+		</dict>
+		<key>flutter_assets/magic_file/magic_image/old3.webp</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			WF6uE6QzhLzviS0nQVumv5l+GVsGvIsnXXCyrUezNFY=
+			</data>
+		</dict>
+		<key>flutter_assets/magic_file/magic_image/old4.webp</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			WF6uE6QzhLzviS0nQVumv5l+GVsGvIsnXXCyrUezNFY=
 			</data>
 		</dict>
 		<key>flutter_assets/magic_file/magic_image/play7.webp</key>
