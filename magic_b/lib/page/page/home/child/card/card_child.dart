@@ -26,7 +26,12 @@ class CardChild extends SmBaseTagWidget<CardChildController>{
       SmImageWidget(imageName: "launch_bg",width: double.infinity,height: double.infinity,boxFit: BoxFit.fill,),
       Column(
         children: [
-          HomeTopWidget(),
+          InkWell(
+            onTap: (){
+              smController.test();
+            },
+            child: HomeTopWidget(showSetIcon: true,),
+          ),
           Expanded(
             child: Container(
               margin: EdgeInsets.only(left: 12.w,right: 12.w,top: 16.h),

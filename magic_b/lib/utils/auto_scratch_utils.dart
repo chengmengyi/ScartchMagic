@@ -4,17 +4,18 @@ import 'package:magic_base/utils/sm_export.dart';
 class AutoScratchUtils{
   bool stopWhile=false;
   double width=0.0,height=0.0,marginTop=0.0,marginLeft=0.0;
+  Offset offset=Offset.zero;
 
-  AutoScratchUtils(GlobalKey bgGlobalKey,GlobalKey scratchGlobalKey){
+  AutoScratchUtils(GlobalKey scratchGlobalKey){
     var renderBox = scratchGlobalKey.currentContext!.findRenderObject() as RenderBox;
     width = renderBox.size.width;
     height = renderBox.size.height;
-    var offset = renderBox.localToGlobal(Offset.zero);
+    offset = renderBox.localToGlobal(Offset.zero);
 
-    var contentRender = bgGlobalKey.currentContext!.findRenderObject() as RenderBox;
-    var contentOffset = contentRender.localToGlobal(Offset.zero);
-    marginTop = offset.dy-contentOffset.dy;
-    marginLeft= offset.dx;
+    // var contentRender = bgGlobalKey.currentContext!.findRenderObject() as RenderBox;
+    // var contentOffset = contentRender.localToGlobal(Offset.zero);
+    // marginTop = offset.dy-contentOffset.dy;
+    // marginLeft= offset.dx;
   }
 
   startAuto({

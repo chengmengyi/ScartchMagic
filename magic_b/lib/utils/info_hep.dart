@@ -17,4 +17,16 @@ class InfoHep{
     coins.add(addNum);
     EventInfo(eventCode: EventCode.updateCoins,intValue: addNum);
   }
+
+  updatePlayedCardNum(){
+    playedCardNum.add(1);
+    var num = playedCardNum.read();
+    print("kkkk===updatePlayedCardNum=${num}");
+    if(num==2){
+      EventInfo(eventCode: EventCode.showRevealAllFingerGuide);
+    }
+    if(num==3){
+      EventInfo(eventCode: EventCode.showBubble);
+    }
+  }
 }

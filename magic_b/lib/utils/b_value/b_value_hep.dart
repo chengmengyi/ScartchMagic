@@ -85,6 +85,23 @@ class BValueHep{
     }
   }
 
+  int getWheelAddNum(){
+    var wheelPoint = _valueBean?.wheelPoint;
+    var point20 = wheelPoint?.point20??70;
+    var point50 = wheelPoint?.point50??25;
+    var point80 = wheelPoint?.point80??5;
+    var point100 = wheelPoint?.point100??0;
+    var index = Random().nextInt(100);
+    if(index<point20){
+      return 20;
+    }else if(index>=point20&&index<(point20+point50)){
+      return 50;
+    }else if(index>=(point20+point50)&&index<(point20+point50+point80)){
+      return 80;
+    }
+    return 20;
+  }
+
   int getTigerReward() => _randomReward(_valueBean?.cardTiger?.prize??[]);
 
   bool getPlay7Chance()=>Random().nextInt(100)<(_valueBean?.card77hot?.point7??50);

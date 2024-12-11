@@ -4,10 +4,12 @@ import 'package:magic_b/page/page/home/child/cash/cash_child.dart';
 import 'package:magic_b/page/page/home/child/wheel/wheel_child.dart';
 import 'package:magic_b/page/page/home/home/home_bottom_bean.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
+import 'package:magic_base/utils/event/event_code.dart';
+import 'package:magic_base/utils/event/event_info.dart';
 import 'package:magic_base/utils/voice/voice_utils.dart';
 
 class HomeController extends SmBaseController{
-  var tabIndex=0;
+  var tabIndex=0,_startedWheel=false;
   List<HomeBottomBean> bottomList=[
     HomeBottomBean(unsIcon: "card_uns", selIcon: "card_sel", text: "Card"),
     HomeBottomBean(unsIcon: "wheel_uns", selIcon: "wheel_sel", text: "Wheel"),
@@ -22,10 +24,25 @@ class HomeController extends SmBaseController{
   }
 
   clickTab(index){
-    if(index==tabIndex){
+    if(index==tabIndex||_startedWheel){
       return;
     }
     tabIndex=index;
     update(["page"]);
+  }
+
+  @override
+  bool smRegisterEvent() => true;
+
+  @override
+  smEventReceived(EventInfo eventInfo) {
+    switch(eventInfo.eventCode){
+      case EventCode.showWheelTab:
+        clickTab(1);
+        break;
+      case EventCode.startOrStopWheel:
+        _startedWheel=eventInfo.boolValue??false;
+        break;
+    }
   }
 }

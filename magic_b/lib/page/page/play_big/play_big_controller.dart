@@ -32,7 +32,7 @@ class PlayBigController extends SmBaseController{
   void onReady() {
     super.onReady();
     _initWinningNumList();
-    autoScratchUtils=AutoScratchUtils(contentGlobalKey,globalKey);
+    autoScratchUtils=AutoScratchUtils(globalKey);
   }
 
   clickOpen(){

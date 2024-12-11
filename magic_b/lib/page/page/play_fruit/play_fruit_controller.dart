@@ -32,7 +32,7 @@ class PlayFruitController extends SmBaseController{
   void onReady() {
     super.onReady();
     _initRewardList();
-    autoScratchUtils=AutoScratchUtils(contentGlobalKey,globalKey);
+    autoScratchUtils=AutoScratchUtils(globalKey);
   }
 
   clickOpen()async{

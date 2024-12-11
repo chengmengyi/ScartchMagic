@@ -7,6 +7,7 @@ import 'package:magic_b/utils/b_sql/b_sql_utils.dart';
 import 'package:magic_b/utils/b_sql/play_info_bean.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
 import 'package:magic_b/utils/guide/first_play_guide_overlay.dart';
+import 'package:magic_b/utils/guide/guide_step.dart';
 import 'package:magic_b/utils/guide/guide_utils.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/sm_router/all_routers_name.dart';
@@ -32,36 +33,43 @@ class CardChildController extends SmBaseController{
     super.onReady();
     print("kk==CardChildController==onReady");
     _initPlayList();
-    GuideUtils.instance.checkGuide();
+    GuideUtils.instance.checkGuide(checkOldGuide: true);
   }
 
   clickItem(PlayInfoBean bean){
-    if((bean.time??0)>0){
-      showToast("No scratch card, please go to the next level！");
-      return;
-    }
-    if(bean.unlock!=1){
-      SmRoutersUtils.instance.showDialog(
-        widget: UnlockDialog(
-          playType: bean.type??"",
-          bean: bean,
-        ),
-      );
-      return;
-    }
-    if(bean.type==PlayType.playfruit.name){
-      SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.playFruitB);
-    }else if(bean.type==PlayType.playbig.name){
-      SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.playBigB);
-    }else if(bean.type==PlayType.playtiger.name){
-      SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.playTigerB);
-    }else if(bean.type==PlayType.play7.name){
-      SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.play7B);
-    }else if(bean.type==PlayType.playemoji.name){
-      SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.playEmojiB);
-    }else if(bean.type==PlayType.play8.name){
-      SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.play8B);
-    }
+    // if((bean.time??0)>0){
+    //   showToast("No scratch card, please go to the next level！");
+    //   return;
+    // }
+    // if(bean.unlock!=1){
+    //   SmRoutersUtils.instance.showDialog(
+    //     widget: UnlockDialog(
+    //       playType: bean.type??"",
+    //       bean: bean,
+    //     ),
+    //   );
+    //   return;
+    // }
+    // if(bean.type==PlayType.playfruit.name){
+    //   SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.playFruitB);
+    // }else if(bean.type==PlayType.playbig.name){
+    //   SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.playBigB);
+    // }else if(bean.type==PlayType.playtiger.name){
+    //   SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.playTigerB);
+    // }else if(bean.type==PlayType.play7.name){
+    //   SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.play7B);
+    // }else if(bean.type==PlayType.playemoji.name){
+    //   SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.playEmojiB);
+    // }else if(bean.type==PlayType.play8.name){
+    //   SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.play8B);
+    // }
+
+    SmRoutersUtils.instance.toNextPage(
+      routersName: AllRoutersName.playB,
+      arguments: {
+        "playType":PlayType.playfruit,
+      },
+    );
   }
 
   _initPlayList()async{
@@ -146,5 +154,6 @@ class CardChildController extends SmBaseController{
     if(!kDebugMode){
       return;
     }
+    GuideUtils.instance.checkGuide(checkOldGuide: true);
   }
 }

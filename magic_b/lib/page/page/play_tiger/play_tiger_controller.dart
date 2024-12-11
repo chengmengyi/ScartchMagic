@@ -42,7 +42,7 @@ class PlayTigerController extends SmBaseController{
   void onReady() {
     super.onReady();
     _initYourList();
-    autoScratchUtils=AutoScratchUtils(contentGlobalKey,globalKey);
+    autoScratchUtils=AutoScratchUtils(globalKey);
   }
 
   clickOpen(){

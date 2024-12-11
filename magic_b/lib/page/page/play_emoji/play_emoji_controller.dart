@@ -51,7 +51,7 @@ class PlayEmojiController extends SmBaseController{
   void onReady() {
     super.onReady();
     _initEmojiList();
-    autoScratchUtils=AutoScratchUtils(contentGlobalKey,globalKey);
+    autoScratchUtils=AutoScratchUtils(globalKey);
   }
 
 

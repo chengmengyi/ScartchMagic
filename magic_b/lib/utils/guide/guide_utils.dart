@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:magic_b/page/widget/dialog/old_user_dialog/old_user_dialog.dart';
 import 'package:magic_b/utils/b_sql/play_info_bean.dart';
 import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
 import 'package:magic_b/utils/guide/guide_step.dart';
@@ -6,6 +8,7 @@ import 'package:magic_base/sm_router/all_routers_name.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
+import 'package:magic_base/utils/sm_extension.dart';
 
 class GuideUtils{
   factory GuideUtils()=>_getInstance();
@@ -20,7 +23,9 @@ class GuideUtils{
 
   OverlayEntry? _overlayEntry;
 
-  checkGuide(){
+  checkGuide({bool checkOldGuide=false}){
+    print("k====checkGuide=${currentGuideStep.read()}");
+
     switch(currentGuideStep.read()){
       case GuideStep.showFirstPlayGuide:
         EventInfo(eventCode: EventCode.showFirstPlayGuide);
@@ -29,17 +34,78 @@ class GuideUtils{
         SmRoutersUtils.instance.toNextPage(
           routersName: AllRoutersName.playB,
           arguments: {
-            "showFruitFingerGuide":true,
             "playType":PlayType.playfruit,
           },
         );
+        break;
+      case GuideStep.firstGetReward:
+
+        break;
+      case GuideStep.showCashFingerGuide:
+        EventInfo(eventCode: EventCode.showCashFingerGuide);
+        break;
+      case GuideStep.showRevealAllFinger:
+        EventInfo(eventCode: EventCode.showRevealAllFingerGuide);
+        break;
+      case GuideStep.showBubble:
+        if(playedCardNum.read()>=3){
+          EventInfo(eventCode: EventCode.showBubble);
+        }
+        if(checkOldGuide){
+          _checkOldGuide();
+        }
+        break;
+    }
+  }
+
+  _checkOldGuide(){
+    if(getTodayTime()==newUserGuideCompletedTimer.read()){
+      return;
+    }
+    var oldUserStep = _getOldUserStep();
+    print("kkk==_checkOldGuide==${oldUserStep}");
+    switch(oldUserStep){
+      case OldGuideStep.showOldUserDialog:
+        SmRoutersUtils.instance.showDialog(
+          widget: OldUserDialog()
+        );
+        break;
+      case OldGuideStep.showWheelTab:
+        EventInfo(eventCode: EventCode.showWheelTab,boolValue: true);
         break;
     }
   }
 
   updateGuideStep(String step){
     currentGuideStep.write(step);
+    if(step==GuideStep.showBubble){
+      newUserGuideCompletedTimer.write(getTodayTime());
+    }
     checkGuide();
+  }
+
+  updateOldStep(String step){
+    oldUserGuideStep.write("${getTodayTime()}_$step");
+    _checkOldGuide();
+  }
+
+  clickRevealAll(){
+    if(playedCardNum.read()==2&&currentGuideStep.read()==GuideStep.showRevealAllFinger){
+      updateGuideStep(GuideStep.showBubble);
+    }
+  }
+
+  String _getOldUserStep(){
+    try{
+      var s = oldUserGuideStep.read();
+      var list = s.split("_");
+      if(list.first==getTodayTime()){
+        return list.last;
+      }
+      return OldGuideStep.showOldUserDialog;
+    }catch(e){
+      return OldGuideStep.showOldUserDialog;
+    }
   }
 
   showOver({

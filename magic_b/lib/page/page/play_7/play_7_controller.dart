@@ -35,7 +35,7 @@ class Play7Controller extends SmBaseController{
   void onReady() {
     super.onReady();
     _initYourNumList();
-    autoScratchUtils=AutoScratchUtils(contentGlobalKey,globalKey);
+    autoScratchUtils=AutoScratchUtils(globalKey);
   }
 
   clickOpen(){

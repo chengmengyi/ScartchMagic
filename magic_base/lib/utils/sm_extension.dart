@@ -52,3 +52,8 @@ extension NumberFor on int{
   String format()=>NumberFormat.decimalPattern().format(this);
 }
 
+String getTodayTime(){
+  var dateTime = DateTime.now();
+  return "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+}
+

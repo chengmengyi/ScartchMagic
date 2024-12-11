@@ -34,7 +34,7 @@ class Play8Controller extends SmBaseController{
   void onReady() {
     super.onReady();
     _initYourList();
-    autoScratchUtils=AutoScratchUtils(contentGlobalKey,globalKey);
+    autoScratchUtils=AutoScratchUtils(globalKey);
   }
 
 

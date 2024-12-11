@@ -9,6 +9,10 @@ import 'package:magic_b/page/widget/home_top_widget/home_top_controller.dart';
 import 'package:magic_b/page/widget/level_widget/level_widget.dart';
 
 class HomeTopWidget extends SmBaseWidget<HomeTopController>{
+  bool showSetIcon;
+  HomeTopWidget({
+    required this.showSetIcon,
+});
 
   @override
   HomeTopController setController() => HomeTopController();
@@ -35,11 +39,14 @@ class HomeTopWidget extends SmBaseWidget<HomeTopController>{
               SizedBox(width: 10.w,),
               LevelWidget(isHome: true,),
               const Spacer(),
-              InkWell(
-                onTap: (){
-                  SmRoutersUtils.instance.showDialog(widget: SetDialog());
-                },
-                child: SmImageWidget(imageName: "icon_set",width: 36.w,height: 36.h,),
+              Visibility(
+                visible: showSetIcon,
+                child: InkWell(
+                  onTap: (){
+                    SmRoutersUtils.instance.showDialog(widget: SetDialog());
+                  },
+                  child: SmImageWidget(imageName: "icon_set",width: 36.w,height: 36.h,),
+                ),
               ),
               SizedBox(width: 12.w,),
             ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/page/home/home/home_bottom_bean.dart';
 import 'package:magic_b/page/page/play/play_controller.dart';
+import 'package:magic_b/page/widget/finger_widget/finger_lottie.dart';
 import 'package:magic_base/base_widget/sm_b_base_page.dart';
 import 'package:magic_base/base_widget/sm_gradient_text_widget.dart';
 import 'package:magic_base/base_widget/sm_image_widget.dart';
@@ -13,19 +14,24 @@ class PlayPage extends SmBaseBPage<PlayController>{
   PlayController setController() => PlayController();
 
   @override
-  Widget contentWidget() => GetBuilder<PlayController>(
-    id: "page",
-    builder: (_)=>Column(
-      children: [
-        Expanded(
-          child: IndexedStack(
-            index: smController.tabIndex,
-            children: smController.pageList,
-          ),
+  Widget contentWidget() => Stack(
+    children: [
+      GetBuilder<PlayController>(
+        id: "page",
+        builder: (_)=>Column(
+          children: [
+            Expanded(
+              child: IndexedStack(
+                index: smController.tabIndex,
+                children: smController.pageList,
+              ),
+            ),
+            _bottomWidget(),
+          ],
         ),
-        _bottomWidget(),
-      ],
-    ),
+      ),
+      _cashFingerGuideWidget(),
+    ],
   );
 
   _bottomWidget()=>SizedBox(
@@ -77,6 +83,23 @@ class PlayPage extends SmBaseBPage<PlayController>{
               )
           ),
         ],
+      ),
+    ),
+  );
+
+  _cashFingerGuideWidget()=>GetBuilder<PlayController>(
+    id: "cashFingerGuide",
+    builder: (_)=>Positioned(
+      right: 0,
+      bottom: 0,
+      child: Offstage(
+        offstage: !smController.showCashFingerGuide,
+        child: InkWell(
+          onTap: (){
+            smController.clickTab(2);
+          },
+          child: FingerLottie(),
+        ),
       ),
     ),
   );
