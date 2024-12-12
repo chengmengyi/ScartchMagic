@@ -59,7 +59,16 @@ class HomePage extends SmBaseBPage<HomeController>{
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          SmImageWidget(imageName: index==smController.tabIndex?bean.selIcon:bean.unsIcon,width: 56.w,height: 56.h,),
+          Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              SmImageWidget(imageName: index==smController.tabIndex?bean.selIcon:bean.unsIcon,width: 56.w,height: 56.h,),
+              Visibility(
+                visible: index==1&&smController.wheelChance==0,
+                child: SmImageWidget(imageName: "icon_luck",width: 22.w,height: 22.h,),
+              ),
+            ],
+          ),
           Container(
               margin: EdgeInsets.only(top: 50.h),
               child: SmGradientTextWidget(

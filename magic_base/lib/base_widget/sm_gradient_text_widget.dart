@@ -9,6 +9,7 @@ class SmGradientTextWidget extends StatelessWidget{
   AlignmentGeometry? begin;
   AlignmentGeometry? end;
   List<Shadow>? shadows;
+  TextAlign? textAlign;
 
   SmGradientTextWidget({
     required this.text,
@@ -18,6 +19,7 @@ class SmGradientTextWidget extends StatelessWidget{
     this.begin,
     this.end,
     this.shadows,
+    this.textAlign,
   });
 
   @override
@@ -29,7 +31,7 @@ class SmGradientTextWidget extends StatelessWidget{
         colors: colors,
       ).createShader(rect);
     },
-    child: SmTextWidget(text: text, size: size, color: "#FFFFFF",fontWeight: fontWeight,shadows: shadows,),
+    child: SmTextWidget(text: text, size: size, color: "#FFFFFF",fontWeight: fontWeight,shadows: shadows,textAlign: textAlign,),
   );
 
 }

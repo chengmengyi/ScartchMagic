@@ -122,6 +122,7 @@ class PlayFruitChildController extends SmBaseController{
   }
 
   resetPlay(){
+    InfoHep.instance.updateBoxProgress();
     playResultStatus=PlayResultStatus.init;
     update(["result_fail"]);
     key.currentState?.reset();

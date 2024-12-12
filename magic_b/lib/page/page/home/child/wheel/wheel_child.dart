@@ -75,30 +75,28 @@ class WheelChild extends SmBaseTagWidget<WheelChildController>{
               ),
               Align(
                 alignment: Alignment.centerLeft,
-                child: InkWell(
-                  child: Container(
-                    width: 40.w,
-                    height: 40.w,
-                    margin: EdgeInsets.only(left: 10.w),
-                    child: Stack(
-                      children: [
-                        SmImageWidget(imageName: "wheel5",width: 40.w,height: 40.w,),
-                        Align(
+                child: Container(
+                  width: 40.w,
+                  height: 40.w,
+                  margin: EdgeInsets.only(left: 10.w),
+                  child: Stack(
+                    children: [
+                      SmImageWidget(imageName: "wheel5",width: 40.w,height: 40.w,),
+                      Align(
+                        alignment: Alignment.center,
+                        child: SmImageWidget(imageName: "wheel6",width: 36.w,height: 36.w,),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Stack(
                           alignment: Alignment.center,
-                          child: SmImageWidget(imageName: "wheel6",width: 36.w,height: 36.w,),
+                          children: [
+                            SmImageWidget(imageName: "wheel7",width: 18.w,height: 18.w,),
+                            SmTextWidget(text: "x1", size: 12.sp, color: "#FFFFFF"),
+                          ],
                         ),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              SmImageWidget(imageName: "wheel7",width: 18.w,height: 18.w,),
-                              SmTextWidget(text: "x1", size: 12.sp, color: "#FFFFFF"),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               )

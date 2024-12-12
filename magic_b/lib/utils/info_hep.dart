@@ -21,12 +21,18 @@ class InfoHep{
   updatePlayedCardNum(){
     playedCardNum.add(1);
     var num = playedCardNum.read();
-    print("kkkk===updatePlayedCardNum=${num}");
     if(num==2){
       EventInfo(eventCode: EventCode.showRevealAllFingerGuide);
     }
     if(num==3){
       EventInfo(eventCode: EventCode.showBubble);
     }
+  }
+
+  updateBoxProgress(){
+    if(currentBoxProgress.read()<5){
+      currentBoxProgress.add(1);
+    }
+    EventInfo(eventCode: EventCode.updateBoxProgress);
   }
 }

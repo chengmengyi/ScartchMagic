@@ -3,6 +3,7 @@ import 'package:sqflite/sqflite.dart';
 class SmSqlTable{
   static const String playInfoNormal="playInfoNormal";
   static const String playInfoB="playInfoB";
+  static const String cashTaskB="cashTaskB";
 }
 
 class SmSqlUtils{
@@ -33,5 +34,6 @@ class SmSqlUtils{
 
   _createVersion2DB(db){
     db.execute('CREATE TABLE ${SmSqlTable.playInfoB} (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, currentPro INTEGER, playedNum INTEGER, unlock INTEGER, time INTEGER)');
+    db.execute('CREATE TABLE ${SmSqlTable.cashTaskB} (id INTEGER PRIMARY KEY AUTOINCREMENT, taskType INTEGER, cashType INTEGER, cashMoney INTEGER, currentPro INTEGER, timer TEXT)');
   }
 }

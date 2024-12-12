@@ -154,6 +154,7 @@ class CardChildController extends SmBaseController{
     if(!kDebugMode){
       return;
     }
-    GuideUtils.instance.checkGuide(checkOldGuide: true);
+    GuideUtils.instance.updateOldStep(OldGuideStep.showOldUserDialog);
+    // GuideUtils.instance.checkGuide(checkOldGuide: true);
   }
 }

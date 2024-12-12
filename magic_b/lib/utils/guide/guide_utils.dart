@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/widget/dialog/old_user_dialog/old_user_dialog.dart';
+import 'package:magic_b/page/widget/dialog/old_user_single_reward/old_user_single_reward_dialog.dart';
 import 'package:magic_b/utils/b_sql/play_info_bean.dart';
 import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
+import 'package:magic_b/utils/b_value/b_value_hep.dart';
 import 'package:magic_b/utils/guide/guide_step.dart';
 import 'package:magic_base/sm_router/all_routers_name.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
@@ -72,6 +74,11 @@ class GuideUtils{
         break;
       case OldGuideStep.showWheelTab:
         EventInfo(eventCode: EventCode.showWheelTab,boolValue: true);
+        break;
+      case OldGuideStep.showSingleRewardDialog:
+        SmRoutersUtils.instance.showDialog(
+            widget: OldUserSingleRewardDialog(signReward: BValueHep.instance.getSignReward())
+        );
         break;
     }
   }

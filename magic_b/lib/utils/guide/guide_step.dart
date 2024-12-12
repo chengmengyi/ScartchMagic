@@ -11,4 +11,5 @@ class OldGuideStep{
   static const String showOldUserDialog="showOldUserDialog";
   static const String showWheelTab="showWheelTab";
   static const String showSingleRewardDialog="showSingleRewardDialog";
+  static const String completed="completed";
 }

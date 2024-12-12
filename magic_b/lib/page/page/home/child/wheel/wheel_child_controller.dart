@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:magic_b/page/widget/dialog/no_wheel/no_wheel_dialog.dart';
 import 'package:magic_b/page/widget/dialog/old_user_double_reward/old_user_double_reward_dialog.dart';
 import 'package:magic_b/utils/b_ad/ad_utils.dart';
+import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
@@ -28,6 +30,10 @@ class WheelChildController extends SmBaseController{
       return;
     }
     _looping=true;
+    if(wheelChanceNum.read()<=0){
+      SmRoutersUtils.instance.showDialog(widget: NoWheelDialog(fromHome: true));
+      return;
+    }
     EventInfo(eventCode: EventCode.startOrStopWheel,boolValue: true);
     var wheelAddNum = BValueHep.instance.getWheelAddNum();
     var addAngel = _getAddAngelByNum(wheelAddNum);
@@ -49,12 +55,14 @@ class WheelChildController extends SmBaseController{
     EventInfo(eventCode: EventCode.startOrStopWheel,boolValue: false);
     AdUtils.instance.showAd(
       closeAd: (){
-        // if(fromOldGuide){
-        //
-        // }
-        SmRoutersUtils.instance.showDialog(
-          widget: OldUserDoubleRewardDialog(),
-        );
+        if(fromOldGuide){
+          SmRoutersUtils.instance.showDialog(
+            widget: OldUserDoubleRewardDialog(
+              wheelReward: wheelAddNum,
+              signReward: BValueHep.instance.getSignReward(),
+            ),
+          );
+        }
       },
     );
   }

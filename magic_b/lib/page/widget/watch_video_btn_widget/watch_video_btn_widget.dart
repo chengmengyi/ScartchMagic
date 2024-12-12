@@ -4,10 +4,10 @@ import 'package:magic_base/base_widget/sm_text_widget.dart';
 import 'package:magic_base/utils/sm_export.dart';
 
 class WatchVideoBtnWidget extends StatelessWidget{
-  int money;
+  String text;
   Function() onTap;
   WatchVideoBtnWidget({
-    required this.money,
+    required this.text,
     required this.onTap,
   });
   
@@ -24,7 +24,7 @@ class WatchVideoBtnWidget extends StatelessWidget{
           SmImageWidget(imageName: "btn",width: 208.w,height: 56.h,),
           Align(
             alignment: Alignment.center,
-            child: SmTextWidget(text: "Claim \$${money*2}", size: 18.sp, color: "#FFFFFF",fontWeight: FontWeight.w700,),
+            child: SmTextWidget(text: text, size: 18.sp, color: "#FFFFFF",fontWeight: FontWeight.w700,),
           ),
           Align(
             alignment: Alignment.topRight,

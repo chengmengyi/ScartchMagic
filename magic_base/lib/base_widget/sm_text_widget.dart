@@ -8,6 +8,7 @@ class SmTextWidget extends StatelessWidget{
   FontWeight? fontWeight;
   List<Shadow>? shadows;
   double? height;
+  double? withOpacity;
   TextAlign? textAlign;
 
   SmTextWidget({
@@ -18,6 +19,7 @@ class SmTextWidget extends StatelessWidget{
     this.shadows,
     this.height,
     this.textAlign,
+    this.withOpacity,
   });
 
   @override
@@ -26,7 +28,7 @@ class SmTextWidget extends StatelessWidget{
       text,
       textAlign: textAlign,
       style: TextStyle(
-          color: color.toSmColor(),
+          color: null!=withOpacity?color.toSmColor().withOpacity(withOpacity!):color.toSmColor(),
           fontSize: size,
           fontWeight: fontWeight,
           shadows: shadows,

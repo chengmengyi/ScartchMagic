@@ -24,6 +24,16 @@ class BValueHep{
     _valueBean=ValueBean.fromJson(jsonDecode(valueStr.base64()));
   }
 
+  int getSignReward(){
+    var list = _valueBean?.checkReward??[];
+    if(list.length!=2){
+      return 3;
+    }
+    var min = list.first;
+    var max = list.last;
+    return min + Random().nextInt(max - min + 1);
+  }
+
   int getMaxWin(String? playType){
     try{
       if(playType==PlayType.playfruit.name){

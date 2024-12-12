@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/widget/dialog/old_user_double_reward/old_user_double_reward_controller.dart';
+import 'package:magic_b/page/widget/watch_video_btn_widget/watch_video_btn_widget.dart';
 import 'package:magic_base/base_widget/sm_base_dialog.dart';
 import 'package:magic_base/base_widget/sm_gradient_text_widget.dart';
 import 'package:magic_base/base_widget/sm_image_widget.dart';
@@ -8,6 +9,12 @@ import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/sm_extension.dart';
 
 class OldUserDoubleRewardDialog extends SmBaseDialog<OldUserDoubleRewardController>{
+  int wheelReward;
+  int signReward;
+  OldUserDoubleRewardDialog({
+    required this.wheelReward,
+    required this.signReward,
+});
 
   @override
   OldUserDoubleRewardController setController() => OldUserDoubleRewardController();
@@ -25,7 +32,7 @@ class OldUserDoubleRewardDialog extends SmBaseDialog<OldUserDoubleRewardControll
           alignment: Alignment.topRight,
           child: InkWell(
             onTap: (){
-              // smController.clickClose();
+              smController.clickClose();
             },
             child: SmImageWidget(imageName: "close",width: 32.w,height: 32.h,),
           ),
@@ -69,7 +76,7 @@ class OldUserDoubleRewardDialog extends SmBaseDialog<OldUserDoubleRewardControll
                 children: [
                   SmImageWidget(imageName: "b_coins",width: 20.w,height: 20.w,),
                   SizedBox(width: 3.w,),
-                  SmTextWidget(text: "+\$10.0", size: 16.sp, color: "#FFE646",fontWeight: FontWeight.bold,)
+                  SmTextWidget(text: "+\$$wheelReward", size: 16.sp, color: "#FFE646",fontWeight: FontWeight.bold,)
                 ],
               )
             ],
@@ -93,14 +100,27 @@ class OldUserDoubleRewardDialog extends SmBaseDialog<OldUserDoubleRewardControll
                 children: [
                   SmImageWidget(imageName: "b_coins",width: 20.w,height: 20.w,),
                   SizedBox(width: 3.w,),
-                  SmTextWidget(text: "+\$10.0", size: 16.sp, color: "#FFE646",fontWeight: FontWeight.bold,)
+                  SmTextWidget(text: "+\$$signReward", size: 16.sp, color: "#FFE646",fontWeight: FontWeight.bold,)
                 ],
               )
             ],
           )
         ],
       ),
-
+      SizedBox(height: 20.h,),
+      WatchVideoBtnWidget(
+        text: "Double Claim",
+        onTap: (){
+          smController.clickDouble(wheelReward,signReward);
+        },
+      ),
+      SizedBox(height: 4.h,),
+      InkWell(
+        onTap: (){
+          smController.clickSingle(wheelReward,signReward);
+        },
+        child: SmTextWidget(text: "Claim", size: 14.sp, color: "#FFFFFF",fontWeight: FontWeight.bold,),
+      )
     ],
   );
 }

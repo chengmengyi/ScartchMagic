@@ -63,7 +63,7 @@ class IncentDialog extends SmBaseDialog<IncentController>{
     mainAxisSize: MainAxisSize.min,
     children: [
       WatchVideoBtnWidget(
-        money: money,
+        text: "Claim \$${money*2}",
         onTap: (){
           smController.clickDouble(money, dismissDialog);
         },

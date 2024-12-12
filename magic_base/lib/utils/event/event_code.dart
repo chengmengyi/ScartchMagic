@@ -13,4 +13,6 @@ class EventCode{
   static const int showBubble=104;
   static const int showWheelTab=105;
   static const int startOrStopWheel=106;
+  static const int updateHomeTabIndex=107;
+  static const int updateBoxProgress=108;
 }
