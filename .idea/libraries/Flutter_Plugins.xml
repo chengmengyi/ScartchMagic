@@ -25,6 +25,12 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/audioplayers-6.1.0" />
       <root url="file://$PROJECT_DIR$/magic_normal" />
       <root url="file://$PROJECT_DIR$/magic_b" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/in_app_review-2.0.9" />
+      <root url="file://$PROJECT_DIR$/magic_b/plugins/flutter_local_notifications-18.0.1" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_local_notifications_linux-5.0.0" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_tba_info-0.0.8" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/android_play_install_referrer-0.4.0" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/adjust_sdk-4.31.0" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

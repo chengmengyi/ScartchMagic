@@ -1,4 +1,4 @@
-import 'package:magic_b/utils/b_ad/ad_utils.dart';
+import 'package:magic_base/utils/b_ad/ad_utils.dart';
 import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
 import 'package:magic_b/utils/guide/guide_step.dart';
 import 'package:magic_b/utils/guide/guide_utils.dart';

@@ -34,6 +34,6 @@ class SmSqlUtils{
 
   _createVersion2DB(db){
     db.execute('CREATE TABLE ${SmSqlTable.playInfoB} (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, currentPro INTEGER, playedNum INTEGER, unlock INTEGER, time INTEGER)');
-    db.execute('CREATE TABLE ${SmSqlTable.cashTaskB} (id INTEGER PRIMARY KEY AUTOINCREMENT, taskType INTEGER, cashType INTEGER, cashMoney INTEGER, currentPro INTEGER, timer TEXT)');
+    db.execute('CREATE TABLE ${SmSqlTable.cashTaskB} (id INTEGER PRIMARY KEY AUTOINCREMENT, taskType INTEGER, cashType INTEGER, cashMoney INTEGER, currentPro INTEGER, maxPro INTEGER, completeStatus INTEGER,maxDays INTEGER,timer TEXT,account TEXT)');
   }
 }

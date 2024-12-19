@@ -6,6 +6,10 @@ import 'package:magic_base/utils/event/event_info.dart';
 class NoWheelController extends SmBaseController{
   clickFind(bool fromHome){
     SmRoutersUtils.instance.offPage();
-    EventInfo(eventCode: EventCode.updateHomeTabIndex,intValue: 0);
+    if(fromHome){
+      EventInfo(eventCode: EventCode.updateHomeTabIndex,intValue: 0);
+    }else{
+      EventInfo(eventCode: EventCode.updatePlayPageTabIndex,intValue: 0);
+    }
   }
 }

@@ -30,31 +30,33 @@ class IncentDialog extends SmBaseDialog<IncentController>{
   );
 
   _rewardWidget()=>Stack(
-    alignment: Alignment.center,
+    alignment: Alignment.bottomCenter,
     children: [
-      SmImageWidget(imageName: "incent1",width: 320.w,height: 320.h,),
-      SmImageWidget(imageName: "incent2",width: 290.w,height: 290.h,),
-      Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          SmImageWidget(imageName: "incent3",width: 280.w,height: 192.h,),
-          Container(
-            margin: EdgeInsets.only(bottom: 6.h),
-            child: SmGradientTextWidget(
-              text: "\$$money",
-              size: 32.sp,
-              fontWeight: FontWeight.w700,
-              colors: ["#FFFB04".toSmColor(),"#FF7B00".toSmColor()],
-              shadows: [
-                Shadow(
-                    color: "#690800".toSmColor(),
-                    blurRadius: 2.w,
-                    offset: Offset(0,0.5.w)
-                )
-              ],
-            ),
-          )
-        ],
+      Lottie.asset("magic_file/magic_lottie/you_win.json",height: 300.h,fit: BoxFit.fitHeight),
+      Container(
+        margin: EdgeInsets.only(bottom: 80.h),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            SmImageWidget(imageName: "incent4",width: 240.w,height: 60.h,),
+            Container(
+              margin: EdgeInsets.only(bottom: 6.h),
+              child: SmGradientTextWidget(
+                text: "\$$money",
+                size: 32.sp,
+                fontWeight: FontWeight.w700,
+                colors: ["#FFFB04".toSmColor(),"#FF7B00".toSmColor()],
+                shadows: [
+                  Shadow(
+                      color: "#690800".toSmColor(),
+                      blurRadius: 2.w,
+                      offset: Offset(0,0.5.w)
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       )
     ],
   );

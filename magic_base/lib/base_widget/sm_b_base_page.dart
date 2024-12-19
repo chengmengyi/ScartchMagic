@@ -12,6 +12,7 @@ abstract class SmBaseBPage<T extends SmBaseController> extends StatelessWidget{
     smController.smContext=context;
     return Scaffold(
       body: contentWidget(),
+      resizeToAvoidBottomInset: false,
     );
   }
 

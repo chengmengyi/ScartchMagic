@@ -8,4 +8,6 @@ class BStorageName{
   static const String firstShowBoxGuide="firstShowBoxGuideB";
   static const String currentBoxProgress="currentBoxProgressB";
   static const String cashTypeIndex="cashTypeIndexB";
+  static const String firstGetMoney="firstGetMoneyB";
+  static const String firstLaunchApp="firstLaunchAppB";
 }

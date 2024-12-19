@@ -14,7 +14,9 @@ class ValueBean {
       this.card8rich, 
       this.wtdTask, 
       this.winupNumber, 
-      this.checkReward,});
+      this.checkReward,
+      this.boxPrize,
+  });
 
   ValueBean.fromJson(dynamic json) {
     cardRange = json['card_range'] != null ? json['card_range'].cast<int>() : [];
@@ -28,7 +30,7 @@ class ValueBean {
     if (json['float_prize'] != null) {
       floatPrize = [];
       json['float_prize'].forEach((v) {
-        floatPrize?.add(FloatPrize.fromJson(v));
+        floatPrize?.add(Prize.fromJson(v));
       });
     }
     wheelPoint = json['wheel_point'] != null ? WheelPoint.fromJson(json['wheel_point']) : null;
@@ -47,11 +49,17 @@ class ValueBean {
     wtdTask = json['wtd_task'] != null ? WtdTask.fromJson(json['wtd_task']) : null;
     winupNumber = json['winup_number'] != null ? json['winup_number'].cast<int>() : [];
     checkReward = json['check_reward'] != null ? json['check_reward'].cast<int>() : [];
+    if (json['box_prize'] != null) {
+      boxPrize = [];
+      json['box_prize'].forEach((v) {
+        boxPrize?.add(Prize.fromJson(v));
+      });
+    }
   }
   List<int>? cardRange;
   int? newPrize;
   List<IntadPoint>? intadPoint;
-  List<FloatPrize>? floatPrize;
+  List<Prize>? floatPrize;
   WheelPoint? wheelPoint;
   List<KeyOut>? keyOut;
   CardFruit? cardFruit;
@@ -63,6 +71,7 @@ class ValueBean {
   WtdTask? wtdTask;
   List<int>? winupNumber;
   List<int>? checkReward;
+  List<Prize>? boxPrize;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -103,6 +112,9 @@ class ValueBean {
     }
     map['winup_number'] = winupNumber;
     map['check_reward'] = checkReward;
+    if (boxPrize != null) {
+      map['box_prize'] = boxPrize?.map((v) => v.toJson()).toList();
+    }
     return map;
   }
 
@@ -429,30 +441,6 @@ class WheelPoint {
     map['point_80'] = point80;
     map['point_100'] = point100;
     map['iphone_point'] = iphonePoint;
-    return map;
-  }
-
-}
-
-class FloatPrize {
-  FloatPrize({
-      this.firstNumber, 
-      this.prize, 
-      this.endNumber,});
-
-  FloatPrize.fromJson(dynamic json) {
-    firstNumber = json['first_number'];
-    prize = json['prize'] != null ? json['prize'].cast<int>() : [];
-    endNumber = json['end_number'];
-  }
-  int? firstNumber;
-  List<int>? prize;
-  int? endNumber;
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['first_number'] = firstNumber;
-    map['prize'] = prize;
-    map['end_number'] = endNumber;
     return map;
   }
 

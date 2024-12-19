@@ -15,4 +15,6 @@ StorageHep<String> oldUserGuideStep=StorageHep<String>(key: BStorageName.oldUser
 
 
 StorageHep<bool> firstShowBoxGuide=StorageHep<bool>(key: BStorageName.firstShowBoxGuide, defaultValue: true);
+StorageHep<bool> firstGetMoney=StorageHep<bool>(key: BStorageName.firstGetMoney, defaultValue: true);
+StorageHep<bool> firstLaunchApp=StorageHep<bool>(key: BStorageName.firstLaunchApp, defaultValue: true);
 

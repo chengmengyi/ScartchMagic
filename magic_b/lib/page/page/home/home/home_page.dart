@@ -34,15 +34,18 @@ class HomePage extends SmBaseBPage<HomeController>{
     child: Stack(
       children: [
         SmImageWidget(imageName: "b_bottom_bg",width: double.infinity,height: double.infinity,boxFit: BoxFit.fill,),
-        StaggeredGridView.countBuilder(
-          padding: const EdgeInsets.all(0),
-          itemCount: smController.bottomList.length,
-          shrinkWrap: true,
-          crossAxisCount: 3,
-          mainAxisSpacing: 0,
-          crossAxisSpacing: 0,
-          itemBuilder: (context,index)=>_bottomItemWidget(index,smController.bottomList[index]),
-          staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),
+        GetBuilder<HomeController>(
+          id: "bottom",
+          builder: (_)=>StaggeredGridView.countBuilder(
+            padding: const EdgeInsets.all(0),
+            itemCount: smController.bottomList.length,
+            shrinkWrap: true,
+            crossAxisCount: 3,
+            mainAxisSpacing: 0,
+            crossAxisSpacing: 0,
+            itemBuilder: (context,index)=>_bottomItemWidget(index,smController.bottomList[index]),
+            staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),
+          ),
         ),
       ],
     ),

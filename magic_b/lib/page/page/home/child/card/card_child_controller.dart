@@ -6,12 +6,15 @@ import 'package:magic_b/page/widget/dialog/unlock_dialog/unlock_dialog.dart';
 import 'package:magic_b/utils/b_sql/b_sql_utils.dart';
 import 'package:magic_b/utils/b_sql/play_info_bean.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
+import 'package:magic_b/utils/cash_task/cash_task_utils.dart';
 import 'package:magic_b/utils/guide/first_play_guide_overlay.dart';
 import 'package:magic_b/utils/guide/guide_step.dart';
 import 'package:magic_b/utils/guide/guide_utils.dart';
+import 'package:magic_b/utils/info_hep.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/sm_router/all_routers_name.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
+import 'package:magic_base/utils/check_user/check_user_utils.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
 import 'package:magic_base/utils/sm_extension.dart';
@@ -50,24 +53,11 @@ class CardChildController extends SmBaseController{
     //   );
     //   return;
     // }
-    // if(bean.type==PlayType.playfruit.name){
-    //   SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.playFruitB);
-    // }else if(bean.type==PlayType.playbig.name){
-    //   SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.playBigB);
-    // }else if(bean.type==PlayType.playtiger.name){
-    //   SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.playTigerB);
-    // }else if(bean.type==PlayType.play7.name){
-    //   SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.play7B);
-    // }else if(bean.type==PlayType.playemoji.name){
-    //   SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.playEmojiB);
-    // }else if(bean.type==PlayType.play8.name){
-    //   SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.play8B);
-    // }
-
+    var playType = PlayType.values.firstWhere((element) => element.name==bean.type);
     SmRoutersUtils.instance.toNextPage(
       routersName: AllRoutersName.playB,
       arguments: {
-        "playType":PlayType.playfruit,
+        "playType":playType,
       },
     );
   }
@@ -154,7 +144,9 @@ class CardChildController extends SmBaseController{
     if(!kDebugMode){
       return;
     }
-    GuideUtils.instance.updateOldStep(OldGuideStep.showOldUserDialog);
-    // GuideUtils.instance.checkGuide(checkOldGuide: true);
+    // InfoHep.instance.updateCoins(1000);
+    // BSqlUtils.instance.deleteTask();
+    // BSqlUtils.instance.updateCashTaskPro(TaskType.card);
+    CheckUserUtils.instance.initCheck();
   }
 }

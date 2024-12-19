@@ -4,6 +4,8 @@ import 'package:magic_b/page/page/home/child/cash/cash_child.dart';
 import 'package:magic_b/page/page/home/child/wheel/wheel_child.dart';
 import 'package:magic_b/page/page/home/home/home_bottom_bean.dart';
 import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
+import 'package:magic_b/utils/info_hep.dart';
+import 'package:magic_b/utils/local_notification/local_notification_utils.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
@@ -27,7 +29,10 @@ class HomeController extends SmBaseController{
   @override
   void onReady() {
     super.onReady();
+    LocalNotificationUtils.instance.initLocalNotification();
     VoiceUtils.instance.playBgMp3();
+    InfoHep.instance.notFirstLaunchAppShowCommentDialog();
+    LocalNotificationUtils.instance.checkFromNotificationLaunchApp();
   }
 
   clickTab(index){
@@ -52,6 +57,10 @@ class HomeController extends SmBaseController{
         break;
       case EventCode.updateHomeTabIndex:
         clickTab(eventInfo.intValue??0);
+        break;
+      case EventCode.keyAnimatorEnd:
+        wheelChance=wheelChanceNum.read();
+        update(["bottom"]);
         break;
     }
   }

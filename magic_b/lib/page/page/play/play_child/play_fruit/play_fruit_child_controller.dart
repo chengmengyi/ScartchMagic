@@ -21,12 +21,14 @@ import 'package:magic_b/utils/b_value/b_value_hep.dart';
 import 'package:magic_b/utils/utils.dart';
 
 class PlayFruitChildController extends SmBaseController{
-  var _canClick=true,_has3fruit=false,playResultStatus=PlayResultStatus.init,showFruitFingerGuide=false,showRevealAllFinger=false;
+  var _canClick=true,_has3fruit=false,playResultStatus=PlayResultStatus.init,
+      showFruitFingerGuide=false,showRevealAllFinger=false,hideKeyIcon=false;
   final key = GlobalKey<ScratcherState>();
   List<String> rewardList=[];
   Timer? _timer;
 
   GlobalKey globalKey=GlobalKey();
+  GlobalKey keyGlobalKey=GlobalKey();
   Offset? iconOffset;
   AutoScratchUtils? autoScratchUtils;
 
@@ -66,7 +68,20 @@ class PlayFruitChildController extends SmBaseController{
       iconOffset=null;
       update(["gold_icon"]);
     });
+    if(rewardList.contains("icon_key")){
+      _canClick=false;
+      hideKeyIcon=true;
+      update(["list"]);
+      var renderBox = keyGlobalKey.currentContext!.findRenderObject() as RenderBox;
+      var offset = renderBox.localToGlobal(Offset.zero);
+      EventInfo(eventCode: EventCode.keyAnimatorStart,dynamicValue: offset);
+      return;
+    }
+    _checkResult();
+  }
 
+  _checkResult()async{
+    EventInfo(eventCode: EventCode.canClickOtherBtn,boolValue: true);
     var maxWin = BValueHep.instance.getMaxWin(PlayType.playfruit.name);
     var upLevel = await BSqlUtils.instance.updatePlayedNumInfo(PlayType.playfruit);
     if(upLevel>0){
@@ -77,7 +92,7 @@ class PlayFruitChildController extends SmBaseController{
           call: (){
             InfoHep.instance.updateCoins(maxWin);
             InfoHep.instance.updatePlayedCardNum();
-            // Utils.toNextPlay(PlayType.playfruit);
+            Utils.toNextPlay(PlayType.playfruit);
           },
         ),
       );
@@ -87,16 +102,6 @@ class PlayFruitChildController extends SmBaseController{
     var fruitReward = BValueHep.instance.getFruitReward();
     playResultStatus=_has3fruit?PlayResultStatus.success:PlayResultStatus.fail;
     if(playResultStatus==PlayResultStatus.success){
-      // SmRoutersUtils.instance.showDialog(
-      //   widget: WinDialog(
-      //     addNum: fruitReward,
-      //     timeOut: (){
-      //       InfoHep.instance.updateCoins(fruitReward);
-      //       _initRewardList();
-      //       resetPlay();
-      //     },
-      //   ),
-      // );
       if(currentGuideStep.read()==GuideStep.showFruitFingerGuide){
         GuideUtils.instance.updateGuideStep(GuideStep.firstGetReward);
       }
@@ -127,6 +132,7 @@ class PlayFruitChildController extends SmBaseController{
     update(["result_fail"]);
     key.currentState?.reset();
     _canClick=true;
+    hideKeyIcon=false;
 
     autoScratchUtils?.stopWhile=false;
     iconOffset=null;
@@ -141,6 +147,9 @@ class PlayFruitChildController extends SmBaseController{
     rewardList.addAll(["icon_fruit1","icon_fruit1"]);
     if(_has3fruit){
       rewardList.add("icon_fruit1");
+    }
+    if(BValueHep.instance.checkHasKey()){
+      rewardList.add("icon_key");
     }
     while(rewardList.length<9){
       rewardList.add(Random().nextInt(100)<50?"icon_fruit2":"icon_fruit3");
@@ -168,6 +177,7 @@ class PlayFruitChildController extends SmBaseController{
   }
 
   hideRevealAllFinger(){
+    EventInfo(eventCode: EventCode.canClickOtherBtn,boolValue: false);
     if(showRevealAllFinger){
       showRevealAllFinger=false;
       update(["showRevealAllFingerGuide"]);
@@ -188,6 +198,9 @@ class PlayFruitChildController extends SmBaseController{
           showRevealAllFinger=true;
           update(["showRevealAllFingerGuide"]);
         }
+        break;
+      case EventCode.keyAnimatorEnd:
+        _checkResult();
         break;
     }
   }

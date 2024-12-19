@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -53,7 +54,16 @@ extension NumberFor on int{
 }
 
 String getTodayTime(){
+  if(kDebugMode){
+    return "2024-12-24";
+  }
   var dateTime = DateTime.now();
   return "${dateTime.year}-${dateTime.month}-${dateTime.day}";
 }
 
+
+logPrint(String str){
+  if(kDebugMode){
+    print(str);
+  }
+}

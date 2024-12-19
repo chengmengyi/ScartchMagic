@@ -11,6 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+  in_app_review: 2.0.9
+  flutter_local_notifications:
+    path: plugins/flutter_local_notifications-18.0.1
   magic_base:
     path: ../magic_base
 

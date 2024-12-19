@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/page/home/child/cash/cash_child_controller.dart';
 import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
+import 'package:magic_b/utils/cash_task/cash_list_bean.dart';
 import 'package:magic_base/base_widget/sm_base_tag_widget.dart';
 import 'package:magic_base/base_widget/sm_image_widget.dart';
 import 'package:magic_base/base_widget/sm_text_widget.dart';
@@ -155,17 +156,17 @@ class CashChild extends SmBaseTagWidget<CashChildController>{
           removeTop: true,
           context: smController.smContext,
           child: ListView.builder(
-            itemCount: 10,
+            itemCount: smController.cashList.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context,index) => _cashItemWidget(),
+            itemBuilder: (context,index) => _cashItemWidget(smController.cashList[index]),
           ),
         ),
       )
     ],
   );
   
-  _cashItemWidget()=>Container(
+  _cashItemWidget(CashListBean bean)=>Container(
     width: double.infinity,
     height: 104.h,
     margin: EdgeInsets.only(left: 12.w,right: 12.w,bottom: 8.h),
@@ -181,25 +182,30 @@ class CashChild extends SmBaseTagWidget<CashChildController>{
             children: [
               Row(
                 children: [
-                  SmTextWidget(text: "\$800", size: 24.sp, color: "#FFFFFF",fontWeight: FontWeight.bold,),
+                  SmTextWidget(text: "\$${bean.cashNum}", size: 24.sp, color: "#FFFFFF",fontWeight: FontWeight.bold,),
                   const Spacer(),
                   InkWell(
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
                         SmImageWidget(imageName: "cash_btn",width: 88.w,height: 28.h,),
-                        SmTextWidget(
-                          text: "Cash Out",
-                          size: 14.sp,
-                          color: "#FFFFFF",
-                          fontWeight: FontWeight.bold,
-                          shadows: [
-                            Shadow(
-                                color: "#825400".toSmColor(),
-                                blurRadius: 2.w,
-                                offset: Offset(0,0.5.w)
-                            )
-                          ],
+                        InkWell(
+                          onTap: (){
+                            smController.clickCashOut(bean,home);
+                          },
+                          child: SmTextWidget(
+                            text: smController.getBtnStr(bean.list),
+                            size: 14.sp,
+                            color: "#FFFFFF",
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                  color: "#825400".toSmColor(),
+                                  blurRadius: 2.w,
+                                  offset: Offset(0,0.5.w)
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -207,35 +213,57 @@ class CashChild extends SmBaseTagWidget<CashChildController>{
                 ],
               ),
               SizedBox(height: 4.h,),
-              // Stack(
-              //   alignment: Alignment.centerRight,
-              //   children: [
-              //     LayoutBuilder(
-              //       builder: (context,bc){
-              //         var maxWidth = bc.maxWidth;
-              //         return Container(
-              //           width: double.infinity,
-              //           height: 16.h,
-              //           alignment: Alignment.centerLeft,
-              //           decoration: BoxDecoration(
-              //             color: "#0F0942".toSmColor(),
-              //             borderRadius: BorderRadius.circular(8.w),
-              //           ),
-              //           child: Container(
-              //             width: maxWidth*0.5,
-              //             height: 16.h,
-              //             decoration: BoxDecoration(
-              //               borderRadius: BorderRadius.circular(8.w),
-              //               gradient: LinearGradient(colors: ["#FFD500".toSmColor(),"#FF7700".toSmColor(),])
-              //             ),
-              //           ),
-              //         );
-              //       },
-              //     ),
-              //     SmImageWidget(imageName: "b_coins",width: 24.w,height: 24.w,),
-              //   ],
-              // ),
-              _taskListWidget(),
+              bean.list.isEmpty?Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  LayoutBuilder(
+                    builder: (context,bc){
+                      var maxWidth = bc.maxWidth;
+                      var pro = coins.read()/bean.cashNum;
+                      if(pro>=1){
+                        pro=1;
+                      }
+                      return Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 16.h,
+                            alignment: Alignment.centerLeft,
+                            decoration: BoxDecoration(
+                              color: "#0F0942".toSmColor(),
+                              borderRadius: BorderRadius.circular(8.w),
+                            ),
+                            child: Container(
+                              width: maxWidth*pro,
+                              height: 16.h,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.w),
+                                  gradient: LinearGradient(colors: ["#FFD500".toSmColor(),"#FF7700".toSmColor(),])
+                              ),
+                            ),
+                          ),
+                          SmTextWidget(
+                            text: "${(pro*100).toStringAsFixed(2)}%",
+                            size: 12.sp,
+                            color: "#FFFFFF",
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                  color: "#000000".toSmColor(),
+                                  blurRadius: 2.w,
+                                  offset: Offset(0,0.5.w)
+                              )
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  SmImageWidget(imageName: "b_coins",width: 24.w,height: 24.w,),
+                ],
+              ):
+              _taskListWidget(bean.list),
             ],
           ),
         )
@@ -243,17 +271,15 @@ class CashChild extends SmBaseTagWidget<CashChildController>{
     ),
   );
 
-  _taskListWidget()=>Row(
+  _taskListWidget(List<CashTaskBean> list)=>Row(
     children: [
       SmImageWidget(imageName: "icon_box2",width: 32.w,height: 32.h,),
       SizedBox(width: 8.w,),
       Expanded(
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: 2,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context,index){
-            return Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
               width: double.infinity,
               height: 20.h,
               padding: EdgeInsets.only(left: 4.w,right: 4.w),
@@ -265,9 +291,9 @@ class CashChild extends SmBaseTagWidget<CashChildController>{
               child: Row(
                 children: [
                   Expanded(
-                    child: SmTextWidget(text: " Scratch 77 cards", size: 12.sp, color: "#FFFFFF"),
+                    child: SmTextWidget(text: smController.getTitleStr(list), size: 12.sp, color: "#FFFFFF"),
                   ),
-                  SmTextWidget(text: "10/77", size: 12.sp, color: "#FFE32E",fontWeight: FontWeight.bold,),
+                  SmTextWidget(text: smController.getTaskProStr(list), size: 12.sp, color: "#FFE32E",fontWeight: FontWeight.bold,),
                   SizedBox(width: 20.w,),
                   Container(
                     width: 16.w,
@@ -277,12 +303,47 @@ class CashChild extends SmBaseTagWidget<CashChildController>{
                         color: "#140A5D".toSmColor(),
                         borderRadius: BorderRadius.circular(2.w)
                     ),
-                    child: SmImageWidget(imageName: "gou",width: 16.w,height: 16.w,),
+                    child: Visibility(
+                      visible: smController.completeCurrentPro(list),
+                      child: SmImageWidget(imageName: "gou",width: 16.w,height: 16.w,),
+                    ),
                   )
                 ],
               ),
-            );
-          },
+            ),
+            Container(
+              width: double.infinity,
+              height: 20.h,
+              padding: EdgeInsets.only(left: 4.w,right: 4.w),
+              margin: EdgeInsets.only(top: 2.h,bottom: 2.h),
+              decoration: BoxDecoration(
+                  color: "#3231A0".toSmColor(),
+                  borderRadius: BorderRadius.circular(4.w)
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SmTextWidget(text: "Play Game ${list.first.maxDays??0} days", size: 12.sp, color: "#FFFFFF"),
+                  ),
+                  SmTextWidget(text: smController.getDaysProStr(list), size: 12.sp, color: "#FFE32E",fontWeight: FontWeight.bold,),
+                  SizedBox(width: 20.w,),
+                  Container(
+                    width: 16.w,
+                    height: 16.w,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: "#140A5D".toSmColor(),
+                        borderRadius: BorderRadius.circular(2.w)
+                    ),
+                    child: Visibility(
+                      visible: smController.completeCurrentDays(list),
+                      child: SmImageWidget(imageName: "gou",width: 16.w,height: 16.w,),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
       )
     ],

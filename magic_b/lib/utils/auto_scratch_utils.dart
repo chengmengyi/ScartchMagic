@@ -23,6 +23,7 @@ class AutoScratchUtils{
     required Function(Offset offset) iconOffsetCall,
 })async{
     var hang=1,currentDx=0;
+    key.currentState?.callStart();
     while(hang*15<height&&!stopWhile){
       if(hang%2!=0){
         if(currentDx<width){

@@ -31,6 +31,7 @@ class PlayPage extends SmBaseBPage<PlayController>{
         ),
       ),
       _cashFingerGuideWidget(),
+      _moneyLottieWidget(),
     ],
   );
 
@@ -100,6 +101,17 @@ class PlayPage extends SmBaseBPage<PlayController>{
           },
           child: FingerLottie(),
         ),
+      ),
+    ),
+  );
+
+  _moneyLottieWidget()=>GetBuilder<PlayController>(
+    id: "money_lottie",
+    builder: (_)=>Visibility(
+      visible: smController.showMoneyLottie,
+      child: Container(
+        margin: EdgeInsets.only(left: 20.w),
+        child: Lottie.asset("magic_file/magic_lottie/money.zip",repeat: false),
       ),
     ),
   );

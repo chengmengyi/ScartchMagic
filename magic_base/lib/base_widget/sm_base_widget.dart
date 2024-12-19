@@ -9,13 +9,10 @@ abstract class SmBaseWidget<T extends SmBaseController> extends StatelessWidget{
   Widget build(BuildContext context) {
     smController=Get.put(setController());
     smController.smContext=context;
-    initView();
     return contentWidget();
   }
 
   T setController();
 
   Widget contentWidget();
-
-  initView(){}
 }

@@ -105,11 +105,17 @@ class PlayFruitChild extends SmBaseWidget<PlayFruitChildController>{
                         crossAxisSpacing: 6.w,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context,index){
+                          var icon = smController.rewardList[index];
                           return Container(
                             width: double.infinity,
                             height: 82.h,
                             alignment: Alignment.center,
-                            child: SmImageWidget(imageName: smController.rewardList[index],width: 72.w,height: 72.h,),
+                            key: icon=="icon_key"?smController.keyGlobalKey:null,
+                            child: icon=="icon_key"?
+                            (smController.hideKeyIcon?
+                            Container():
+                            Lottie.asset("magic_file/magic_lottie/key.json",width: 70.w,height: 70.h)):
+                            SmImageWidget(imageName: icon,width: 72.w,height: 72.h,),
                           );
                         },
                         staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),

@@ -1,4 +1,10 @@
 PODS:
+  - Adjust (4.31.0):
+    - Adjust/Core (= 4.31.0)
+  - Adjust/Core (4.31.0)
+  - adjust_sdk (4.31.0):
+    - Adjust (= 4.31.0)
+    - Flutter
   - applovin_max (4.0.0):
     - AppLovinSDK (= 13.0.0)
     - Flutter
@@ -8,9 +14,15 @@ PODS:
   - Flutter (1.0.0)
   - flutter_app_lifecycle (0.0.1):
     - Flutter
+  - flutter_local_notifications (0.0.1):
+    - Flutter
+  - flutter_tba_info (0.0.1):
+    - Flutter
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
+  - in_app_review (0.2.0):
+    - Flutter
   - magic_b (0.0.1):
     - Flutter
   - magic_base (0.0.1):
@@ -30,11 +42,15 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - adjust_sdk (from `.symlinks/plugins/adjust_sdk/ios`)
   - applovin_max (from `.symlinks/plugins/applovin_max/ios`)
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - Flutter (from `Flutter`)
   - flutter_app_lifecycle (from `.symlinks/plugins/flutter_app_lifecycle/ios`)
+  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - flutter_tba_info (from `.symlinks/plugins/flutter_tba_info/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - magic_b (from `.symlinks/plugins/magic_b/ios`)
   - magic_base (from `.symlinks/plugins/magic_base/ios`)
   - magic_normal (from `.symlinks/plugins/magic_normal/ios`)
@@ -45,10 +61,13 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Adjust
     - AppLovinSDK
     - Toast
 
 EXTERNAL SOURCES:
+  adjust_sdk:
+    :path: ".symlinks/plugins/adjust_sdk/ios"
   applovin_max:
     :path: ".symlinks/plugins/applovin_max/ios"
   audioplayers_darwin:
@@ -57,8 +76,14 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_app_lifecycle:
     :path: ".symlinks/plugins/flutter_app_lifecycle/ios"
+  flutter_local_notifications:
+    :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  flutter_tba_info:
+    :path: ".symlinks/plugins/flutter_tba_info/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  in_app_review:
+    :path: ".symlinks/plugins/in_app_review/ios"
   magic_b:
     :path: ".symlinks/plugins/magic_b/ios"
   magic_base:
@@ -75,12 +100,17 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
+  Adjust: 8d4c9da5bb1d161db5d35dd091e34a641c9511ef
+  adjust_sdk: 5e02361d2ccc4b1fd9dcd9a9fffa744b17f65f28
   applovin_max: 8ce6e077c7f526d8292a9774037683ebe43eff8d
   AppLovinSDK: c0ecb434df24008b6ecdd7f1e5b8587bc45ff381
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_app_lifecycle: 8dcf95e3e3db994b040426a60863db32d200094d
+  flutter_local_notifications: df98d66e515e1ca797af436137b4459b160ad8c9
+  flutter_tba_info: a8d28bab6ac4832dc4f3e8375e6a1adba8efe235
   fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
+  in_app_review: 318597b3a06c22bb46dc454d56828c85f444f99d
   magic_b: 338b3c5f96f5cdedd044f82017a8eb41dac1e164
   magic_base: c7f255e985e8210b9f5b8e6933436795263718f2
   magic_normal: c94b19a9bf4b8c82177275012dd1ba7bacfdd062

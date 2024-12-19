@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/page/home/child/wheel/wheel_child_controller.dart';
 import 'package:magic_b/page/widget/home_top_widget/home_top_widget.dart';
+import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
 import 'package:magic_base/base_widget/sm_base_tag_widget.dart';
 import 'package:magic_base/base_widget/sm_gradient_text_widget.dart';
 import 'package:magic_base/base_widget/sm_image_widget.dart';
@@ -61,7 +62,7 @@ class WheelChild extends SmBaseTagWidget<WheelChildController>{
       ),
       InkWell(
         onTap: (){
-          smController.startWheel();
+          smController.startWheel(home);
         },
         child: SizedBox(
           width: 240.w,
@@ -92,7 +93,11 @@ class WheelChild extends SmBaseTagWidget<WheelChildController>{
                           alignment: Alignment.center,
                           children: [
                             SmImageWidget(imageName: "wheel7",width: 18.w,height: 18.w,),
-                            SmTextWidget(text: "x1", size: 12.sp, color: "#FFFFFF"),
+                            GetBuilder<WheelChildController>(
+                              id: "wheel_num",
+                              tag: controllerTag(),
+                              builder: (_)=>SmTextWidget(text: "x${wheelChanceNum.read()}", size: 12.sp, color: "#FFFFFF"),
+                            ),
                           ],
                         ),
                       )

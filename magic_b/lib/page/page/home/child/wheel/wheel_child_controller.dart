@@ -1,11 +1,13 @@
 import 'dart:async';
+import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
 import 'package:magic_b/page/widget/dialog/no_wheel/no_wheel_dialog.dart';
 import 'package:magic_b/page/widget/dialog/old_user_double_reward/old_user_double_reward_dialog.dart';
-import 'package:magic_b/utils/b_ad/ad_utils.dart';
 import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
+import 'package:magic_b/utils/info_hep.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
+import 'package:magic_base/utils/b_ad/ad_utils.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
 import 'package:magic_base/utils/sm_extension.dart';
@@ -25,15 +27,15 @@ class WheelChildController extends SmBaseController{
     print("kk===WheelChildController=onReady");
   }
 
-  startWheel({bool fromOldGuide=false,}){
+  startWheel(bool fromHome,{bool fromOldGuide=false,}){
+    if(wheelChanceNum.read()<=0){
+      SmRoutersUtils.instance.showDialog(widget: NoWheelDialog(fromHome: fromHome));
+      return;
+    }
     if(_looping){
       return;
     }
     _looping=true;
-    if(wheelChanceNum.read()<=0){
-      SmRoutersUtils.instance.showDialog(widget: NoWheelDialog(fromHome: true));
-      return;
-    }
     EventInfo(eventCode: EventCode.startOrStopWheel,boolValue: true);
     var wheelAddNum = BValueHep.instance.getWheelAddNum();
     var addAngel = _getAddAngelByNum(wheelAddNum);
@@ -53,6 +55,8 @@ class WheelChildController extends SmBaseController{
     _wheelTimer?.cancel();
     _looping=false;
     EventInfo(eventCode: EventCode.startOrStopWheel,boolValue: false);
+    wheelChanceNum.add(-1);
+    update(["wheel_num"]);
     AdUtils.instance.showAd(
       closeAd: (){
         if(fromOldGuide){
@@ -61,6 +65,15 @@ class WheelChildController extends SmBaseController{
               wheelReward: wheelAddNum,
               signReward: BValueHep.instance.getSignReward(),
             ),
+          );
+        }else{
+          SmRoutersUtils.instance.showDialog(
+            widget: IncentDialog(
+              money: wheelAddNum,
+              dismissDialog: (add){
+                InfoHep.instance.updateCoins(wheelAddNum);
+              },
+            )
           );
         }
       },
@@ -84,8 +97,11 @@ class WheelChildController extends SmBaseController{
     switch(eventInfo.eventCode){
       case EventCode.showWheelTab:
         if(eventInfo.boolValue==true){
-          startWheel();
+          startWheel(false);
         }
+        break;
+      case EventCode.keyAnimatorEnd:
+        update(["wheel_num"]);
         break;
     }
   }

@@ -1,4 +1,6 @@
 # This is a generated file; do not edit or check into version control.
+adjust_sdk=/Users/a68/.pub-cache/hosted/pub.dev/adjust_sdk-4.31.0/
+android_play_install_referrer=/Users/a68/.pub-cache/hosted/pub.dev/android_play_install_referrer-0.4.0/
 applovin_max=/Users/a68/.pub-cache/hosted/pub.dev/applovin_max-4.0.0/
 audioplayers=/Users/a68/.pub-cache/hosted/pub.dev/audioplayers-6.1.0/
 audioplayers_android=/Users/a68/.pub-cache/hosted/pub.dev/audioplayers_android-5.0.0/
@@ -7,7 +9,11 @@ audioplayers_linux=/Users/a68/.pub-cache/hosted/pub.dev/audioplayers_linux-4.0.0
 audioplayers_web=/Users/a68/.pub-cache/hosted/pub.dev/audioplayers_web-5.0.1/
 audioplayers_windows=/Users/a68/.pub-cache/hosted/pub.dev/audioplayers_windows-4.0.0/
 flutter_app_lifecycle=/Users/a68/.pub-cache/hosted/pub.dev/flutter_app_lifecycle-0.0.1/
+flutter_local_notifications=/Users/a68/StudioProjects/scratch_magic/magic_b/plugins/flutter_local_notifications-18.0.1/
+flutter_local_notifications_linux=/Users/a68/.pub-cache/hosted/pub.dev/flutter_local_notifications_linux-5.0.0/
+flutter_tba_info=/Users/a68/.pub-cache/hosted/pub.dev/flutter_tba_info-0.0.8/
 fluttertoast=/Users/a68/.pub-cache/hosted/pub.dev/fluttertoast-8.0.9/
+in_app_review=/Users/a68/.pub-cache/hosted/pub.dev/in_app_review-2.0.9/
 magic_b=/Users/a68/StudioProjects/scratch_magic/magic_b/
 magic_base=/Users/a68/StudioProjects/scratch_magic/magic_base/
 magic_normal=/Users/a68/StudioProjects/scratch_magic/magic_normal/

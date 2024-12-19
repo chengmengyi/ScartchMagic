@@ -15,4 +15,11 @@ class EventCode{
   static const int startOrStopWheel=106;
   static const int updateHomeTabIndex=107;
   static const int updateBoxProgress=108;
+  static const int toNextCardChild=109;
+  static const int updateCashTaskList=110;
+  static const int updatePlayPageTabIndex=111;
+  static const int showMoneyGetLottie=112;
+  static const int keyAnimatorStart=113;
+  static const int keyAnimatorEnd=114;
+  static const int canClickOtherBtn=115;
 }

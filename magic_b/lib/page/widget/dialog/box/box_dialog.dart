@@ -8,6 +8,9 @@ import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/sm_extension.dart';
 
 class BoxDialog extends SmBaseDialog<BoxController>{
+  Function() dismiss;
+  BoxDialog({required this.dismiss});
+
   @override
   BoxController setController() => BoxController();
 
@@ -21,17 +24,19 @@ class BoxDialog extends SmBaseDialog<BoxController>{
         fontWeight: FontWeight.w700,
         colors: ["#FCFEFF".toSmColor(),"#FBE40A".toSmColor()],
       ),
+      SizedBox(height: 16.h,),
+      Lottie.asset("magic_file/magic_lottie/box.json",width: 180.w,height: 180.w,repeat: false),
       SmTextWidget(text: "+\$${smController.reward}", size: 32.sp, color: "#FFE646",fontWeight: FontWeight.bold,),
       WatchVideoBtnWidget(
         text: "Claim \$${smController.reward*2}",
         onTap: (){
-          smController.clickDouble();
+          smController.clickDouble(dismiss);
         },
       ),
       SizedBox(height: 4.h,),
       InkWell(
         onTap: (){
-          smController.clickSingle();
+          smController.clickSingle(dismiss);
         },
         child: SmTextWidget(
           text: "\$${smController.reward}",
