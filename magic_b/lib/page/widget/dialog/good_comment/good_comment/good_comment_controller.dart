@@ -1,0 +1,19 @@
+import 'package:magic_base/base_widget/sm_base_controller.dart';
+import 'package:magic_base/sm_router/sm_routers_utils.dart';
+
+class GoodCommentController extends SmBaseController{
+  var canClick=true,clickIndex=-1;
+
+  clickStar(index,Function(int index) call){
+    if(!canClick){
+      return;
+    }
+    canClick=false;
+    clickIndex=index;
+    update(["list"]);
+    Future.delayed(const Duration(milliseconds: 800),(){
+      SmRoutersUtils.instance.offPage();
+      call.call(clickIndex);
+    });
+  }
+}
