@@ -4,7 +4,9 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
 import 'package:magic_b/utils/cash_task/cash_task_utils.dart';
+import 'package:magic_base/utils/b_ad/load_ad.dart';
 import 'package:magic_base/utils/data.dart';
+import 'package:magic_base/utils/firebase/firebase_utils.dart';
 import 'package:magic_base/utils/sm_extension.dart';
 import 'package:magic_b/utils/b_sql/play_info_bean.dart';
 import 'package:magic_b/utils/b_value/value_bean.dart';
@@ -23,7 +25,16 @@ class BValueHep{
   ValueBean? _valueBean;
 
   initValue(){
-    _valueBean=ValueBean.fromJson(jsonDecode(valueStrB.base64()));
+    FirebaseUtils.instance.valueUpdateCall=(){
+      if(valueConf.read().isEmpty){
+        var s = FirebaseUtils.instance.getFirebaseConf("magic_number");
+        if(s.isNotEmpty){
+          valueConf.write(s);
+          _parseValueData();
+        }
+      }
+    };
+    _parseValueData();
   }
 
   int getSignReward(){
@@ -85,6 +96,30 @@ class BValueHep{
       return true;
     }
     var list = _valueBean?.keyOut??[];
+    if(list.isEmpty){
+      return false;
+    }
+    var userCoins = coins.read();
+    var last = list.last;
+    if(userCoins>=(last.endNumber??1000)){
+      return Random().nextInt(100)<(last.point??5);
+    }
+    for (var value in list) {
+      if(userCoins>=(value.firstNumber??0)&&userCoins<(value.endNumber??0)){
+        return Random().nextInt(100)<(value.point??5);
+      }
+    }
+    return false;
+  }
+
+  bool checkShowIntAd(AdType adType){
+    if(kDebugMode){
+      return false;
+    }
+    if(adType==AdType.reward){
+      return true;
+    }
+    var list = _valueBean?.intadPoint??[];
     if(list.isEmpty){
       return false;
     }
@@ -210,5 +245,13 @@ class BValueHep{
       }
     }
     return 1;
+  }
+
+  _parseValueData(){
+    var s = valueConf.read();
+    if(s.isEmpty){
+      s=valueStrB.base64();
+    }
+    _valueBean=ValueBean.fromJson(jsonDecode(s));
   }
 }

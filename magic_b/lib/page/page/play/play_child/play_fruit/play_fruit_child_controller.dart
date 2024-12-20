@@ -19,11 +19,14 @@ import 'package:magic_b/utils/b_sql/b_sql_utils.dart';
 import 'package:magic_b/utils/b_sql/play_info_bean.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
 import 'package:magic_b/utils/utils.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class PlayFruitChildController extends SmBaseController{
   var _canClick=true,_has3fruit=false,playResultStatus=PlayResultStatus.init,
       showFruitFingerGuide=false,showRevealAllFinger=false,hideKeyIcon=false;
   final key = GlobalKey<ScratcherState>();
+  final PlayType _playType=PlayType.playfruit;
   List<String> rewardList=[];
   Timer? _timer;
 
@@ -36,6 +39,9 @@ class PlayFruitChildController extends SmBaseController{
   void onInit() {
     super.onInit();
     showFruitFingerGuide=currentGuideStep.read()==GuideStep.showFruitFingerGuide;
+    if(showFruitFingerGuide){
+      TbaUtils.instance.pointEvent(pointType: PointType.sm_card_guide);
+    }
   }
 
   @override
@@ -69,6 +75,7 @@ class PlayFruitChildController extends SmBaseController{
       update(["gold_icon"]);
     });
     if(rewardList.contains("icon_key")){
+      TbaUtils.instance.pointEvent(pointType: PointType.sm_key_out,data: {"source_from":Utils.getSourceFromByPlayType(_playType)});
       _canClick=false;
       hideKeyIcon=true;
       update(["list"]);
@@ -82,8 +89,8 @@ class PlayFruitChildController extends SmBaseController{
 
   _checkResult()async{
     EventInfo(eventCode: EventCode.canClickOtherBtn,boolValue: true);
-    var maxWin = BValueHep.instance.getMaxWin(PlayType.playfruit.name);
-    var upLevel = await BSqlUtils.instance.updatePlayedNumInfo(PlayType.playfruit);
+    var maxWin = BValueHep.instance.getMaxWin(_playType.name);
+    var upLevel = await BSqlUtils.instance.updatePlayedNumInfo(_playType);
     if(upLevel>0){
       SmRoutersUtils.instance.showDialog(
         widget: UpLevelDialog(
@@ -92,9 +99,10 @@ class PlayFruitChildController extends SmBaseController{
           call: (){
             InfoHep.instance.updateCoins(maxWin);
             InfoHep.instance.updatePlayedCardNum();
-            Utils.toNextPlay(PlayType.playfruit);
+            Utils.toNextPlay(_playType);
           },
         ),
+        arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)},
       );
       return;
     }
@@ -107,6 +115,7 @@ class PlayFruitChildController extends SmBaseController{
       }
       SmRoutersUtils.instance.showDialog(
         widget: IncentDialog(
+          incentType: IncentType.card,
           money: fruitReward,
           dismissDialog: (addNum){
             InfoHep.instance.updateCoins(fruitReward);
@@ -114,7 +123,8 @@ class PlayFruitChildController extends SmBaseController{
             _initRewardList();
             resetPlay();
           },
-        )
+        ),
+        arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)}
       );
     }else{
       update(["result_fail"]);
@@ -171,6 +181,7 @@ class PlayFruitChildController extends SmBaseController{
 
   updateFruitFinger(){
     if(showFruitFingerGuide){
+      TbaUtils.instance.pointEvent(pointType: PointType.sm_card_guide_c);
       showFruitFingerGuide=false;
       update(["showFruitFingerGuide"]);
     }

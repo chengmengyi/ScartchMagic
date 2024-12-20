@@ -50,7 +50,7 @@ class NoWheelDialog extends SmBaseDialog<NoWheelController>{
                   alignment: Alignment.center,
                   children: [
                     SmImageWidget(imageName: "wheel7",width: 24.w,height: 24.w,),
-                    SmTextWidget(text: "x1", size: 12.sp, color: "#FFFFFF"),
+                    SmTextWidget(text: "x0", size: 12.sp, color: "#FFFFFF"),
                   ],
                 ),
               ],

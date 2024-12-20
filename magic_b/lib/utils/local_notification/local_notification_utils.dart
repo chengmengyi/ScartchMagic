@@ -4,6 +4,8 @@ import 'package:magic_b/utils/local_notification/local_notification_id.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
 import 'package:magic_base/utils/sm_extension.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class LocalNotificationUtils{
   factory LocalNotificationUtils()=>_getInstance();
@@ -76,7 +78,8 @@ class LocalNotificationUtils{
       id,
       title,
       desc,
-      kDebugMode?RepeatInterval.everyMinute:repeatInterval,
+      // kDebugMode?RepeatInterval.everyMinute:repeatInterval,
+      repeatInterval,
       const NotificationDetails(),
       androidScheduleMode: AndroidScheduleMode.alarmClock,
     );
@@ -85,10 +88,16 @@ class LocalNotificationUtils{
   _clickNotification(int? id){
     switch(id){
       case LocalNotificationId.guding:
-
+        TbaUtils.instance.pointEvent(pointType: PointType.sm_fix_inform_c);
         break;
       case LocalNotificationId.tixian:
-        EventInfo(eventCode: playPageShowing?EventCode.updatePlayPageTabIndex:EventCode.updateHomeTabIndex,intValue: 2);
+        TbaUtils.instance.pointEvent(pointType: PointType.sm_cash_inform_c);
+        break;
+      case LocalNotificationId.qiandao:
+        TbaUtils.instance.pointEvent(pointType: PointType.sm_sign_inform_c);
+        break;
+      case LocalNotificationId.guaguaka:
+        TbaUtils.instance.pointEvent(pointType: PointType.sm_card_inform_c);
         break;
     }
   }
@@ -98,5 +107,19 @@ class LocalNotificationUtils{
     if(details?.didNotificationLaunchApp==true){
       _clickNotification(details?.notificationResponse?.id);
     }
+    TbaUtils.instance.pointEvent(pointType: PointType.sm_launch_page,data: {"source_from":details?.didNotificationLaunchApp==true?"push":"icon"});
+  }
+
+  checkClickNotificationShowTab()async{
+    var details = await plugins.getNotificationAppLaunchDetails();
+    if(details?.didNotificationLaunchApp==true&&details?.notificationResponse?.id==LocalNotificationId.tixian){
+      EventInfo(eventCode: playPageShowing?EventCode.updatePlayPageTabIndex:EventCode.updateHomeTabIndex,intValue: 2);
+    }
+  }
+  
+  checkHasPermission()async{
+    var notificationsPlugin = plugins.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>();
+    var permissions = await notificationsPlugin?.checkPermissions();
+    TbaUtils.instance.pointEvent(pointType: PointType.sm_push_status,data: {"status":permissions?.isEnabled==true?"on":"off"});
   }
 }

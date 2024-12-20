@@ -20,6 +20,8 @@ import 'package:magic_b/utils/b_sql/b_sql_utils.dart';
 import 'package:magic_b/utils/b_sql/play_info_bean.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
 import 'package:magic_b/utils/utils.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class PlayTigerChildController extends SmBaseController{
   var win=false,_canClick=true,prizeBorderIndex=-1,hideKeyIcon=false,playResultStatus=PlayResultStatus.init;
@@ -69,6 +71,7 @@ class PlayTigerChildController extends SmBaseController{
       update(["gold_icon"]);
     });
     if(yourList.indexWhere((element) => element.hasKey==true)>=0){
+      TbaUtils.instance.pointEvent(pointType: PointType.sm_key_out,data: {"source_from":Utils.getSourceFromByPlayType(_playType)});
       _canClick=false;
       hideKeyIcon=true;
       update(["your_list"]);
@@ -99,6 +102,7 @@ class PlayTigerChildController extends SmBaseController{
             Utils.toNextPlay(_playType);
           },
         ),
+        arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)},
       );
       return;
     }
@@ -108,13 +112,15 @@ class PlayTigerChildController extends SmBaseController{
       var tigerReward = yourList.map((item) => item.reward).reduce((a, b) => a + b);
       SmRoutersUtils.instance.showDialog(
           widget: IncentDialog(
+            incentType: IncentType.card,
             money: tigerReward,
             dismissDialog: (addNum){
               InfoHep.instance.updateCoins(tigerReward);
               _initYourList();
               resetPlay();
             },
-          )
+          ),
+          arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)}
       );
     }else{
       update(["result_fail"]);

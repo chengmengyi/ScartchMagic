@@ -8,10 +8,16 @@ import 'package:magic_base/base_widget/sm_text_widget.dart';
 import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/sm_extension.dart';
 
+enum IncentType{
+  card,wheel,
+}
+
 class IncentDialog extends SmBaseDialog<IncentController>{
+  IncentType incentType;
   int money;
   Function(int addNum) dismissDialog;
   IncentDialog({
+    required this.incentType,
     required this.money,
     required this.dismissDialog,
 });
@@ -67,13 +73,13 @@ class IncentDialog extends SmBaseDialog<IncentController>{
       WatchVideoBtnWidget(
         text: "Claim \$${money*2}",
         onTap: (){
-          smController.clickDouble(money, dismissDialog);
+          smController.clickDouble(incentType,money, dismissDialog);
         },
       ),
       SizedBox(height: 8.h,),
       InkWell(
         onTap: (){
-          smController.clickSingle(money, dismissDialog);
+          smController.clickSingle(incentType,money, dismissDialog);
         },
         child: SmTextWidget(
           text: "\$$money",

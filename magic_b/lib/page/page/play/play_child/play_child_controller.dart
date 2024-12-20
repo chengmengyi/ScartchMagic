@@ -16,6 +16,8 @@ import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
 import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/sm_extension.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class PlayChildController extends SmBaseController with GetTickerProviderStateMixin{
   PlayType? currentPlayType;
@@ -58,6 +60,7 @@ class PlayChildController extends SmBaseController with GetTickerProviderStateMi
         EventInfo(eventCode: EventCode.keyAnimatorEnd);
       }
     });
+
   }
 
   @override
@@ -146,6 +149,7 @@ class PlayChildController extends SmBaseController with GetTickerProviderStateMi
 
   _showBoxGuide(){
     if(firstShowBoxGuide.read()){
+      TbaUtils.instance.pointEvent(pointType: PointType.box_guide);
       firstShowBoxGuide.write(false);
       var renderBox = boxGlobalKey.currentContext!.findRenderObject() as RenderBox;
       var offset = renderBox.localToGlobal(Offset.zero);
@@ -154,6 +158,7 @@ class PlayChildController extends SmBaseController with GetTickerProviderStateMi
         widget: BoxGuideOverlay(
           offset: offset,
           dismiss: (){
+            TbaUtils.instance.pointEvent(pointType: PointType.box_guide_c);
             clickBox();
           },
         ),

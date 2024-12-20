@@ -61,6 +61,16 @@ String getTodayTime(){
   return "${dateTime.year}-${dateTime.month}-${dateTime.day}";
 }
 
+extension Str2Int on String{
+  int toInt(){
+    try{
+      return int.parse(this);
+    }catch(e){
+      return 0;
+    }
+  }
+}
+
 
 logPrint(String str){
   if(kDebugMode){

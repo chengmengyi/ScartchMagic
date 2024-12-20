@@ -32,4 +32,30 @@ class Utils{
     await BSqlUtils.instance.unlockNextPlay(currentType);
     EventInfo(eventCode: EventCode.toNextCardChild,dynamicValue: nextPlayType);
   }
+
+  static String getSourceFromByPlayType(PlayType playType){
+    var pageFrom="";
+    //page_from:fruit、number、tigter、77、emoji、rich8、achieve
+    switch(playType){
+      case PlayType.playfruit:
+        pageFrom="fruit";
+        break;
+      case PlayType.playbig:
+        pageFrom="number";
+        break;
+      case PlayType.playtiger:
+        pageFrom="tigter";
+        break;
+      case PlayType.play7:
+        pageFrom="77";
+        break;
+      case PlayType.playemoji:
+        pageFrom="emoji";
+        break;
+      case PlayType.play8:
+        pageFrom="rich8";
+        break;
+    }
+    return pageFrom;
+  }
 }

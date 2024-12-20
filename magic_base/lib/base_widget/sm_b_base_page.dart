@@ -10,9 +10,14 @@ abstract class SmBaseBPage<T extends SmBaseController> extends StatelessWidget{
   Widget build(BuildContext context) {
     smController=Get.put(setController());
     smController.smContext=context;
-    return Scaffold(
-      body: contentWidget(),
-      resizeToAvoidBottomInset: false,
+    return WillPopScope(
+      child: Scaffold(
+        body: contentWidget(),
+        resizeToAvoidBottomInset: false,
+      ),
+      onWillPop: ()async{
+        return false;
+      },
     );
   }
 

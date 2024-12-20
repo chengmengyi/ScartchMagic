@@ -17,6 +17,8 @@ import 'package:magic_base/sm_router/sm_routers_utils.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
 import 'package:magic_base/utils/sm_export.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class PlayBigChildController extends SmBaseController{
   var _win=false,_canClick=true,hideKeyIcon=false,playResultStatus=PlayResultStatus.init;
@@ -58,6 +60,7 @@ class PlayBigChildController extends SmBaseController{
       update(["gold_icon"]);
     });
     if(yourNumList.indexWhere((element) => element.hasKey==true)>=0){
+      TbaUtils.instance.pointEvent(pointType: PointType.sm_key_out,data: {"source_from":Utils.getSourceFromByPlayType(_playType)});
       _canClick=false;
       hideKeyIcon=true;
       update(["list"]);
@@ -83,6 +86,7 @@ class PlayBigChildController extends SmBaseController{
             Utils.toNextPlay(_playType);
           },
         ),
+        arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)},
       );
       return;
     }
@@ -97,13 +101,15 @@ class PlayBigChildController extends SmBaseController{
       }
       SmRoutersUtils.instance.showDialog(
           widget: IncentDialog(
+            incentType: IncentType.card,
             money: bigReward,
             dismissDialog: (addNum){
               InfoHep.instance.updateCoins(bigReward);
               _initWinningNumList();
               resetPlay();
             },
-          )
+          ),
+          arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)}
       );
     }else{
       update(["result_fail"]);

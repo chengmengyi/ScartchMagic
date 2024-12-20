@@ -11,6 +11,41 @@ PODS:
   - AppLovinSDK (13.0.0)
   - audioplayers_darwin (0.0.1):
     - Flutter
+  - Firebase/CoreOnly (11.0.0):
+    - FirebaseCore (= 11.0.0)
+  - Firebase/RemoteConfig (11.0.0):
+    - Firebase/CoreOnly
+    - FirebaseRemoteConfig (~> 11.0.0)
+  - firebase_core (3.4.0):
+    - Firebase/CoreOnly (= 11.0.0)
+    - Flutter
+  - firebase_remote_config (5.0.4):
+    - Firebase/RemoteConfig (= 11.0.0)
+    - firebase_core
+    - Flutter
+  - FirebaseABTesting (11.4.0):
+    - FirebaseCore (~> 11.0)
+  - FirebaseCore (11.0.0):
+    - FirebaseCoreInternal (~> 11.0)
+    - GoogleUtilities/Environment (~> 8.0)
+    - GoogleUtilities/Logger (~> 8.0)
+  - FirebaseCoreInternal (11.6.0):
+    - "GoogleUtilities/NSData+zlib (~> 8.0)"
+  - FirebaseInstallations (11.4.0):
+    - FirebaseCore (~> 11.0)
+    - GoogleUtilities/Environment (~> 8.0)
+    - GoogleUtilities/UserDefaults (~> 8.0)
+    - PromisesObjC (~> 2.4)
+  - FirebaseRemoteConfig (11.0.0):
+    - FirebaseABTesting (~> 11.0)
+    - FirebaseCore (~> 11.0)
+    - FirebaseInstallations (~> 11.0)
+    - FirebaseRemoteConfigInterop (~> 11.0)
+    - FirebaseSharedSwift (~> 11.0)
+    - GoogleUtilities/Environment (~> 8.0)
+    - "GoogleUtilities/NSData+zlib (~> 8.0)"
+  - FirebaseRemoteConfigInterop (11.6.0)
+  - FirebaseSharedSwift (11.6.0)
   - Flutter (1.0.0)
   - flutter_app_lifecycle (0.0.1):
     - Flutter
@@ -21,6 +56,17 @@ PODS:
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
+  - GoogleUtilities/Environment (8.0.2):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Logger (8.0.2):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Privacy
+  - "GoogleUtilities/NSData+zlib (8.0.2)":
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Privacy (8.0.2)
+  - GoogleUtilities/UserDefaults (8.0.2):
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
   - in_app_review (0.2.0):
     - Flutter
   - magic_b (0.0.1):
@@ -32,6 +78,7 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - PromisesObjC (2.4.0)
   - sqflite (0.0.3):
     - Flutter
     - FlutterMacOS
@@ -45,6 +92,8 @@ DEPENDENCIES:
   - adjust_sdk (from `.symlinks/plugins/adjust_sdk/ios`)
   - applovin_max (from `.symlinks/plugins/applovin_max/ios`)
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
+  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
   - Flutter (from `Flutter`)
   - flutter_app_lifecycle (from `.symlinks/plugins/flutter_app_lifecycle/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
@@ -63,6 +112,16 @@ SPEC REPOS:
   trunk:
     - Adjust
     - AppLovinSDK
+    - Firebase
+    - FirebaseABTesting
+    - FirebaseCore
+    - FirebaseCoreInternal
+    - FirebaseInstallations
+    - FirebaseRemoteConfig
+    - FirebaseRemoteConfigInterop
+    - FirebaseSharedSwift
+    - GoogleUtilities
+    - PromisesObjC
     - Toast
 
 EXTERNAL SOURCES:
@@ -72,6 +131,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/applovin_max/ios"
   audioplayers_darwin:
     :path: ".symlinks/plugins/audioplayers_darwin/ios"
+  firebase_core:
+    :path: ".symlinks/plugins/firebase_core/ios"
+  firebase_remote_config:
+    :path: ".symlinks/plugins/firebase_remote_config/ios"
   Flutter:
     :path: Flutter
   flutter_app_lifecycle:
@@ -105,16 +168,28 @@ SPEC CHECKSUMS:
   applovin_max: 8ce6e077c7f526d8292a9774037683ebe43eff8d
   AppLovinSDK: c0ecb434df24008b6ecdd7f1e5b8587bc45ff381
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
+  Firebase: 9f574c08c2396885b5e7e100ed4293d956218af9
+  firebase_core: ceec591a66629daaee82d3321551692c4a871493
+  firebase_remote_config: 2408a10fde916f849a2d3bc941c55aec1a15db06
+  FirebaseABTesting: aef1719704fade00b200827e7973f352efc4caee
+  FirebaseCore: 3cf438f431f18c12cdf2aaf64434648b63f7e383
+  FirebaseCoreInternal: d98ab91e2d80a56d7b246856a8885443b302c0c2
+  FirebaseInstallations: 6ef4a1c7eb2a61ee1f74727d7f6ce2e72acf1414
+  FirebaseRemoteConfig: fe8b7e6d6770fefbde27b0cac3f3deffba6e7326
+  FirebaseRemoteConfigInterop: e75e348953352a000331eb77caf01e424248e176
+  FirebaseSharedSwift: a4e5dfca3e210633bb3a3dfb94176c019211948b
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_app_lifecycle: 8dcf95e3e3db994b040426a60863db32d200094d
   flutter_local_notifications: df98d66e515e1ca797af436137b4459b160ad8c9
   flutter_tba_info: a8d28bab6ac4832dc4f3e8375e6a1adba8efe235
   fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
+  GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
   in_app_review: 318597b3a06c22bb46dc454d56828c85f444f99d
   magic_b: 338b3c5f96f5cdedd044f82017a8eb41dac1e164
   magic_base: c7f255e985e8210b9f5b8e6933436795263718f2
   magic_normal: c94b19a9bf4b8c82177275012dd1ba7bacfdd062
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
   Toast: 1f5ea13423a1e6674c4abdac5be53587ae481c4e
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe

@@ -18,6 +18,8 @@ import 'package:magic_b/utils/b_sql/b_sql_utils.dart';
 import 'package:magic_b/utils/b_sql/play_info_bean.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
 import 'package:magic_b/utils/utils.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class PlayEmojiChildController extends SmBaseController{
   final key = GlobalKey<ScratcherState>();
@@ -80,6 +82,7 @@ class PlayEmojiChildController extends SmBaseController{
       update(["gold_icon"]);
     });
     if(emojiList.indexWhere((element) => element.hasKey==true)>=0){
+      TbaUtils.instance.pointEvent(pointType: PointType.sm_key_out,data: {"source_from":Utils.getSourceFromByPlayType(_playType)});
       _canClick=false;
       hideKeyIcon=true;
       update(["list"]);
@@ -106,6 +109,7 @@ class PlayEmojiChildController extends SmBaseController{
             Utils.toNextPlay(_playType);
           },
         ),
+        arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)},
       );
       return;
     }
@@ -115,13 +119,15 @@ class PlayEmojiChildController extends SmBaseController{
       var tigerReward = emojiList.map((item) => item.reward).reduce((a, b) => a + b);
       SmRoutersUtils.instance.showDialog(
           widget: IncentDialog(
+            incentType: IncentType.card,
             money: tigerReward,
             dismissDialog: (addNum){
               InfoHep.instance.updateCoins(tigerReward);
               _initEmojiList();
               resetPlay();
             },
-          )
+          ),
+          arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)}
       );
     }else{
       update(["result_fail"]);

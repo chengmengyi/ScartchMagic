@@ -87,7 +87,7 @@ class _LevelWidgetState extends State<LevelWidget>{
     for (var value in list) {
       allPlayedNum+=(value.playedNum??0);
     }
-    level=allPlayedNum~/5;
+    level=allPlayedNum~/10;
     if(widget.isHome){
       var pro = allPlayedNum/60;
       if(pro>=1.0){
@@ -96,7 +96,7 @@ class _LevelWidgetState extends State<LevelWidget>{
         currentPro=pro;
       }
     }else{
-      currentPro=(allPlayedNum%5)/5;
+      currentPro=(allPlayedNum%10)/10;
     }
     setState(() {});
   }

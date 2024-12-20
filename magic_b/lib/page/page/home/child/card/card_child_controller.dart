@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/widget/dialog/unlock_dialog/unlock_dialog.dart';
+import 'package:magic_b/page/widget/dialog/up_level_dialog/up_level_dialog.dart';
+import 'package:magic_b/utils/b_ad/show_ad_utils.dart';
 import 'package:magic_b/utils/b_sql/b_sql_utils.dart';
 import 'package:magic_b/utils/b_sql/play_info_bean.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
@@ -14,10 +16,15 @@ import 'package:magic_b/utils/info_hep.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/sm_router/all_routers_name.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
+import 'package:magic_base/utils/b_ad/ad_utils.dart';
+import 'package:magic_base/utils/b_ad/load_ad.dart';
 import 'package:magic_base/utils/check_user/check_user_utils.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
+import 'package:magic_base/utils/firebase/firebase_utils.dart';
 import 'package:magic_base/utils/sm_extension.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class CardChildController extends SmBaseController{
   GlobalKey playListGlobal=GlobalKey();
@@ -26,6 +33,7 @@ class CardChildController extends SmBaseController{
   void onInit() {
     super.onInit();
     print("kk==CardChildController==onInit");
+    TbaUtils.instance.pointEvent(pointType: PointType.sm_home_page);
   }
 
   Timer? _timer;
@@ -40,19 +48,14 @@ class CardChildController extends SmBaseController{
   }
 
   clickItem(PlayInfoBean bean){
-    // if((bean.time??0)>0){
-    //   showToast("No scratch card, please go to the next level！");
-    //   return;
-    // }
-    // if(bean.unlock!=1){
-    //   SmRoutersUtils.instance.showDialog(
-    //     widget: UnlockDialog(
-    //       playType: bean.type??"",
-    //       bean: bean,
-    //     ),
-    //   );
-    //   return;
-    // }
+    if((bean.time??0)>0){
+      showToast("No scratch card, please go to the next level！");
+      return;
+    }
+    if(bean.unlock!=1){
+      showToast("Complete the previous level to unlock");
+      return;
+    }
     var playType = PlayType.values.firstWhere((element) => element.name==bean.type);
     SmRoutersUtils.instance.toNextPage(
       routersName: AllRoutersName.playB,
@@ -126,6 +129,7 @@ class CardChildController extends SmBaseController{
   }
 
   _showFirstPlayGuide(){
+    TbaUtils.instance.pointEvent(pointType: PointType.sm_home_guide);
     var renderBox = playListGlobal.currentContext!.findRenderObject() as RenderBox;
     var offset = renderBox.localToGlobal(Offset.zero);
     GuideUtils.instance.showOver(
@@ -147,6 +151,5 @@ class CardChildController extends SmBaseController{
     // InfoHep.instance.updateCoins(1000);
     // BSqlUtils.instance.deleteTask();
     // BSqlUtils.instance.updateCashTaskPro(TaskType.card);
-    CheckUserUtils.instance.initCheck();
   }
 }

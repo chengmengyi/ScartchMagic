@@ -72,8 +72,8 @@ class BSqlUtils{
     for (var value in queryPlayList) {
       allPlayedNum+=(value.playedNum??0);
     }
-    if(allPlayedNum%5==0){
-      return allPlayedNum~/5;
+    if(allPlayedNum%10==0){
+      return allPlayedNum~/10;
     }
     return 0;
   }

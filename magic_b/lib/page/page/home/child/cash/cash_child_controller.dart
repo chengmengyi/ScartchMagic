@@ -10,6 +10,8 @@ import 'package:magic_base/sm_router/sm_routers_utils.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
 import 'package:magic_base/utils/sm_extension.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 
 import 'cash_type_bean.dart';
 
@@ -49,6 +51,7 @@ class CashChildController extends SmBaseController{
   }
 
   clickCashOut(CashListBean bean,bool fromHome){
+    TbaUtils.instance.pointEvent(pointType: PointType.sm_cash_out_c,data: {"money":bean.cashNum});
     var list = bean.list;
     if(list.isNotEmpty){
       if(list.first.completeStatus==1){

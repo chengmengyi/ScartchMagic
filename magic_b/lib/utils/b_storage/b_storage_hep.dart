@@ -8,10 +8,12 @@ StorageHep<int> wheelChanceNum=StorageHep<int>(key: BStorageName.wheelChanceNum,
 StorageHep<int> currentBoxProgress=StorageHep<int>(key: BStorageName.currentBoxProgress, defaultValue: 0);
 //0pay 1 ama 2gp 3mas 4cash 5web
 StorageHep<int> cashTypeIndex=StorageHep<int>(key: BStorageName.cashTypeIndex, defaultValue: 0);
+StorageHep<int> countMoney=StorageHep<int>(key: BStorageName.countMoney, defaultValue: 0);
 
 StorageHep<String> currentGuideStep=StorageHep<String>(key: BStorageName.currentGuideStep, defaultValue: GuideStep.showFirstPlayGuide);
 StorageHep<String> newUserGuideCompletedTimer=StorageHep<String>(key: BStorageName.newUserGuideCompletedTimer, defaultValue: "");
 StorageHep<String> oldUserGuideStep=StorageHep<String>(key: BStorageName.oldUserGuideStep, defaultValue: OldGuideStep.showOldUserDialog);
+StorageHep<String> valueConf=StorageHep<String>(key: BStorageName.valueConf, defaultValue: "");
 
 
 StorageHep<bool> firstShowBoxGuide=StorageHep<bool>(key: BStorageName.firstShowBoxGuide, defaultValue: true);

@@ -9,6 +9,8 @@ import 'package:magic_b/utils/local_notification/local_notification_utils.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 import 'package:magic_base/utils/voice/voice_utils.dart';
 
 class HomeController extends SmBaseController{
@@ -32,12 +34,22 @@ class HomeController extends SmBaseController{
     LocalNotificationUtils.instance.initLocalNotification();
     VoiceUtils.instance.playBgMp3();
     InfoHep.instance.notFirstLaunchAppShowCommentDialog();
-    LocalNotificationUtils.instance.checkFromNotificationLaunchApp();
+    LocalNotificationUtils.instance.checkClickNotificationShowTab();
   }
 
-  clickTab(index){
+  clickTab(index,{fromOldUser=false}){
     if(index==tabIndex||_startedWheel){
       return;
+    }
+    if(index==0){
+      TbaUtils.instance.pointEvent(pointType: PointType.sm_home_page);
+    }
+    if(index==1){
+      TbaUtils.instance.pointEvent(pointType: PointType.sm_wheel_c,data: {"source_from":"home"});
+      TbaUtils.instance.pointEvent(pointType: PointType.sm_wheel_page,data: {"source_from":fromOldUser?"oldpop":"home"});
+    }
+    if(index==2){
+      TbaUtils.instance.pointEvent(pointType: PointType.sm_cash_page);
     }
     tabIndex=index;
     update(["page"]);
@@ -50,7 +62,7 @@ class HomeController extends SmBaseController{
   smEventReceived(EventInfo eventInfo) {
     switch(eventInfo.eventCode){
       case EventCode.showWheelTab:
-        clickTab(1);
+        clickTab(1,fromOldUser: true);
         break;
       case EventCode.startOrStopWheel:
         _startedWheel=eventInfo.boolValue??false;

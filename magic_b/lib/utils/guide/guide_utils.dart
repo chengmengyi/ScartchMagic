@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/widget/dialog/old_user_dialog/old_user_dialog.dart';
 import 'package:magic_b/page/widget/dialog/old_user_single_reward/old_user_single_reward_dialog.dart';
@@ -26,8 +25,6 @@ class GuideUtils{
   OverlayEntry? _overlayEntry;
 
   checkGuide({bool checkOldGuide=false}){
-    print("k====checkGuide=${currentGuideStep.read()}");
-
     switch(currentGuideStep.read()){
       case GuideStep.showFirstPlayGuide:
         EventInfo(eventCode: EventCode.showFirstPlayGuide);
@@ -65,7 +62,6 @@ class GuideUtils{
       return;
     }
     var oldUserStep = _getOldUserStep();
-    print("kkk==_checkOldGuide==${oldUserStep}");
     switch(oldUserStep){
       case OldGuideStep.showOldUserDialog:
         SmRoutersUtils.instance.showDialog(

@@ -10,6 +10,8 @@ import 'package:magic_base/base_widget/sm_image_widget.dart';
 import 'package:magic_base/base_widget/sm_text_widget.dart';
 import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/sm_extension.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class WheelChild extends SmBaseTagWidget<WheelChildController>{
   bool home;
@@ -62,6 +64,7 @@ class WheelChild extends SmBaseTagWidget<WheelChildController>{
       ),
       InkWell(
         onTap: (){
+          TbaUtils.instance.pointEvent(pointType: PointType.sm_wheel_page_c);
           smController.startWheel(home);
         },
         child: SizedBox(

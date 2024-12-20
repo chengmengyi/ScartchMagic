@@ -10,20 +10,25 @@ abstract class SmBasePage<T extends SmBaseController> extends StatelessWidget{
   Widget build(BuildContext context) {
     smController=Get.put(setController());
     smController.smContext=context;
-    return Scaffold(
-      body: Stack(
-        children: [
-          SmImageWidget(imageName: backgroundName(),width: double.infinity,height: double.infinity,),
-          Column(
-            children: [
-              topTitleWidget()??Container(),
-              Expanded(
-                child: contentWidget(),
-              )
-            ],
-          )
-        ],
+    return WillPopScope(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            SmImageWidget(imageName: backgroundName(),width: double.infinity,height: double.infinity,),
+            Column(
+              children: [
+                topTitleWidget()??Container(),
+                Expanded(
+                  child: contentWidget(),
+                )
+              ],
+            )
+          ],
+        ),
       ),
+      onWillPop: ()async{
+        return false;
+      },
     );
   }
 

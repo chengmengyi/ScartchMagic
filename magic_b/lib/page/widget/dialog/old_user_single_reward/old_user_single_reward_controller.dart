@@ -1,14 +1,29 @@
-import 'package:magic_base/utils/b_ad/ad_utils.dart';
+import 'package:magic_b/utils/b_ad/show_ad_utils.dart';
 import 'package:magic_b/utils/guide/guide_step.dart';
 import 'package:magic_b/utils/guide/guide_utils.dart';
 import 'package:magic_b/utils/info_hep.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
+import 'package:magic_base/utils/b_ad/load_ad.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class OldUserSingleRewardController extends SmBaseController{
+  @override
+  void onInit() {
+    super.onInit();
+    TbaUtils.instance.pointEvent(pointType: PointType.sm_daily_pop);
+  }
+
   clickDouble(signReward){
-    AdUtils.instance.showAd(
-        closeAd: (){
+    TbaUtils.instance.pointEvent(pointType: PointType.sm_daily_pop_c);
+    ShowAdUtils.instance.showAd(
+      adPos: AdPos.stmag_olduser_signin_rv,
+      adType: AdType.reward,
+        closeAd: (showFail){
+          if(showFail){
+            return;
+          }
           SmRoutersUtils.instance.offPage();
           InfoHep.instance.updateCoins(signReward*2);
           GuideUtils.instance.updateOldStep(OldGuideStep.completed);
@@ -17,8 +32,10 @@ class OldUserSingleRewardController extends SmBaseController{
   }
 
   clickSingle(signReward){
-    AdUtils.instance.showAd(
-        closeAd: (){
+    ShowAdUtils.instance.showAd(
+        adPos: AdPos.stmag_olduser_signin_int,
+        adType: AdType.interstitial,
+        closeAd: (showFail){
           SmRoutersUtils.instance.offPage();
           InfoHep.instance.updateCoins(signReward);
           GuideUtils.instance.updateOldStep(OldGuideStep.completed);

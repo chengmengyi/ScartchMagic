@@ -5,6 +5,8 @@ import 'package:magic_base/sm_router/sm_routers_utils.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
 import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class InfoHep{
   factory InfoHep()=>_getInstance();
@@ -19,6 +21,13 @@ class InfoHep{
 
   updateCoins(int addNum){
     coins.add(addNum);
+    if(addNum>0){
+      var i = countMoney.read()+100;
+      if(coins.read()>i){
+        TbaUtils.instance.pointEvent(pointType: PointType.sm_cash_money_detail,data: {"money":i});
+        countMoney.write(i);
+      }
+    }
     EventInfo(eventCode: EventCode.showMoneyGetLottie,intValue: addNum);
     if(firstGetMoney.read()){
       firstGetMoney.write(false);

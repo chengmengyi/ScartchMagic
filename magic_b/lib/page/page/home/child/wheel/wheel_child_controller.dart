@@ -2,15 +2,17 @@ import 'dart:async';
 import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
 import 'package:magic_b/page/widget/dialog/no_wheel/no_wheel_dialog.dart';
 import 'package:magic_b/page/widget/dialog/old_user_double_reward/old_user_double_reward_dialog.dart';
+import 'package:magic_b/utils/b_ad/show_ad_utils.dart';
 import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
 import 'package:magic_b/utils/info_hep.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
-import 'package:magic_base/utils/b_ad/ad_utils.dart';
+import 'package:magic_base/utils/b_ad/load_ad.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
 import 'package:magic_base/utils/sm_extension.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
 
 class WheelChildController extends SmBaseController{
   var currentWheelAngle=0.0,_looping=false;
@@ -57,8 +59,10 @@ class WheelChildController extends SmBaseController{
     EventInfo(eventCode: EventCode.startOrStopWheel,boolValue: false);
     wheelChanceNum.add(-1);
     update(["wheel_num"]);
-    AdUtils.instance.showAd(
-      closeAd: (){
+    ShowAdUtils.instance.showAd(
+      adPos: fromOldGuide?AdPos.stmag_olduser_wheelspin_int:AdPos.stmag_wheelspin_int,
+      adType: AdType.interstitial,
+      closeAd: (showFail){
         if(fromOldGuide){
           SmRoutersUtils.instance.showDialog(
             widget: OldUserDoubleRewardDialog(
@@ -69,11 +73,13 @@ class WheelChildController extends SmBaseController{
         }else{
           SmRoutersUtils.instance.showDialog(
             widget: IncentDialog(
+              incentType: IncentType.wheel,
               money: wheelAddNum,
               dismissDialog: (add){
                 InfoHep.instance.updateCoins(wheelAddNum);
               },
-            )
+            ),
+            arguments: {"sourceFrom":"wheel"},
           );
         }
       },

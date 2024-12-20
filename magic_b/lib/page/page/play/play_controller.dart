@@ -8,11 +8,14 @@ import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
 import 'package:magic_b/utils/guide/guide_step.dart';
 import 'package:magic_b/utils/guide/guide_utils.dart';
 import 'package:magic_b/utils/local_notification/local_notification_utils.dart';
+import 'package:magic_b/utils/utils.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
 import 'package:magic_base/utils/sm_export.dart';
+import 'package:magic_base/utils/tba/ad_pos.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class PlayController extends SmBaseController with GetTickerProviderStateMixin{
   var tabIndex=0,showCashFingerGuide=false,canClick=true,showMoneyLottie=false,_addNum=0;
@@ -32,7 +35,7 @@ class PlayController extends SmBaseController with GetTickerProviderStateMixin{
     playType=map["playType"];
     pageList.insert(0, PlayChild(playType: playType));
     LocalNotificationUtils.instance.playPageShowing=true;
-
+    _pointCardShowEvent();
     moneyLottieController=AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1000),
@@ -59,6 +62,15 @@ class PlayController extends SmBaseController with GetTickerProviderStateMixin{
     }
     if(index==tabIndex){
       return;
+    }
+    if(index==0){
+      _pointCardShowEvent();
+    }
+    if(index==1){
+      TbaUtils.instance.pointEvent(pointType: PointType.sm_wheel_c,data: {"source_from":"detail"});
+    }
+    if(index==2){
+      TbaUtils.instance.pointEvent(pointType: PointType.sm_cash_page);
     }
     tabIndex=index;
     if(tabIndex==2&&showCashFingerGuide){
@@ -99,6 +111,10 @@ class PlayController extends SmBaseController with GetTickerProviderStateMixin{
         moneyLottieController..reset()..forward();
         break;
     }
+  }
+
+  _pointCardShowEvent(){
+    TbaUtils.instance.pointEvent(pointType: PointType.sm_card_detail_page,data: {"page_from":Utils.getSourceFromByPlayType(playType)});
   }
 
   @override

@@ -10,4 +10,6 @@ class BStorageName{
   static const String cashTypeIndex="cashTypeIndexB";
   static const String firstGetMoney="firstGetMoneyB";
   static const String firstLaunchApp="firstLaunchAppB";
+  static const String valueConf="valueConfB";
+  static const String countMoney="countMoneyB";
 }

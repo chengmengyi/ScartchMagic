@@ -4,8 +4,11 @@ import 'package:magic_b/sm_routers/sm_b_routers_list.dart';
 import 'package:magic_b/utils/b_sql/b_sql_utils.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
 import 'package:magic_base/sm_router/all_routers_name.dart';
+import 'package:magic_base/utils/b_ad/ad_utils.dart';
 import 'package:magic_base/utils/check_user/check_user_utils.dart';
+import 'package:magic_base/utils/firebase/firebase_utils.dart';
 import 'package:magic_base/utils/sm_export.dart';
+import 'package:magic_base/utils/tba/tba_utils.dart';
 import 'package:magic_normal/sm_routers/sm_normal_routers_list.dart';
 import 'package:magic_normal/utils/normal_ad/normal_ad_utils.dart';
 import 'package:magic_normal/utils/normal_sql/normal_sql_utils.dart';
@@ -31,6 +34,7 @@ _initApp()async{
       )
   );
   await GetStorage.init();
+  FirebaseUtils.instance.readFirebaseConf();
   //init a
   NormalValueHep.instance.initValue();
   NormalSqlUtils.instance.queryPlayList();
@@ -39,8 +43,11 @@ _initApp()async{
   //init b
   BValueHep.instance.initValue();
   BSqlUtils.instance.queryPlayList();
+  AdUtils.instance.initAd();
 
   CheckUserUtils.instance.initCheck();
+
+  TbaUtils.instance.install();
 }
 
 class SmMyApp extends StatelessWidget {
