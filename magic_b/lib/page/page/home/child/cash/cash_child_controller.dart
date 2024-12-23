@@ -173,7 +173,7 @@ class CashChildController extends SmBaseController{
   smEventReceived(EventInfo eventInfo) {
     switch(eventInfo.eventCode){
       case EventCode.updateCoins:
-        update(["cash_list"]);
+        update(["cash_list","coins"]);
         break;
       case EventCode.updateCashTaskList:
         updateCashList();

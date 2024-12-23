@@ -27,8 +27,10 @@ class InfoHep{
         TbaUtils.instance.pointEvent(pointType: PointType.sm_cash_money_detail,data: {"money":i});
         countMoney.write(i);
       }
+      EventInfo(eventCode: EventCode.showMoneyGetLottie,intValue: addNum);
+    }else{
+      EventInfo(eventCode: EventCode.updateCoins,intValue: addNum);
     }
-    EventInfo(eventCode: EventCode.showMoneyGetLottie,intValue: addNum);
     if(firstGetMoney.read()){
       firstGetMoney.write(false);
       _showGoodCommentDialog();

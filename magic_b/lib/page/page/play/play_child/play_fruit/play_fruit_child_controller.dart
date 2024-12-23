@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
 import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
+import 'package:magic_b/utils/cash_task/cash_task_utils.dart';
 import 'package:magic_b/utils/guide/guide_step.dart';
 import 'package:magic_b/utils/guide/guide_utils.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
@@ -93,6 +94,7 @@ class PlayFruitChildController extends SmBaseController with GetTickerProviderSt
   }
 
   _checkResult()async{
+    BSqlUtils.instance.updateCashTaskPro(TaskType.card);
     scaleController.stop();
     EventInfo(eventCode: EventCode.canClickOtherBtn,boolValue: true);
     var maxWin = BValueHep.instance.getMaxWin(_playType.name);

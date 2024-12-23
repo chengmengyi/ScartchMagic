@@ -9,23 +9,36 @@ import 'package:magic_b/utils/local_notification/local_notification_utils.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
+import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/tba/ad_pos.dart';
 import 'package:magic_base/utils/tba/tba_utils.dart';
 import 'package:magic_base/utils/voice/voice_utils.dart';
 
-class HomeController extends SmBaseController{
-  var tabIndex=0,_startedWheel=false,wheelChance=0;
+class HomeController extends SmBaseController with GetTickerProviderStateMixin{
+  var tabIndex=0,_startedWheel=false,wheelChance=0,showMoneyLottie=false,_addNum=0;
   List<HomeBottomBean> bottomList=[
     HomeBottomBean(unsIcon: "card_uns", selIcon: "card_sel", text: "Card"),
     HomeBottomBean(unsIcon: "wheel_uns", selIcon: "wheel_sel", text: "Wheel"),
     HomeBottomBean(unsIcon: "cash_uns", selIcon: "cash_sel", text: "Cash"),
   ];
   List<Widget> pageList=[CardChild(),WheelChild(home: true,),CashChild(home: true,)];
+  late AnimationController moneyLottieController;
 
   @override
   void onInit() {
     super.onInit();
     wheelChance=wheelChanceNum.read();
+    moneyLottieController=AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    )..addStatusListener((status) {
+      if(status==AnimationStatus.completed){
+        showMoneyLottie=false;
+        moneyLottieController.stop();
+        update(["money_lottie"]);
+        EventInfo(eventCode: EventCode.updateCoins,intValue: _addNum);
+      }
+    });
   }
 
   @override
@@ -73,6 +86,12 @@ class HomeController extends SmBaseController{
       case EventCode.keyAnimatorEnd:
         wheelChance=wheelChanceNum.read();
         update(["bottom"]);
+        break;
+      case EventCode.showMoneyGetLottie:
+        _addNum=eventInfo.intValue??0;
+        showMoneyLottie=true;
+        update(["money_lottie"]);
+        moneyLottieController..reset()..forward();
         break;
     }
   }

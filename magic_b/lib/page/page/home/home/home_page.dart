@@ -13,19 +13,24 @@ class HomePage extends SmBaseBPage<HomeController>{
   HomeController setController() => HomeController();
 
   @override
-  Widget contentWidget() => GetBuilder<HomeController>(
-    id: "page",
-    builder: (_)=>Column(
-      children: [
-        Expanded(
-          child: IndexedStack(
-            index: smController.tabIndex,
-            children: smController.pageList,
-          ),
+  Widget contentWidget() => Stack(
+    children: [
+      GetBuilder<HomeController>(
+        id: "page",
+        builder: (_)=>Column(
+          children: [
+            Expanded(
+              child: IndexedStack(
+                index: smController.tabIndex,
+                children: smController.pageList,
+              ),
+            ),
+            _bottomWidget(),
+          ],
         ),
-        _bottomWidget(),
-      ],
-    ),
+      ),
+      _moneyLottieWidget(),
+    ],
   );
 
   _bottomWidget()=>SizedBox(
@@ -89,6 +94,17 @@ class HomePage extends SmBaseBPage<HomeController>{
               )
           ),
         ],
+      ),
+    ),
+  );
+
+  _moneyLottieWidget()=>GetBuilder<HomeController>(
+    id: "money_lottie",
+    builder: (_)=>Visibility(
+      visible: smController.showMoneyLottie,
+      child: Container(
+        margin: EdgeInsets.only(left: 20.w),
+        child: Lottie.asset("magic_file/magic_lottie/money.zip",repeat: false),
       ),
     ),
   );

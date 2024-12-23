@@ -10,6 +10,7 @@ import 'package:magic_b/utils/auto_scratch_utils.dart';
 import 'package:magic_b/utils/b_sql/b_sql_utils.dart';
 import 'package:magic_b/utils/b_sql/play_info_bean.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
+import 'package:magic_b/utils/cash_task/cash_task_utils.dart';
 import 'package:magic_b/utils/info_hep.dart';
 import 'package:magic_b/utils/utils.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
@@ -83,6 +84,7 @@ class PlayBigChildController extends SmBaseController with GetTickerProviderStat
   }
 
   _checkResult()async{
+    BSqlUtils.instance.updateCashTaskPro(TaskType.card);
     scaleController.stop();
     EventInfo(eventCode: EventCode.canClickOtherBtn,boolValue: true);
     var maxWin = BValueHep.instance.getMaxWin(_playType.name);

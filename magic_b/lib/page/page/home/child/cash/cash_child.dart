@@ -130,7 +130,11 @@ class CashChild extends SmBaseTagWidget<CashChildController>{
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SmTextWidget(text: "\$", size: 20.sp, color: "#000000",fontWeight: FontWeight.bold,),
-                    SmTextWidget(text: "${coins.read()}", size: 32.sp, color: "#000000",fontWeight: FontWeight.bold,),
+                    GetBuilder<CashChildController>(
+                      id: "coins",
+                      tag: controllerTag(),
+                      builder: (_)=>SmTextWidget(text: "${coins.read()}", size: 32.sp, color: "#000000",fontWeight: FontWeight.bold,),
+                    ),
                   ],
                 ),
               )

@@ -3,8 +3,10 @@ import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
 import 'package:magic_b/page/widget/dialog/no_wheel/no_wheel_dialog.dart';
 import 'package:magic_b/page/widget/dialog/old_user_double_reward/old_user_double_reward_dialog.dart';
 import 'package:magic_b/utils/b_ad/show_ad_utils.dart';
+import 'package:magic_b/utils/b_sql/b_sql_utils.dart';
 import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
+import 'package:magic_b/utils/cash_task/cash_task_utils.dart';
 import 'package:magic_b/utils/info_hep.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
@@ -59,6 +61,7 @@ class WheelChildController extends SmBaseController{
     EventInfo(eventCode: EventCode.startOrStopWheel,boolValue: false);
     wheelChanceNum.add(-1);
     update(["wheel_num"]);
+    BSqlUtils.instance.updateCashTaskPro(TaskType.wheel);
     ShowAdUtils.instance.showAd(
       adPos: fromOldGuide?AdPos.stmag_olduser_wheelspin_int:AdPos.stmag_wheelspin_int,
       adType: AdType.interstitial,

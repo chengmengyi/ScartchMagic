@@ -27,12 +27,12 @@ class IncentDialog extends SmBaseDialog<IncentController>{
 
   @override
   Widget contentWidget() => Column(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      _rewardWidget(),
-      SizedBox(height: 10.h,),
-      _bottomWidget(),
-    ]
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _rewardWidget(),
+        SizedBox(height: 10.h,),
+        _bottomWidget(),
+      ]
   );
 
   _rewardWidget()=>Stack(

@@ -46,6 +46,7 @@ class PlayChildController extends SmBaseController with GetTickerProviderStateMi
     PlayType.play8:"play81",
   };
 
+
   @override
   void onInit() {
     super.onInit();

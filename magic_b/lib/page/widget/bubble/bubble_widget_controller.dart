@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:magic_b/utils/b_ad/show_ad_utils.dart';
+import 'package:magic_b/utils/b_sql/b_sql_utils.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
+import 'package:magic_b/utils/cash_task/cash_task_utils.dart';
 import 'package:magic_b/utils/info_hep.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/utils/b_ad/load_ad.dart';
@@ -30,6 +32,7 @@ class BubbleWidgetController extends SmBaseController with GetSingleTickerProvid
   }
 
   clickBubble(){
+    BSqlUtils.instance.updateCashTaskPro(TaskType.bubble);
     TbaUtils.instance.pointEvent(pointType: PointType.sm_float_c);
     showBubble=false;
     update(["bubble"]);

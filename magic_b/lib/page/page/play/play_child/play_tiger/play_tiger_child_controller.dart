@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:magic_b/page/page/play/play_child/play_tiger/prize_bean.dart';
 import 'package:magic_b/page/page/play/play_child/play_tiger/tiger_bean.dart';
 import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
+import 'package:magic_b/utils/cash_task/cash_task_utils.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
 import 'package:magic_base/utils/event/event_code.dart';
@@ -89,6 +90,7 @@ class PlayTigerChildController extends SmBaseController with GetTickerProviderSt
   }
 
   _checkResult()async{
+    BSqlUtils.instance.updateCashTaskPro(TaskType.card);
     scaleController.stop();
     if(win){
       prizeBorderIndex = yourList.where((value) => value.icon=="tiger7").length;

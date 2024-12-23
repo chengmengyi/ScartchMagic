@@ -26,6 +26,9 @@ class BValueHep{
 
   initValue(){
     FirebaseUtils.instance.valueUpdateCall=(){
+      if(kDebugMode){
+        return;
+      }
       if(valueConf.read().isEmpty){
         var s = FirebaseUtils.instance.getFirebaseConf("magic_number");
         if(s.isNotEmpty){
@@ -113,9 +116,9 @@ class BValueHep{
   }
 
   bool checkShowIntAd(AdType adType){
-    // if(kDebugMode){
-    //   return false;
-    // }
+    if(kDebugMode){
+      return false;
+    }
     if(adType==AdType.reward){
       return true;
     }

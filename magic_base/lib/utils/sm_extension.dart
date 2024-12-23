@@ -54,9 +54,9 @@ extension NumberFor on int{
 }
 
 String getTodayTime(){
-  if(kDebugMode){
-    return "2024-12-24";
-  }
+  // if(kDebugMode){
+  //   return "2024-12-24";
+  // }
   var dateTime = DateTime.now();
   return "${dateTime.year}-${dateTime.month}-${dateTime.day}";
 }
