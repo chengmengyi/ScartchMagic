@@ -105,7 +105,7 @@ class PlayFruitChildController extends SmBaseController with GetTickerProviderSt
           level: upLevel,
           addNum: maxWin,
           call: (){
-            InfoHep.instance.updateCoins(maxWin);
+            InfoHep.instance.updateCoins(maxWin,showLottie: false);
             InfoHep.instance.updatePlayedCardNum();
             Utils.toNextPlay(_playType);
           },

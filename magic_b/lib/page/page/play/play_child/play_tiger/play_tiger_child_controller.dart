@@ -106,7 +106,7 @@ class PlayTigerChildController extends SmBaseController with GetTickerProviderSt
           level: upLevel,
           addNum: maxWin,
           call: (){
-            InfoHep.instance.updateCoins(maxWin);
+            InfoHep.instance.updateCoins(maxWin,showLottie: false);
             Utils.toNextPlay(_playType);
           },
         ),

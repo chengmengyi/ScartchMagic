@@ -95,7 +95,7 @@ class PlayBigChildController extends SmBaseController with GetTickerProviderStat
           level: upLevel,
           addNum: maxWin,
           call: (){
-            InfoHep.instance.updateCoins(maxWin);
+            InfoHep.instance.updateCoins(maxWin,showLottie: false);
             Utils.toNextPlay(_playType);
           },
         ),

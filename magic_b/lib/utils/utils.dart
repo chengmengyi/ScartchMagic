@@ -30,7 +30,8 @@ class Utils{
     //   nextPlayType=PlayType.play8;
     // }
     await BSqlUtils.instance.unlockNextPlay(currentType);
-    EventInfo(eventCode: EventCode.toNextCardChild,dynamicValue: nextPlayType);
+    // EventInfo(eventCode: EventCode.toNextCardChild,dynamicValue: nextPlayType);
+    SmRoutersUtils.instance.offPage();
   }
 
   static String getSourceFromByPlayType(PlayType playType){

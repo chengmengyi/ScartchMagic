@@ -19,9 +19,9 @@ class InfoHep{
 
   InfoHep._internal();
 
-  updateCoins(int addNum){
+  updateCoins(int addNum,{showLottie=true}){
     coins.add(addNum);
-    if(addNum>0){
+    if(addNum>0&&showLottie){
       var i = countMoney.read()+100;
       if(coins.read()>i){
         TbaUtils.instance.pointEvent(pointType: PointType.sm_cash_money_detail,data: {"money":i});

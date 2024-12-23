@@ -112,7 +112,7 @@ class Play7ChildController extends SmBaseController with GetTickerProviderStateM
           level: upLevel,
           addNum: maxWin,
           call: (){
-            InfoHep.instance.updateCoins(maxWin);
+            InfoHep.instance.updateCoins(maxWin,showLottie: false);
             Utils.toNextPlay(_playType);
           },
         ),
