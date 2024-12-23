@@ -22,7 +22,7 @@ import 'package:magic_b/utils/utils.dart';
 import 'package:magic_base/utils/tba/ad_pos.dart';
 import 'package:magic_base/utils/tba/tba_utils.dart';
 
-class PlayFruitChildController extends SmBaseController{
+class PlayFruitChildController extends SmBaseController with GetTickerProviderStateMixin{
   var _canClick=true,_has3fruit=false,playResultStatus=PlayResultStatus.init,
       showFruitFingerGuide=false,showRevealAllFinger=false,hideKeyIcon=false;
   final key = GlobalKey<ScratcherState>();
@@ -34,10 +34,12 @@ class PlayFruitChildController extends SmBaseController{
   GlobalKey keyGlobalKey=GlobalKey();
   Offset? iconOffset;
   AutoScratchUtils? autoScratchUtils;
+  late AnimationController scaleController;
 
   @override
   void onInit() {
     super.onInit();
+    _initAnimator();
     showFruitFingerGuide=currentGuideStep.read()==GuideStep.showFruitFingerGuide;
     if(showFruitFingerGuide){
       TbaUtils.instance.pointEvent(pointType: PointType.sm_card_guide);
@@ -74,6 +76,9 @@ class PlayFruitChildController extends SmBaseController{
       iconOffset=null;
       update(["gold_icon"]);
     });
+    if(_has3fruit){
+      scaleController..reset()..forward();
+    }
     if(rewardList.contains("icon_key")){
       TbaUtils.instance.pointEvent(pointType: PointType.sm_key_out,data: {"source_from":Utils.getSourceFromByPlayType(_playType)});
       _canClick=false;
@@ -88,6 +93,7 @@ class PlayFruitChildController extends SmBaseController{
   }
 
   _checkResult()async{
+    scaleController.stop();
     EventInfo(eventCode: EventCode.canClickOtherBtn,boolValue: true);
     var maxWin = BValueHep.instance.getMaxWin(_playType.name);
     var upLevel = await BSqlUtils.instance.updatePlayedNumInfo(_playType);
@@ -216,8 +222,25 @@ class PlayFruitChildController extends SmBaseController{
     }
   }
 
+  _initAnimator(){
+    scaleController=AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+      lowerBound: 1,
+      upperBound: 1.2,
+    )
+      ..addStatusListener((status) {
+        if(status==AnimationStatus.completed){
+          scaleController.reverse();
+        }else if(status==AnimationStatus.dismissed){
+          scaleController.forward();
+        }
+      });
+  }
+
   @override
   void onClose() {
+    scaleController.dispose();
     super.onClose();
     autoScratchUtils?.stopWhile=true;
     _timer?.cancel();

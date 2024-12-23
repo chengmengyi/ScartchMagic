@@ -129,28 +129,31 @@ class Play7Child extends SmBaseWidget<Play7ChildController>{
                         play7bean.hasKey==true?
                         (smController.hideKeyIcon?
                         SizedBox(width: 60.w,height: 60.h):
-                        Lottie.asset("magic_file/magic_lottie/key.json",width: 60.w,height: 60.h)):
+                        Lottie.asset("magic_file/magic_lottie/key.json",width: 60.w,height: 60.h,)):
                         play7bean.icon.isNotEmpty?
-                        Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            SmImageWidget(imageName: play7bean.icon,width: 52.w,height: 52.h,),
-                            SmGradientTextWidget(
-                              text: "${play7bean.reward}",
-                              size: 16.sp,
-                              fontWeight: FontWeight.w900,
-                              colors: ["#F9DF02".toSmColor(),"#EF8000".toSmColor()],
-                              shadows: [
-                                Shadow(
-                                    color: "#221002".toSmColor(),
-                                    blurRadius: 2.w,
-                                    offset: Offset(0,2.w)
-                                )
-                              ],
-                            ),
-                          ],
+                        ScaleTransition(
+                          scale: smController.scaleController,
+                          child: Stack(
+                            alignment: Alignment.bottomCenter,
+                            children: [
+                              SmImageWidget(imageName: play7bean.icon,width: 52.w,height: 52.h,),
+                              SmGradientTextWidget(
+                                text: "\$${play7bean.reward}",
+                                size: 16.sp,
+                                fontWeight: FontWeight.w900,
+                                colors: ["#F9DF02".toSmColor(),"#EF8000".toSmColor()],
+                                shadows: [
+                                  Shadow(
+                                      color: "#221002".toSmColor(),
+                                      blurRadius: 2.w,
+                                      offset: Offset(0,2.w)
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
                         ):
-                        SmTextWidget(text: "63", size: 36.sp, color: "#8B3022",fontWeight: FontWeight.w700,),
+                        SmTextWidget(text: "${play7bean.num}", size: 36.sp, color: "#8B3022",fontWeight: FontWeight.w700,),
                       );
                     },
                     staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),

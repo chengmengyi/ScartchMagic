@@ -112,6 +112,24 @@ class PlayBigChild extends SmBaseWidget<PlayBigChildController>{
                           itemBuilder: (context,index){
                             var bean = smController.yourNumList[index];
                             var selected = smController.winningNumList.contains(bean.num);
+                            var w = Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: SmStrokeTextWidget(
+                                    text: "${bean.num}",
+                                    fontSize: 32.sp,
+                                    textColor: selected?"#FFD622".toSmColor():"#52180E".toSmColor(),
+                                    strokeColor: "#52180E".toSmColor(),
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: SmTextWidget(text: "${bean.reward}", size: 15.sp, color: selected?"#F15825":"#D2910E",),
+                                ),
+                              ],
+                            );
                             return Container(
                               width: double.infinity,
                               height: 60.h,
@@ -122,24 +140,11 @@ class PlayBigChild extends SmBaseWidget<PlayBigChildController>{
                               (smController.hideKeyIcon?
                               Container():
                               Lottie.asset("magic_file/magic_lottie/key.json",width: 60.w,height: 60.h)):
-                              Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: SmStrokeTextWidget(
-                                      text: "${bean.num}",
-                                      fontSize: 32.sp,
-                                      textColor: selected?"#FFD622".toSmColor():"#52180E".toSmColor(),
-                                      strokeColor: "#52180E".toSmColor(),
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: SmTextWidget(text: "${bean.reward}", size: 15.sp, color: selected?"#F15825":"#D2910E",),
-                                  ),
-                                ],
-                              ),
+                              selected?ScaleTransition(
+                                scale: smController.scaleController,
+                                child: w,
+                              ):
+                              w,
                             );
                           },
                           staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),

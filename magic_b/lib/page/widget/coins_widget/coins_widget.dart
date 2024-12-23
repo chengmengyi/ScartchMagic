@@ -47,7 +47,7 @@ class _CoinsWidgetState extends State<CoinsWidget>{
         children: [
           SmImageWidget(imageName: "b_coins",width: 28.w,height: 28.w,),
           SizedBox(width: 4.w,),
-          SmTextWidget(text: currentCoins.format(), size: 16.sp, color: "#FFFFFF",fontWeight: FontWeight.w600,),
+          SmTextWidget(text: "\$${currentCoins.format()}", size: 16.sp, color: "#FFFFFF",fontWeight: FontWeight.w600,),
         ],
       ),
     ),

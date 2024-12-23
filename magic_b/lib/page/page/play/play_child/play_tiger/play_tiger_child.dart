@@ -240,21 +240,14 @@ class PlayTigerChild extends SmBaseWidget<PlayTigerChildController>{
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context,index){
                         var bean = smController.yourList[index];
-                        return bean.hasKey==true?
-                        (smController.hideKeyIcon?
-                        SizedBox(
-                          width: 52.w,
-                          height: 52.h,
-                        ):
-                        Lottie.asset("magic_file/magic_lottie/key.json",width: 52.w,height: 52.h,key: smController.keyGlobalKey)):
-                        Stack(
+                        var w = Stack(
                           alignment: Alignment.bottomCenter,
                           children: [
                             SmImageWidget(imageName: bean.icon,width: 52.w,height: 52.w,),
                             Offstage(
                               offstage: bean.reward==0,
                               child: SmGradientTextWidget(
-                                text: "${bean.reward}",
+                                text: "\$${bean.reward}",
                                 size: 16.sp,
                                 fontWeight: FontWeight.w400,
                                 colors: ["#F9DF02".toSmColor(),"#EF8000".toSmColor()],
@@ -280,6 +273,18 @@ class PlayTigerChild extends SmBaseWidget<PlayTigerChildController>{
                             )
                           ],
                         );
+                        return bean.hasKey==true?
+                        (smController.hideKeyIcon?
+                        SizedBox(
+                          width: 52.w,
+                          height: 52.h,
+                        ):
+                        Lottie.asset("magic_file/magic_lottie/key.json",width: 52.w,height: 52.h,key: smController.keyGlobalKey)):
+                        smController.win&&bean.icon=="tiger7"?
+                        ScaleTransition(
+                          scale: smController.scaleController,
+                          child: w,
+                        ):w;
                       },
                       staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),
                     ),

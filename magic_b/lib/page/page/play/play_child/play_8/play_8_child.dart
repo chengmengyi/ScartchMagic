@@ -149,6 +149,31 @@ class Play8Child extends SmBaseWidget<Play8ChildController>{
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context,index){
                                 var play8bean = smController.yourList[index];
+                                var w = Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: [
+                                    SmImageWidget(imageName: play8bean.icon,width: 64.w,height: 64.h,),
+                                    Offstage(
+                                      offstage: play8bean.reward==0,
+                                      child: SmGradientTextWidget(
+                                        text: "\$${play8bean.reward}",
+                                        size: 14.sp,
+                                        colors: [
+                                          "#FFFFFF".toSmColor(),
+                                          "#FFEE90".toSmColor(),
+                                        ],
+                                        fontWeight: FontWeight.w700,
+                                        shadows: [
+                                          Shadow(
+                                              color: "#F6AC00".toSmColor(),
+                                              blurRadius: 2.w,
+                                              offset: Offset(0,0.5.w)
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                );
                                 return Container(
                                   width: double.infinity,
                                   height: 60.h,
@@ -159,31 +184,11 @@ class Play8Child extends SmBaseWidget<Play8ChildController>{
                                   (smController.hideKeyIcon?
                                   SizedBox(width: 60.w,height: 60.h):
                                   Lottie.asset("magic_file/magic_lottie/key.json",width: 60.w,height: 60.h)):
-                                  Stack(
-                                    alignment: Alignment.bottomCenter,
-                                    children: [
-                                      SmImageWidget(imageName: play8bean.icon,width: 64.w,height: 64.h,),
-                                      Offstage(
-                                        offstage: play8bean.reward==0,
-                                        child: SmGradientTextWidget(
-                                          text: "${play8bean.reward}",
-                                          size: 14.sp,
-                                          colors: [
-                                            "#FFFFFF".toSmColor(),
-                                            "#FFEE90".toSmColor(),
-                                          ],
-                                          fontWeight: FontWeight.w700,
-                                          shadows: [
-                                            Shadow(
-                                                color: "#F6AC00".toSmColor(),
-                                                blurRadius: 2.w,
-                                                offset: Offset(0,0.5.w)
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                  play8bean.reward!=0?
+                                  ScaleTransition(
+                                    scale: smController.scaleController,
+                                    child: w,
+                                  ):w,
                                 );
                               },
                               staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),

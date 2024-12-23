@@ -23,7 +23,7 @@ import 'package:magic_b/utils/utils.dart';
 import 'package:magic_base/utils/tba/ad_pos.dart';
 import 'package:magic_base/utils/tba/tba_utils.dart';
 
-class PlayTigerChildController extends SmBaseController{
+class PlayTigerChildController extends SmBaseController with GetTickerProviderStateMixin{
   var win=false,_canClick=true,prizeBorderIndex=-1,hideKeyIcon=false,playResultStatus=PlayResultStatus.init;
   Timer? _timer;
   final PlayType _playType=PlayType.playtiger;
@@ -36,10 +36,12 @@ class PlayTigerChildController extends SmBaseController{
   GlobalKey keyGlobalKey=GlobalKey();
   Offset? iconOffset;
   AutoScratchUtils? autoScratchUtils;
+  late AnimationController scaleController;
 
   @override
   void onInit() {
     super.onInit();
+    _initAnimator();
     _initPrizeList();
   }
 
@@ -70,6 +72,9 @@ class PlayTigerChildController extends SmBaseController{
       iconOffset=null;
       update(["gold_icon"]);
     });
+    if(win){
+      scaleController..reset()..forward();
+    }
     if(yourList.indexWhere((element) => element.hasKey==true)>=0){
       TbaUtils.instance.pointEvent(pointType: PointType.sm_key_out,data: {"source_from":Utils.getSourceFromByPlayType(_playType)});
       _canClick=false;
@@ -84,6 +89,7 @@ class PlayTigerChildController extends SmBaseController{
   }
 
   _checkResult()async{
+    scaleController.stop();
     if(win){
       prizeBorderIndex = yourList.where((value) => value.icon=="tiger7").length;
       update(["prize_list","your_list"]);
@@ -204,8 +210,25 @@ class PlayTigerChildController extends SmBaseController{
     }
   }
 
+  _initAnimator(){
+    scaleController=AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+      lowerBound: 1,
+      upperBound: 1.2,
+    )
+      ..addStatusListener((status) {
+        if(status==AnimationStatus.completed){
+          scaleController.reverse();
+        }else if(status==AnimationStatus.dismissed){
+          scaleController.forward();
+        }
+      });
+  }
+
   @override
   void onClose() {
+    scaleController.dispose();
     super.onClose();
     autoScratchUtils?.stopWhile=true;
     _timer?.cancel();

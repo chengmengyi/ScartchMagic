@@ -106,6 +106,7 @@ class PlayFruitChild extends SmBaseWidget<PlayFruitChildController>{
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context,index){
                           var icon = smController.rewardList[index];
+                          var success = icon=="icon_fruit1";
                           return Container(
                             width: double.infinity,
                             height: 82.h,
@@ -115,6 +116,11 @@ class PlayFruitChild extends SmBaseWidget<PlayFruitChildController>{
                             (smController.hideKeyIcon?
                             Container():
                             Lottie.asset("magic_file/magic_lottie/key.json",width: 70.w,height: 70.h)):
+                            success?
+                            ScaleTransition(
+                              scale: smController.scaleController,
+                              child: SmImageWidget(imageName: icon,width: 72.w,height: 72.h,),
+                            ):
                             SmImageWidget(imageName: icon,width: 72.w,height: 72.h,),
                           );
                         },

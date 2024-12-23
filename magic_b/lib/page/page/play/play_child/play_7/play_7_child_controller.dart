@@ -21,7 +21,7 @@ import 'package:magic_b/utils/utils.dart';
 import 'package:magic_base/utils/tba/ad_pos.dart';
 import 'package:magic_base/utils/tba/tba_utils.dart';
 
-class Play7ChildController extends SmBaseController{
+class Play7ChildController extends SmBaseController with GetTickerProviderStateMixin{
   var win=false,_canClick=true,showCover=false,hideKeyIcon=false,playResultStatus=PlayResultStatus.init;
 
   final key = GlobalKey<ScratcherState>();
@@ -35,7 +35,13 @@ class Play7ChildController extends SmBaseController{
   GlobalKey contentGlobalKey=GlobalKey();
   Offset? iconOffset;
   AutoScratchUtils? autoScratchUtils;
+  late AnimationController scaleController;
 
+  @override
+  void onInit() {
+    super.onInit();
+    _initAnimator();
+  }
 
   @override
   void onReady() {
@@ -64,7 +70,9 @@ class Play7ChildController extends SmBaseController{
       iconOffset=null;
       update(["gold_icon"]);
     });
-
+    if(yourList.indexWhere((element) => element.icon.isNotEmpty)>=0){
+      scaleController..reset()..forward();
+    }
     if(yourList.indexWhere((element) => element.hasKey==true)>=0){
       TbaUtils.instance.pointEvent(pointType: PointType.sm_key_out,data: {"source_from":Utils.getSourceFromByPlayType(_playType)});
       _canClick=false;
@@ -79,6 +87,7 @@ class Play7ChildController extends SmBaseController{
   }
 
   _checkResult()async{
+    scaleController.stop();
     win = yourList.indexWhere((element) => element.icon.isNotEmpty)>=0;
     playResultStatus=win?PlayResultStatus.success:PlayResultStatus.fail;
     update(["cover"]);
@@ -184,8 +193,25 @@ class Play7ChildController extends SmBaseController{
     }
   }
 
+  _initAnimator(){
+    scaleController=AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+      lowerBound: 1,
+      upperBound: 1.2,
+    )
+      ..addStatusListener((status) {
+        if(status==AnimationStatus.completed){
+          scaleController.reverse();
+        }else if(status==AnimationStatus.dismissed){
+          scaleController.forward();
+        }
+      });
+  }
+
   @override
   void onClose() {
+    scaleController.dispose();
     super.onClose();
     autoScratchUtils?.stopWhile=true;
     _timer?.cancel();

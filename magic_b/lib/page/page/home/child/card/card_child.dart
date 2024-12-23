@@ -100,7 +100,7 @@ class CardChild extends SmBaseTagWidget<CardChildController>{
                           ],
                         ),
                         SmGradientTextWidget(
-                          text: "${bean.maxWin??0}",
+                          text: "\$${bean.maxWin??0}",
                           size: 24.sp,
                           colors: [
                             "#FBCE01".toSmColor(),

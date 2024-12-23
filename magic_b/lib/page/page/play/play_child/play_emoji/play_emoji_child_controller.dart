@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/page/play/play_child/play_emoji/emoji_bean.dart';
 import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
@@ -21,9 +23,9 @@ import 'package:magic_b/utils/utils.dart';
 import 'package:magic_base/utils/tba/ad_pos.dart';
 import 'package:magic_base/utils/tba/tba_utils.dart';
 
-class PlayEmojiChildController extends SmBaseController{
+class PlayEmojiChildController extends SmBaseController with GetTickerProviderStateMixin{
   final key = GlobalKey<ScratcherState>();
-  var _win=false,_canClick=true,prizeBorderIndex=-1,hideKeyIcon=false,playResultStatus=PlayResultStatus.init;
+  var win=false,_canClick=true,prizeBorderIndex=-1,hideKeyIcon=false,playResultStatus=PlayResultStatus.init;
   Timer? _timer;
   final PlayType _playType=PlayType.playemoji;
   List<EmojiBean> emojiList=[];
@@ -43,11 +45,12 @@ class PlayEmojiChildController extends SmBaseController{
   GlobalKey keyGlobalKey=GlobalKey();
   Offset? iconOffset;
   AutoScratchUtils? autoScratchUtils;
-
+  late AnimationController scaleController;
 
   @override
   void onInit() {
     super.onInit();
+    _initAnimator();
     while(emojiList.length<9){
       emojiList.add(EmojiBean(icon: "", reward: 0));
     }
@@ -81,6 +84,9 @@ class PlayEmojiChildController extends SmBaseController{
       iconOffset=null;
       update(["gold_icon"]);
     });
+    if(win){
+      scaleController..reset()..forward();
+    }
     if(emojiList.indexWhere((element) => element.hasKey==true)>=0){
       TbaUtils.instance.pointEvent(pointType: PointType.sm_key_out,data: {"source_from":Utils.getSourceFromByPlayType(_playType)});
       _canClick=false;
@@ -95,6 +101,7 @@ class PlayEmojiChildController extends SmBaseController{
   }
 
   _checkResult()async{
+    scaleController.stop();
     await Future.delayed(const Duration(milliseconds: 800));
     EventInfo(eventCode: EventCode.canClickOtherBtn,boolValue: true);
     var maxWin = BValueHep.instance.getMaxWin(_playType.name);
@@ -114,7 +121,7 @@ class PlayEmojiChildController extends SmBaseController{
       return;
     }
 
-    playResultStatus=_win?PlayResultStatus.success:PlayResultStatus.fail;
+    playResultStatus=win?PlayResultStatus.success:PlayResultStatus.fail;
     if(playResultStatus==PlayResultStatus.success){
       var tigerReward = emojiList.map((item) => item.reward).reduce((a, b) => a + b);
       SmRoutersUtils.instance.showDialog(
@@ -157,8 +164,8 @@ class PlayEmojiChildController extends SmBaseController{
       value.icon="";
       value.reward=0;
     }
-    _win = BValueHep.instance.getEmojiChance();
-    if(_win){
+    win = BValueHep.instance.getEmojiChance();
+    if(win){
       var list = _lineMap.random();
       for (var value in list) {
         var bean = emojiList[value];
@@ -236,8 +243,26 @@ class PlayEmojiChildController extends SmBaseController{
     }
   }
 
+  _initAnimator(){
+    scaleController=AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+      lowerBound: 1,
+      upperBound: 1.2,
+    )
+      ..addStatusListener((status) {
+        if(status==AnimationStatus.completed){
+          scaleController.reverse();
+        }else if(status==AnimationStatus.dismissed){
+          scaleController.forward();
+        }
+      });
+  }
+
+
   @override
   void onClose() {
+    scaleController.dispose();
     super.onClose();
     autoScratchUtils?.stopWhile=true;
     _timer?.cancel();

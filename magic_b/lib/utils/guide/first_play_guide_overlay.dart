@@ -95,7 +95,7 @@ class FirstPlayGuideOverlay extends StatelessWidget{
                           ],
                         ),
                         SmGradientTextWidget(
-                          text: "${BValueHep.instance.getMaxWin("playfruit")}",
+                          text: "\$${BValueHep.instance.getMaxWin("playfruit")}",
                           size: 24.sp,
                           colors: [
                             "#FBCE01".toSmColor(),

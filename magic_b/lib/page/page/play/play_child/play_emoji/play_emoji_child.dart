@@ -117,6 +117,28 @@ class PlayEmojiChild extends SmBaseWidget<PlayEmojiChildController>{
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context,index){
                         var bean = smController.emojiList[index];
+                        var w = Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            SmImageWidget(imageName: bean.icon,width: 64.w,height: 64.h,),
+                            Visibility(
+                              visible: bean.icon=="emoji6",
+                              child: SmGradientTextWidget(
+                                text: "\$${bean.reward}",
+                                size: 14.sp,
+                                fontWeight: FontWeight.w900,
+                                colors: ["#FFFFFF".toSmColor(),"#FFD11B".toSmColor()],
+                                shadows: [
+                                  Shadow(
+                                      color: "#6B3D0C".toSmColor(),
+                                      blurRadius: 2.w,
+                                      offset: Offset(0,2.w)
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
                         return Container(
                           width: double.infinity,
                           height: 86.h,
@@ -127,28 +149,12 @@ class PlayEmojiChild extends SmBaseWidget<PlayEmojiChildController>{
                           (smController.hideKeyIcon?
                           SizedBox(width: 60.w,height: 60.h):
                           Lottie.asset("magic_file/magic_lottie/key.json",width: 60.w,height: 60.h)):
-                          Stack(
-                            alignment: Alignment.bottomCenter,
-                            children: [
-                              SmImageWidget(imageName: bean.icon,width: 64.w,height: 64.h,),
-                              Visibility(
-                                visible: bean.icon=="emoji6",
-                                child: SmGradientTextWidget(
-                                  text: "${bean.reward}",
-                                  size: 14.sp,
-                                  fontWeight: FontWeight.w900,
-                                  colors: ["#FFFFFF".toSmColor(),"#FFD11B".toSmColor()],
-                                  shadows: [
-                                    Shadow(
-                                        color: "#6B3D0C".toSmColor(),
-                                        blurRadius: 2.w,
-                                        offset: Offset(0,2.w)
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                          smController.win&&bean.icon=="emoji6"?
+                          ScaleTransition(
+                            scale: smController.scaleController,
+                            child: w,
+                          ):
+                          w,
                         );
                       },
                       staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),

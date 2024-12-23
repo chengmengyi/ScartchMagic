@@ -132,7 +132,7 @@ class PlayChild extends SmBaseWidget<PlayChildController>{
         visible: !smController.canClick,
         child: Container(
           margin: EdgeInsets.only(left: dx<=0?0:dx,top: dy<=0?0:dy),
-          child: Lottie.asset("magic_file/magic_lottie/key.json",width: 80.w,height: 80.h),
+          child: Lottie.asset("magic_file/magic_lottie/key.json",width: 90.w,height: 90.h),
         ),
       );
     },
