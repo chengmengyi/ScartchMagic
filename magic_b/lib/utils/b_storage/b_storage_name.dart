@@ -12,4 +12,5 @@ class BStorageName{
   static const String firstLaunchApp="firstLaunchAppB";
   static const String valueConf="valueConfB";
   static const String countMoney="countMoneyB";
+  static const String hasShowedGoodComment="hasShowedGoodCommentB";
 }

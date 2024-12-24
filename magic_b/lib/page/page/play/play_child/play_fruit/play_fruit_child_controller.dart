@@ -126,7 +126,7 @@ class PlayFruitChildController extends SmBaseController with GetTickerProviderSt
           incentType: IncentType.card,
           money: fruitReward,
           dismissDialog: (addNum){
-            InfoHep.instance.updateCoins(fruitReward);
+            InfoHep.instance.updateCoins(addNum);
             InfoHep.instance.updatePlayedCardNum();
             _initRewardList();
             resetPlay();

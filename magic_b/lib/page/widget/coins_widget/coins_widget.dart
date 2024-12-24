@@ -74,9 +74,9 @@ class _CoinsWidgetState extends State<CoinsWidget>{
 
   @override
   void dispose() {
-    super.dispose();
     _ss?.cancel();
     _timer?.cancel();
+    super.dispose();
   }
 }
 

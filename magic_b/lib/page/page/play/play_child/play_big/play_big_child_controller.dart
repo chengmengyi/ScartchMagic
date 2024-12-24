@@ -117,7 +117,7 @@ class PlayBigChildController extends SmBaseController with GetTickerProviderStat
             incentType: IncentType.card,
             money: bigReward,
             dismissDialog: (addNum){
-              InfoHep.instance.updateCoins(bigReward);
+              InfoHep.instance.updateCoins(addNum);
               _initWinningNumList();
               resetPlay();
             },

@@ -95,9 +95,9 @@ class BValueHep{
   }
 
   bool checkHasKey(){
-    if(kDebugMode){
-      return true;
-    }
+    // if(kDebugMode){
+    //   return true;
+    // }
     var list = _valueBean?.keyOut??[];
     if(list.isEmpty){
       return false;

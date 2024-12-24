@@ -62,6 +62,9 @@ class CardChildController extends SmBaseController{
       arguments: {
         "playType":playType,
       },
+      backCall: (map){
+
+      }
     );
   }
 

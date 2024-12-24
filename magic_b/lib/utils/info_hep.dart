@@ -64,9 +64,13 @@ class InfoHep{
   }
 
   _showGoodCommentDialog(){
+    if(hasShowedGoodComment.read()){
+      return;
+    }
     SmRoutersUtils.instance.showDialog(
       widget: GoodCommentDialog(
         call: (index)async{
+          hasShowedGoodComment.write(true);
           if(index<3){
             SmRoutersUtils.instance.showDialog(widget: CommentSuccessDialog());
           }else{

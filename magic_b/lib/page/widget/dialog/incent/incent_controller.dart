@@ -52,7 +52,6 @@ class IncentController extends SmBaseController{
 
   _closeDialog(int money,Function(int addNum) call){
     SmRoutersUtils.instance.offPage();
-    InfoHep.instance.updateCoins(money);
     if(currentGuideStep.read()==GuideStep.firstGetReward){
       GuideUtils.instance.updateGuideStep(GuideStep.showCashFingerGuide);
     }

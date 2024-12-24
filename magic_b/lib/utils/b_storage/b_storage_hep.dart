@@ -19,4 +19,5 @@ StorageHep<String> valueConf=StorageHep<String>(key: BStorageName.valueConf, def
 StorageHep<bool> firstShowBoxGuide=StorageHep<bool>(key: BStorageName.firstShowBoxGuide, defaultValue: true);
 StorageHep<bool> firstGetMoney=StorageHep<bool>(key: BStorageName.firstGetMoney, defaultValue: true);
 StorageHep<bool> firstLaunchApp=StorageHep<bool>(key: BStorageName.firstLaunchApp, defaultValue: true);
+StorageHep<bool> hasShowedGoodComment=StorageHep<bool>(key: BStorageName.hasShowedGoodComment, defaultValue: false);
 

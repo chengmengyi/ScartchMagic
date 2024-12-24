@@ -58,7 +58,7 @@ class BSqlUtils{
     newMap["playedNum"]=playedNum+1;
     newMap["currentPro"]=currentPro+1;
     if(currentPro+1>=10){
-      newMap["time"]=DateTime.now().millisecondsSinceEpoch+10*60*60*1000;
+      newMap["time"]=DateTime.now().millisecondsSinceEpoch+60*60*1000;
     }
     await db.update(SmSqlTable.playInfoB, newMap,where: '"id" = ?',whereArgs: [id]);
     EventInfo(eventCode: EventCode.updateLevelPro);

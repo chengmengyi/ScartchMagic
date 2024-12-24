@@ -131,7 +131,7 @@ class PlayEmojiChildController extends SmBaseController with GetTickerProviderSt
             incentType: IncentType.card,
             money: tigerReward,
             dismissDialog: (addNum){
-              InfoHep.instance.updateCoins(tigerReward);
+              InfoHep.instance.updateCoins(addNum);
               _initEmojiList();
               resetPlay();
             },

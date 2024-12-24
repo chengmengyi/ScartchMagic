@@ -5,6 +5,6 @@ import 'package:magic_base/sm_router/sm_routers_utils.dart';
 class CommentSuccessController extends SmBaseController{
   clickOk(){
     SmRoutersUtils.instance.offPage();
-    InfoHep.instance.updateCoins(5000);
+    InfoHep.instance.updateCoins(5);
   }
 }

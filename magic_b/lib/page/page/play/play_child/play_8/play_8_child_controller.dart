@@ -134,7 +134,7 @@ class Play8ChildController extends SmBaseController with GetTickerProviderStateM
             incentType: IncentType.card,
             money: reward,
             dismissDialog: (addNum){
-              InfoHep.instance.updateCoins(reward);
+              InfoHep.instance.updateCoins(addNum);
               _initYourList();
               resetPlay();
             },
