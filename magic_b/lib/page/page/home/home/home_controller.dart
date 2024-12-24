@@ -17,9 +17,9 @@ import 'package:magic_base/utils/voice/voice_utils.dart';
 class HomeController extends SmBaseController with GetTickerProviderStateMixin{
   var tabIndex=0,_startedWheel=false,wheelChance=0,showMoneyLottie=false,_addNum=0;
   List<HomeBottomBean> bottomList=[
-    HomeBottomBean(unsIcon: "card_uns", selIcon: "card_sel", text: "Card"),
+    HomeBottomBean(unsIcon: "card_sel", selIcon: "card_sel", text: "Card"),
     HomeBottomBean(unsIcon: "wheel_uns", selIcon: "wheel_sel", text: "Wheel"),
-    HomeBottomBean(unsIcon: "cash_uns", selIcon: "cash_sel", text: "Cash"),
+    HomeBottomBean(unsIcon: "cash_sel", selIcon: "cash_sel", text: "Cash"),
   ];
   List<Widget> pageList=[CardChild(),WheelChild(home: true,),CashChild(home: true,)];
   late AnimationController moneyLottieController;
@@ -84,6 +84,7 @@ class HomeController extends SmBaseController with GetTickerProviderStateMixin{
         clickTab(eventInfo.intValue??0);
         break;
       case EventCode.keyAnimatorEnd:
+      case EventCode.reduceWheelChance:
         wheelChance=wheelChanceNum.read();
         update(["bottom"]);
         break;
@@ -95,6 +96,4 @@ class HomeController extends SmBaseController with GetTickerProviderStateMixin{
         break;
     }
   }
-
-
 }

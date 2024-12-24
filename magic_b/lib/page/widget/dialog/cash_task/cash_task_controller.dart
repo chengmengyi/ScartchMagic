@@ -29,8 +29,14 @@ class CashTaskController extends SmBaseController{
     return "$current/${list.first.maxPro??0}";
   }
 
-  clickGo(bool fromHome){
-    TbaUtils.instance.pointEvent(pointType: PointType.sm_cash_task_pop_c);
+  clickGo(bool fromHome,CashTaskBean cashTaskBean){
+    //pop_from:card、wheel、pop
+    TbaUtils.instance.pointEvent(
+      pointType: PointType.sm_cash_task_pop_c,
+      data: {
+        "pop_from":cashTaskBean.taskType==TaskType.card?"card":cashTaskBean.taskType==TaskType.wheel?"wheel":"pop"
+      },
+    );
     SmRoutersUtils.instance.offPage();
     if(fromHome){
       EventInfo(eventCode: EventCode.updateHomeTabIndex,intValue: 0);

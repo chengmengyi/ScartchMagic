@@ -32,6 +32,7 @@ class OldUserDoubleRewardController extends SmBaseController{
   }
 
   clickSingle(wheelReward,signReward){
+    TbaUtils.instance.pointEvent(pointType: PointType.sm_daily_wheel_pop_close);
     ShowAdUtils.instance.showAd(
       adPos: AdPos.stmag_olduser_wheel_int,
       adType: AdType.interstitial,

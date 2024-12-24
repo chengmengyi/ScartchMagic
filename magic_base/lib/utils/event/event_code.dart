@@ -22,4 +22,5 @@ class EventCode{
   static const int keyAnimatorStart=113;
   static const int keyAnimatorEnd=114;
   static const int canClickOtherBtn=115;
+  static const int reduceWheelChance=116;
 }

@@ -60,7 +60,7 @@ class WheelChildController extends SmBaseController{
     _looping=false;
     EventInfo(eventCode: EventCode.startOrStopWheel,boolValue: false);
     wheelChanceNum.add(-1);
-    update(["wheel_num"]);
+    EventInfo(eventCode: EventCode.reduceWheelChance);
     BSqlUtils.instance.updateCashTaskPro(TaskType.wheel);
     ShowAdUtils.instance.showAd(
       adPos: fromOldGuide?AdPos.stmag_olduser_wheelspin_int:AdPos.stmag_wheelspin_int,
@@ -110,6 +110,9 @@ class WheelChildController extends SmBaseController{
         }
         break;
       case EventCode.keyAnimatorEnd:
+        update(["wheel_num"]);
+        break;
+      case EventCode.reduceWheelChance:
         update(["wheel_num"]);
         break;
     }

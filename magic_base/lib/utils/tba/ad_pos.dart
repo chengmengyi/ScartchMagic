@@ -76,4 +76,6 @@ enum PointType{
   stmag_ad_chance,
   stmag_ad_impression_fail,
   stmag_ad_impression,
+  sm_daily_wheel_pop_close,
+  sm_daily_pop_close
 }

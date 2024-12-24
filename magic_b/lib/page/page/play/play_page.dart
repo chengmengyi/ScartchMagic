@@ -32,6 +32,7 @@ class PlayPage extends SmBaseBPage<PlayController>{
       ),
       _cashFingerGuideWidget(),
       _moneyLottieWidget(),
+      _wheelFingerGuideWidget(),
     ],
   );
 
@@ -41,15 +42,19 @@ class PlayPage extends SmBaseBPage<PlayController>{
     child: Stack(
       children: [
         SmImageWidget(imageName: "b_bottom_bg",width: double.infinity,height: double.infinity,boxFit: BoxFit.fill,),
-        StaggeredGridView.countBuilder(
-          padding: const EdgeInsets.all(0),
-          itemCount: smController.bottomList.length,
-          shrinkWrap: true,
-          crossAxisCount: 3,
-          mainAxisSpacing: 0,
-          crossAxisSpacing: 0,
-          itemBuilder: (context,index)=>_bottomItemWidget(index,smController.bottomList[index]),
-          staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),
+        GetBuilder<PlayController>(
+          id: "bottom",
+          builder: (_)=>StaggeredGridView.countBuilder(
+            padding: const EdgeInsets.all(0),
+            itemCount: smController.bottomList.length,
+            shrinkWrap: true,
+            crossAxisCount: 3,
+            mainAxisSpacing: 0,
+            crossAxisSpacing: 0,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context,index)=>_bottomItemWidget(index,smController.bottomList[index]),
+            staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),
+          ),
         ),
       ],
     ),
@@ -66,7 +71,20 @@ class PlayPage extends SmBaseBPage<PlayController>{
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          SmImageWidget(imageName: index==smController.tabIndex?bean.selIcon:bean.unsIcon,width: 56.w,height: 56.h,),
+          Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              SmImageWidget(
+                imageName: index==1&&smController.wheelChance<=0?bean.unsIcon:bean.selIcon,
+                width: 56.w,
+                height: 56.h,
+              ),
+              Visibility(
+                visible: index==1&&smController.wheelChance==0,
+                child: SmImageWidget(imageName: "icon_luck",width: 22.w,height: 22.h,),
+              ),
+            ],
+          ),
           Container(
               margin: EdgeInsets.only(top: 50.h),
               child: SmGradientTextWidget(
@@ -112,6 +130,28 @@ class PlayPage extends SmBaseBPage<PlayController>{
       child: Container(
         margin: EdgeInsets.only(left: 20.w),
         child: Lottie.asset("magic_file/magic_lottie/money.zip",repeat: false),
+      ),
+    ),
+  );
+
+  _wheelFingerGuideWidget()=>GetBuilder<PlayController>(
+    id: "wheelFingerGuide",
+    builder: (_)=>Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        margin: EdgeInsets.only(left: 60.w),
+        child: Visibility(
+          visible: smController.showWheelFinger&&smController.tabIndex!=1,
+          child: InkWell(
+            onTap: (){
+              smController.clickTab(1);
+            },
+            child: FingerLottie(
+              width: 60.w,
+              height: 60.w,
+            ),
+          ),
+        ),
       ),
     ),
   );

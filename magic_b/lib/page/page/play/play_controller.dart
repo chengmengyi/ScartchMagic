@@ -18,12 +18,12 @@ import 'package:magic_base/utils/tba/ad_pos.dart';
 import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class PlayController extends SmBaseController with GetTickerProviderStateMixin{
-  var tabIndex=0,showCashFingerGuide=false,canClick=true,showMoneyLottie=false,_addNum=0;
+  var tabIndex=0,showCashFingerGuide=false,wheelChance=0,canClick=true,showMoneyLottie=false,_addNum=0,showWheelFinger=false;
   PlayType playType=PlayType.playfruit;
   List<HomeBottomBean> bottomList=[
-    HomeBottomBean(unsIcon: "card_uns", selIcon: "card_sel", text: "Card"),
+    HomeBottomBean(unsIcon: "card_sel", selIcon: "card_sel", text: "Card"),
     HomeBottomBean(unsIcon: "wheel_uns", selIcon: "wheel_sel", text: "Wheel"),
-    HomeBottomBean(unsIcon: "cash_uns", selIcon: "cash_sel", text: "Cash"),
+    HomeBottomBean(unsIcon: "cash_sel", selIcon: "cash_sel", text: "Cash"),
   ];
   List<Widget> pageList=[WheelChild(home: false,),CashChild(home: false,)];
   late AnimationController moneyLottieController;
@@ -31,6 +31,7 @@ class PlayController extends SmBaseController with GetTickerProviderStateMixin{
   @override
   void onInit() {
     super.onInit();
+    wheelChance=wheelChanceNum.read();
     var map = SmRoutersUtils.instance.getParams();
     playType=map["playType"];
     pageList.insert(0, PlayChild(playType: playType));
@@ -57,6 +58,8 @@ class PlayController extends SmBaseController with GetTickerProviderStateMixin{
   }
 
   clickTab(index){
+    showWheelFinger=false;
+    update(["wheelFingerGuide"]);
     if(!canClick){
       return;
     }
@@ -109,6 +112,12 @@ class PlayController extends SmBaseController with GetTickerProviderStateMixin{
         showMoneyLottie=true;
         update(["money_lottie"]);
         moneyLottieController..reset()..forward();
+        break;
+      case EventCode.keyAnimatorEnd:
+      case EventCode.reduceWheelChance:
+        wheelChance=wheelChanceNum.read();
+        showWheelFinger=wheelChance>0;
+        update(["bottom","wheelFingerGuide"]);
         break;
     }
   }

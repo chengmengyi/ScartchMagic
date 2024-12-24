@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/page/home/child/card/card_child_controller.dart';
+import 'package:magic_b/page/widget/finger_widget/finger_lottie.dart';
 import 'package:magic_b/page/widget/home_top_widget/home_top_widget.dart';
 import 'package:magic_b/utils/b_sql/play_info_bean.dart';
 import 'package:magic_base/base_widget/sm_base_tag_widget.dart';
@@ -46,6 +47,7 @@ class CardChild extends SmBaseTagWidget<CardChildController>{
                   crossAxisCount: 2,
                   mainAxisSpacing: 10.h,
                   crossAxisSpacing: 10.w,
+                  controller: smController.scrollController,
                   itemBuilder: (context,index)=>_itemWidget(smController.playList[index],index),
                   staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),
                 ),
@@ -53,7 +55,7 @@ class CardChild extends SmBaseTagWidget<CardChildController>{
             ),
           )
         ],
-      )
+      ),
     ],
   );
 
@@ -82,7 +84,7 @@ class CardChild extends SmBaseTagWidget<CardChildController>{
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            SmImageWidget(imageName: "icon_coins",width: 24.w,height: 24.w,),
+                            SmImageWidget(imageName: "b_coins",width: 24.w,height: 24.w,),
                             SizedBox(width: 4.w,),
                             SmTextWidget(
                               text: "Win Up To",
@@ -148,7 +150,6 @@ class CardChild extends SmBaseTagWidget<CardChildController>{
             ),
           ),
           (bean.time??0)>0?
-          // true?
           Container(
             width: double.infinity,
             height: double.infinity,
@@ -201,6 +202,13 @@ class CardChild extends SmBaseTagWidget<CardChildController>{
               ),
             ],
           ),
+          Align(
+            alignment: Alignment.center,
+            child: Visibility(
+              visible: index==smController.fingerIndex,
+              child: FingerLottie(),
+            ),
+          )
         ],
       ),
     ),

@@ -26,7 +26,7 @@ class Play7Child extends SmBaseWidget<Play7ChildController>{
     children: [
       SizedBox(height: 16.h,),
       LeftUpLevelWidget(),
-      SizedBox(height: 90.h,),
+      SizedBox(height: 80.h,),
       _contentWidget(),
       SizedBox(height: 20.h,),
       PlayBottomWidget(

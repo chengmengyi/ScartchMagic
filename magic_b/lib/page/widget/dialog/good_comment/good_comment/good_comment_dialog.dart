@@ -67,7 +67,7 @@ class GoodCommentDialog extends SmBaseDialog<GoodCommentController>{
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SmTextWidget(text: "Complete reviews earn 5000", size: 12.sp, color: "#FFFFFF"),
+                SmTextWidget(text: "Complete reviews earn \$5", size: 12.sp, color: "#FFFFFF"),
                 SmImageWidget(imageName: "b_coins",width: 20.w,height: 20.w,)
               ],
             ),

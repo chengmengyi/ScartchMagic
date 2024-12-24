@@ -53,7 +53,7 @@ class CashTaskDialog extends SmBaseDialog<CashTaskController>{
             SizedBox(height: 10.h,),
             InkWell(
               onTap: (){
-                smController.clickGo(fromHome);
+                smController.clickGo(fromHome,list.first);
               },
               child: Stack(
                 alignment: Alignment.center,

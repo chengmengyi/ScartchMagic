@@ -77,7 +77,7 @@ class FirstPlayGuideOverlay extends StatelessWidget{
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            SmImageWidget(imageName: "icon_coins",width: 24.w,height: 24.w,),
+                            SmImageWidget(imageName: "b_coins",width: 24.w,height: 24.w,),
                             SizedBox(width: 4.w,),
                             SmTextWidget(
                               text: "Win Up To",

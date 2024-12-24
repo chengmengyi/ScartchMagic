@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
 import 'package:magic_b/utils/b_storage/b_storage_hep.dart';

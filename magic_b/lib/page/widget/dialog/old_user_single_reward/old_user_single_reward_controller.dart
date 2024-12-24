@@ -32,6 +32,7 @@ class OldUserSingleRewardController extends SmBaseController{
   }
 
   clickSingle(signReward){
+    TbaUtils.instance.pointEvent(pointType: PointType.sm_daily_pop_close);
     ShowAdUtils.instance.showAd(
         adPos: AdPos.stmag_olduser_signin_int,
         adType: AdType.interstitial,

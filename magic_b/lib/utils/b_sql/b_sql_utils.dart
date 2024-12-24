@@ -89,7 +89,7 @@ class BSqlUtils{
     var newMap = Map<String, Object?>.from(map);
     newMap["unlock"]=1;
     await db.update(SmSqlTable.playInfoB, newMap,where: '"id" = ?',whereArgs: [id]);
-    EventInfo(eventCode: EventCode.updateHomeList);
+    EventInfo(eventCode: EventCode.updateHomeList,strValue: nextPlay);
   }
 
   Future<void> resetPlayTime(String playType)async{

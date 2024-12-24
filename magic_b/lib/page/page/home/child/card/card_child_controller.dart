@@ -2,9 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:magic_b/page/widget/dialog/unlock_dialog/unlock_dialog.dart';
-import 'package:magic_b/page/widget/dialog/up_level_dialog/up_level_dialog.dart';
-import 'package:magic_b/utils/b_ad/show_ad_utils.dart';
 import 'package:magic_b/utils/b_sql/b_sql_utils.dart';
 import 'package:magic_b/utils/b_sql/play_info_bean.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
@@ -22,12 +19,15 @@ import 'package:magic_base/utils/check_user/check_user_utils.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
 import 'package:magic_base/utils/firebase/firebase_utils.dart';
+import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/sm_extension.dart';
 import 'package:magic_base/utils/tba/ad_pos.dart';
 import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class CardChildController extends SmBaseController{
+  var fingerIndex=-1;
   GlobalKey playListGlobal=GlobalKey();
+  ScrollController scrollController=ScrollController();
 
   @override
   void onInit() {
@@ -48,6 +48,8 @@ class CardChildController extends SmBaseController{
   }
 
   clickItem(PlayInfoBean bean){
+    fingerIndex=-1;
+    update(["list"]);
     if((bean.time??0)>0){
       showToast("No scratch card, please go to the next level！");
       return;
@@ -62,16 +64,21 @@ class CardChildController extends SmBaseController{
       arguments: {
         "playType":playType,
       },
-      backCall: (map){
-
-      }
     );
   }
 
-  _initPlayList()async{
+  _initPlayList({String playType=""})async{
     playList.clear();
     var list = await BSqlUtils.instance.queryPlayList();
     playList.addAll(list);
+
+    var index = playList.indexWhere((element) => element.type==playType);
+    if(index>=0){
+      scrollController.jumpTo((index~/2)*296.h);
+      fingerIndex=index;
+    }
+
+
     for (var element in playList) {
       element.maxWin=BValueHep.instance.getMaxWin(element.type);
     }
@@ -106,7 +113,7 @@ class CardChildController extends SmBaseController{
   }
 
   double getRefreshTimerEndAngle(PlayInfoBean bean){
-    var pro = (36000000-((bean.time??0)-DateTime.now().millisecondsSinceEpoch))/36000000;
+    var pro = (3600000-((bean.time??0)-DateTime.now().millisecondsSinceEpoch))/3600000;
     if(pro>=1.0){
       return 270;
     }else if(pro<=0){
@@ -123,11 +130,19 @@ class CardChildController extends SmBaseController{
   smEventReceived(EventInfo eventInfo) {
     switch(eventInfo.eventCode){
       case EventCode.updateHomeList:
-        _initPlayList();
+        _checkShowItemFinger(eventInfo.strValue);
         break;
       case EventCode.showFirstPlayGuide:
         _showFirstPlayGuide();
         break;
+    }
+  }
+
+  _checkShowItemFinger(value)async{
+    if(null!=value&&value is String){
+      _initPlayList(playType: value);
+    }else{
+      _initPlayList();
     }
   }
 
@@ -143,15 +158,16 @@ class CardChildController extends SmBaseController{
 
   @override
   void onClose() {
-    super.onClose();
+    scrollController.dispose();
     _timer?.cancel();
+    super.onClose();
   }
 
   test(){
     if(!kDebugMode){
       return;
     }
-    InfoHep.instance.updateCoins(1000);
+    InfoHep.instance.updateCoins(-700);
     // BSqlUtils.instance.deleteTask();
     // BSqlUtils.instance.updateCashTaskPro(TaskType.card);
   }

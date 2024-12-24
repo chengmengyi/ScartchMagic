@@ -48,6 +48,7 @@ class HomePage extends SmBaseBPage<HomeController>{
             crossAxisCount: 3,
             mainAxisSpacing: 0,
             crossAxisSpacing: 0,
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context,index)=>_bottomItemWidget(index,smController.bottomList[index]),
             staggeredTileBuilder: (int index) => const StaggeredTile.fit(1),
           ),
@@ -70,7 +71,11 @@ class HomePage extends SmBaseBPage<HomeController>{
           Stack(
             alignment: Alignment.bottomRight,
             children: [
-              SmImageWidget(imageName: index==smController.tabIndex?bean.selIcon:bean.unsIcon,width: 56.w,height: 56.h,),
+              SmImageWidget(
+                imageName: index==1&&smController.wheelChance<=0?bean.unsIcon:bean.selIcon,
+                width: 56.w,
+                height: 56.h,
+              ),
               Visibility(
                 visible: index==1&&smController.wheelChance==0,
                 child: SmImageWidget(imageName: "icon_luck",width: 22.w,height: 22.h,),
