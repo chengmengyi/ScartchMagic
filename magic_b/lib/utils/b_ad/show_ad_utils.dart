@@ -35,14 +35,14 @@ class ShowAdUtils{
       closeAd.call(false);
       return;
     }
-    TbaUtils.instance.pointEvent(pointType: PointType.stmag_ad_chance);
+    TbaUtils.instance.pointEvent(pointType: PointType.stmag_ad_chance,data: {"ad_pos_id":adPos.name});
     if(AdUtils.instance.checkHasCache(adType)){
       AdUtils.instance.showAd(
         adType: adType,
         showAdResultListener: ShowAdResultListener(
           onAdDisplayedCallback: (MaxAd maxAd,MaxAdBean? maxAdBean){
             TbaUtils.instance.adEvent(maxAd, maxAdBean, adPos);
-            TbaUtils.instance.pointEvent(pointType: PointType.stmag_ad_impression);
+            TbaUtils.instance.pointEvent(pointType: PointType.stmag_ad_impression,data: {"ad_pos_id":adPos.name});
           },
           onAdHiddenCallback: (MaxAd ad){
             closeAd.call(false);
@@ -50,7 +50,7 @@ class ShowAdUtils{
           onAdDisplayFailedCallback: (MaxAd ad, MaxError error){
             showToast("show ad fail, please try again");
             closeAd.call(true);
-            TbaUtils.instance.pointEvent(pointType: PointType.stmag_ad_impression_fail);
+            TbaUtils.instance.pointEvent(pointType: PointType.stmag_ad_impression_fail,data: {"ad_pos_id":adPos.name});
           },
         ),
       );

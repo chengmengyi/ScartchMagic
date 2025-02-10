@@ -20,4 +20,5 @@ StorageHep<bool> firstShowBoxGuide=StorageHep<bool>(key: BStorageName.firstShowB
 StorageHep<bool> firstGetMoney=StorageHep<bool>(key: BStorageName.firstGetMoney, defaultValue: true);
 StorageHep<bool> firstLaunchApp=StorageHep<bool>(key: BStorageName.firstLaunchApp, defaultValue: true);
 StorageHep<bool> hasShowedGoodComment=StorageHep<bool>(key: BStorageName.hasShowedGoodComment, defaultValue: false);
+StorageHep<bool> hasCreateCash=StorageHep<bool>(key: BStorageName.hasCreateCash, defaultValue: false);
 

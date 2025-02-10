@@ -1,6 +1,10 @@
 import 'dart:convert';
 
+import 'package:adjust_sdk/adjust.dart';
+import 'package:adjust_sdk/adjust_ad_revenue.dart';
+import 'package:adjust_sdk/adjust_config.dart';
 import 'package:applovin_max/applovin_max.dart';
+import 'package:flutter/foundation.dart';
 import 'package:magic_base/utils/b_ad/conf_ad_bean.dart';
 import 'package:magic_base/utils/b_ad/load_ad.dart';
 import 'package:magic_base/utils/b_ad/max_ad_bean.dart';
@@ -33,9 +37,11 @@ class AdUtils{
   var adShowing=false;
   ShowAdResultListener? _showAdResultListener;
 
+  // final _facebook = FacebookAppEvents();
+
   initAd()async{
     await AppLovinMAX.initialize(maxKeyBase64.base64());
-    
+
     // var json = jsonDecode(localAdStr.base64());
     // var showNum = json["idnmrhft"]??100;
     // var clickNum = json["owmdhdfr"]??100;
@@ -109,6 +115,10 @@ class AdUtils{
         onAdReceivedRewardCallback: (MaxAd ad, MaxReward reward){
 
         },
+
+        onAdRevenuePaidCallback: (MaxAd ad){
+          _onAdRevenuePaidByAdjust(ad);
+        }
       )
     );
     AppLovinMAX.setInterstitialListener(
@@ -143,8 +153,20 @@ class AdUtils{
             loadAd(AdType.interstitial);
             _showAdResultListener?.onAdHiddenCallback.call(ad);
           },
+          onAdRevenuePaidCallback: (MaxAd ad){
+            _onAdRevenuePaidByAdjust(ad);
+          }
         )
     );
+  }
+
+  _onAdRevenuePaidByAdjust(MaxAd ad){
+    var adjustAdRevenue = AdjustAdRevenue(AdjustConfig.AdRevenueSourceAppLovinMAX,);
+    adjustAdRevenue.setRevenue(ad.revenue, "USD");
+    adjustAdRevenue.adRevenueNetwork=ad.networkName;
+    adjustAdRevenue.adRevenueUnit=ad.adUnitId;
+    adjustAdRevenue.adRevenuePlacement=ad.placement;
+    Adjust.trackAdRevenueNew(adjustAdRevenue);
   }
 
   bool checkHasCache(AdType adType){
@@ -247,6 +269,13 @@ class AdUtils{
       _oneLoadAd?.updateInfo(data.idnmrhft??100, data.owmdhdfr??100, data.stmagIntOne??[], data.stmagRvOne??[]);
       _twoLoadAd?.updateInfo(data.idnmrhft??100, data.owmdhdfr??100, data.stmagIntTwo??[], data.stmagRvTwo??[]);
     }
+  }
+
+  test(){
+    print("kk====");
+    // _facebook.init(appId: "kkk", appToken: "iiii", appName: "");
+    // AppLovinMAX.loadRewardedAd("2310cffb3b371483");
+    AppLovinMAX.loadInterstitial("863fb5de4814dc4b");
   }
 
   ConfAdBean _parseAdData(){

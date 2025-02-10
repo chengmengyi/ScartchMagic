@@ -26,7 +26,7 @@ class RequestCloak{
     var networkType = await FlutterTbaInfo.instance.getNetworkType();
     var operator = await FlutterTbaInfo.instance.getOperator();
     var path="$cloakStr?dupe=$bundleId&shall=$os&spandrel=$appVersion&visor=$distinctId&charon=$clientTs&transmit=$deviceModel&come=$osVersion&alumina=$idfv&ethel=$gaid&hecatomb=$androidId&bellyful=$idfa&bath=$networkType&margaret=$operator";
-    logPrint("check_user--->cloak url--->$cloakStr");
+    logPrint("check_user--->cloak url--->$path");
     var dioResult = await DioUtils.instance.requestGet(url: path);
     logPrint("check_user--->cloak result--->${dioResult.success}--->${dioResult.result}");
     if(dioResult.success&&(dioResult.result=="salvo"||dioResult.result=="len")){

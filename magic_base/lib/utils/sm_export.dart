@@ -7,3 +7,4 @@ export 'package:applovin_max/applovin_max.dart';
 export 'package:webview_flutter/webview_flutter.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:lottie/lottie.dart';
+export 'package:app_tracking_transparency/app_tracking_transparency.dart';

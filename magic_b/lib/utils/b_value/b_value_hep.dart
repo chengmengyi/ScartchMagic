@@ -128,7 +128,7 @@ class BValueHep{
     }
     var userCoins = coins.read();
     var last = list.last;
-    if(userCoins>=(last.endNumber??1000)){
+    if(hasCreateCash.read()||userCoins>=(last.endNumber??1000)){
       return Random().nextInt(100)<(last.point??5);
     }
     for (var value in list) {

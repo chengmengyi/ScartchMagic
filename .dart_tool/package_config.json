@@ -20,6 +20,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "app_tracking_transparency",
+      "rootUri": "file:///Users/a68/.pub-cache/hosted/pub.dev/app_tracking_transparency-2.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "applovin_max",
       "rootUri": "file:///Users/a68/.pub-cache/hosted/pub.dev/applovin_max-4.0.0",
       "packageUri": "lib/",
@@ -626,7 +632,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-12-19T07:00:15.251148Z",
+  "generated": "2024-12-24T10:14:56.963803Z",
   "generator": "pub",
   "generatorVersion": "3.3.3"
 }

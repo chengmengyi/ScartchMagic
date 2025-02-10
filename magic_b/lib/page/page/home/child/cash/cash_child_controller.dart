@@ -82,6 +82,7 @@ class CashChildController extends SmBaseController{
       widget: InputAccountDialog(
         cashNum: bean.cashNum,
         dismiss: (String account)async{
+          hasCreateCash.write(true);
           await CashTaskUtils.instance.insertCashTask(bean.cashNum, cashIndex, account);
           InfoHep.instance.updateCoins(-bean.cashNum);
           updateCashList();

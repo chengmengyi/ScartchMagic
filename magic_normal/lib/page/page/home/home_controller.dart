@@ -7,6 +7,7 @@ import 'package:magic_base/sm_router/all_routers_name.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
+import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/sm_extension.dart';
 import 'package:magic_base/utils/voice/voice_utils.dart';
 import 'package:magic_normal/page/widget/dialog/unlock_dialog/unlock_dialog.dart';
@@ -24,6 +25,7 @@ class HomeController extends SmBaseController{
     super.onReady();
     _initPlayList();
     VoiceUtils.instance.playBgMp3();
+    AppTrackingTransparency.requestTrackingAuthorization();
   }
 
   clickItem(PlayInfoBean bean){

@@ -10,7 +10,6 @@ import 'package:magic_base/utils/firebase/firebase_utils.dart';
 import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/tba/tba_utils.dart';
 import 'package:magic_normal/sm_routers/sm_normal_routers_list.dart';
-import 'package:magic_normal/utils/normal_ad/normal_ad_utils.dart';
 import 'package:magic_normal/utils/normal_sql/normal_sql_utils.dart';
 import 'package:magic_normal/utils/normal_value/normal_value_hep.dart';
 import 'package:scratch_magic/launch_page/launch_page.dart';
@@ -38,7 +37,6 @@ _initApp()async{
   //init a
   NormalValueHep.instance.initValue();
   NormalSqlUtils.instance.queryPlayList();
-  NormalAdUtils.instance.initMax();
 
   //init b
   BValueHep.instance.initValue();

@@ -39,6 +39,7 @@ class HomeController extends SmBaseController with GetTickerProviderStateMixin{
         EventInfo(eventCode: EventCode.updateCoins,intValue: _addNum);
       }
     });
+    AppTrackingTransparency.requestTrackingAuthorization();
   }
 
   @override
