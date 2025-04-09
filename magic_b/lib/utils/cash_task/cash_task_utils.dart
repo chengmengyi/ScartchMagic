@@ -5,9 +5,21 @@ import 'package:magic_b/utils/b_value/b_value_hep.dart';
 import 'package:magic_b/utils/cash_task/cash_list_bean.dart';
 
 class TaskType{
-  static const int card=1;
+  static const int card=0;
+  static const int bubble=1;
   static const int wheel=2;
-  static const int bubble=3;
+}
+
+class TaskKey{
+  static const String card1Number="card1Number";
+  static const String bubble1Number="bubble1Number";
+  static const String wheel1Number="wheel1Number";
+  static const String card2Number="card2Number";
+  static const String bubble2Number="bubble2Number";
+  static const String wheel2Number="wheel2Number";
+  static const String card3Number="card3Number";
+  static const String bubble3Number="bubble3Number";
+  static const String wheel3Number="wheel3Number";
 }
 
 class CashTaskUtils{
@@ -24,8 +36,8 @@ class CashTaskUtils{
   Future<List<CashListBean>> getCashListByCashType(int cashTypeIndex)async{
     List<CashListBean> cashList=[];
     for (var money in BValueHep.instance.getCashList()) {
-      var list = await BSqlUtils.instance.queryCashTaskListByMoneyAndType(money, cashTypeIndex);
-      cashList.add(CashListBean(cashNum: money, list: list));
+      var taskBean = await BSqlUtils.instance.queryCashTaskListByMoneyAndType(money, cashTypeIndex);
+      cashList.add(CashListBean(cashNum: money, taskBean: taskBean));
     }
     return cashList;
   }

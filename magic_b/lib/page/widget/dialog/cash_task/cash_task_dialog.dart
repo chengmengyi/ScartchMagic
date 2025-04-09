@@ -10,10 +10,10 @@ import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/sm_extension.dart';
 
 class CashTaskDialog extends SmBaseDialog<CashTaskController>{
-  List<CashTaskBean> list;
+  CashTaskBean taskBean;
   bool fromHome;
   CashTaskDialog({
-    required this.list,
+    required this.taskBean,
     required this.fromHome,
   });
 
@@ -48,19 +48,19 @@ class CashTaskDialog extends SmBaseDialog<CashTaskController>{
             SizedBox(height: 10.h,),
             SmImageWidget(imageName: "cash_task_card",width: 100.w,height: 100.w,),
             SizedBox(height: 10.h,),
-            SmTextWidget(text: "${smController.getDescStr(list.first)}:", size: 12.sp, color: "#FFFFFF"),
-            SmTextWidget(text: "(${smController.getProStr(list)})", size: 14.sp, color: "#FFE646"),
+            SmTextWidget(text: "${smController.getDescStr(taskBean)}:", size: 12.sp, color: "#FFFFFF"),
+            SmTextWidget(text: "(${smController.getProStr(taskBean)})", size: 14.sp, color: "#FFE646"),
             SizedBox(height: 10.h,),
             InkWell(
               onTap: (){
-                smController.clickGo(fromHome,list.first);
+                smController.clickGo(fromHome,taskBean);
               },
               child: Stack(
                 alignment: Alignment.center,
                 children: [
                   SmImageWidget(imageName: "btn3",width: 200.w,height: 36.h,boxFit: BoxFit.fill,),
                   SmTextWidget(
-                    text: "Go(${smController.getProStr(list)})",
+                    text: "Go(${smController.getProStr(taskBean)})",
                     size: 16.sp,
                     color: "#FFFFFF",
                     shadows: [

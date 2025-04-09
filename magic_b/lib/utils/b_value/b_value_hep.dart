@@ -30,7 +30,7 @@ class BValueHep{
         return;
       }
       if(valueConf.read().isEmpty){
-        var s = FirebaseUtils.instance.getFirebaseConf("magic_number");
+        var s = FirebaseUtils.instance.getFirebaseConf("sm_number_b");
         if(s.isNotEmpty){
           valueConf.write(s);
           _parseValueData();
@@ -52,22 +52,32 @@ class BValueHep{
 
   List<int> getCashList()=>_valueBean?.cardRange??[1000,1200,1500,2000];
 
-  int getMaxProByTaskType(int taskType){
+  test(){
+    print("kk===${_valueBean?.wtdTask?.bubble1Number}");
+  }
+
+  int getMaxProByTaskKey(String taskKey){
     var wtdTask = _valueBean?.wtdTask;
-    switch(taskType){
-      case TaskType.card: return wtdTask?.cardNumber??50;
-      case TaskType.wheel: return wtdTask?.wheelNumber??5;
-      case TaskType.bubble: return wtdTask?.bubbleNumber??10;
-      default: return 50;
+    switch(taskKey){
+      case TaskKey.card1Number: return wtdTask?.card1Number??10;
+      case TaskKey.bubble1Number: return wtdTask?.bubble1Number??10;
+      case TaskKey.wheel1Number: return wtdTask?.wheel1Number??5;
+      case TaskKey.card2Number: return wtdTask?.card2Number??20;
+      case TaskKey.bubble2Number: return wtdTask?.bubble2Number??15;
+      case TaskKey.wheel2Number: return wtdTask?.wheel2Number??10;
+      case TaskKey.card3Number: return wtdTask?.card3Number??30;
+      case TaskKey.bubble3Number: return wtdTask?.bubble3Number??20;
+      case TaskKey.wheel3Number: return wtdTask?.wheel3Number??15;
+      default: return 10;
     }
   }
 
   int getMaxDaysByTaskType(int taskType){
     var wtdTask = _valueBean?.wtdTask;
     switch(taskType){
-      case TaskType.card: return wtdTask?.cardDay??2;
-      case TaskType.wheel: return wtdTask?.wheelDay??3;
-      case TaskType.bubble: return wtdTask?.bubbleDay??2;
+      // case TaskType.card: return wtdTask?.cardDay??2;
+      // case TaskType.wheel: return wtdTask?.wheelDay??3;
+      // case TaskType.bubble: return wtdTask?.bubbleDay??2;
       default: return 2;
     }
   }

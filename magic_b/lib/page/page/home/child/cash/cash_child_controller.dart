@@ -28,15 +28,10 @@ class CashChildController extends SmBaseController{
   ];
   List<CashListBean> cashList=[];
 
-  @override
-  void onInit() {
-    super.onInit();
-    print("kk==CashChildController==onInit");
-  }
+
   @override
   void onReady() {
     super.onReady();
-    print("kk==CashChildController==onReady");
     updateCashList();
   }
 
@@ -52,23 +47,16 @@ class CashChildController extends SmBaseController{
 
   clickCashOut(CashListBean bean,bool fromHome){
     TbaUtils.instance.pointEvent(pointType: PointType.sm_cash_out_c,data: {"money":bean.cashNum});
-    var list = bean.list;
-    if(list.isNotEmpty){
-      if(list.first.completeStatus==1){
+    var taskBean = bean.taskBean;
+    if(null!=taskBean){
+      if(taskBean.completeStatus==1){
         showToast("Cash has arrived, please check your account");
         return ;
       }
-      var indexWhere = list.indexWhere((element) => element.timer==getTodayTime());
-      if(indexWhere>=0){
-        var cashTaskBean = list[indexWhere];
-        if((cashTaskBean.currentPro??0)>=(cashTaskBean.maxPro??0)){
-          showToast("Completed 1 day's task in a row, come back tomorrow");
-          return;
-        }
-      }
+      TbaUtils.instance.pointEvent(pointType: PointType.sm_cash_task_pop,data: {"pop_from":taskBean.taskKey});
       SmRoutersUtils.instance.showDialog(
         widget: CashTaskDialog(
-          list: list,
+          taskBean: taskBean,
           fromHome: fromHome,
         )
       );
@@ -110,8 +98,7 @@ class CashChildController extends SmBaseController{
     }
   }
 
-  String getTitleStr(List<CashTaskBean> list){
-    var cashTaskBean = list.first;
+  String getTitleStr(CashTaskBean cashTaskBean){
     switch(cashTaskBean.taskType){
       case TaskType.card: return "Scratch ${cashTaskBean.maxPro??0} Cards";
       case TaskType.wheel: return "Spin ${cashTaskBean.maxPro??0} Wheels";
@@ -120,50 +107,48 @@ class CashChildController extends SmBaseController{
     }
   }
 
-  String getTaskProStr(List<CashTaskBean> list){
-    var first = list.first;
+  String getTaskProStr(CashTaskBean first){
     if(first.completeStatus==1){
       return "${first.maxPro??0}/${first.maxPro??0}";
     }
-    var current = list.map((item) => (item.currentPro??0)).reduce((a, b) => a + b);
-    return "$current/${list.first.maxPro??0}";
+    return "${first.currentPro??0}/${first.maxPro??0}";
   }
 
-  bool completeCurrentPro(List<CashTaskBean> list){
-    if(list.first.completeStatus==1){
-      return true;
-    }
-    var current = list.map((item) => (item.currentPro??0)).reduce((a, b) => a + b);
-    return current>=(list.first.maxPro??0);
-  }
+  // bool completeCurrentPro(CashTaskBean taskBean){
+  //   if(taskBean.completeStatus==1){
+  //     return true;
+  //   }
+  //   var current = list.map((item) => (item.currentPro??0)).reduce((a, b) => a + b);
+  //   return current>=(list.first.maxPro??0);
+  // }
 
-  String getDaysProStr(List<CashTaskBean> list){
-    var first = list.first;
-    if(first.completeStatus==1){
-      return "${first.maxDays??0}/${first.maxDays??0}";
-    }
-    return "${list.length}/${list.first.maxDays??0}";
-  }
+  // String getDaysProStr(List<CashTaskBean> list){
+  //   var first = list.first;
+  //   if(first.completeStatus==1){
+  //     return "${first.maxDays??0}/${first.maxDays??0}";
+  //   }
+  //   return "${list.length}/${list.first.maxDays??0}";
+  // }
 
-  bool completeCurrentDays(List<CashTaskBean> list){
-    if(list.first.completeStatus==1){
-      return true;
-    }
-    return list.length>=(list.first.maxDays??0);
-  }
+  // bool completeCurrentDays(List<CashTaskBean> list){
+  //   if(list.first.completeStatus==1){
+  //     return true;
+  //   }
+  //   return list.length>=(list.first.maxDays??0);
+  // }
 
-  String getBtnStr(List<CashTaskBean> list){
-    if(list.isEmpty){
-      return "Cash Out";
-    }
-    if(list.first.completeStatus==1){
+  String getBtnStr(CashTaskBean? taskBean){
+    // if(null==taskBean){
+    //   return "Cash Out";
+    // }
+    if(taskBean?.completeStatus==1){
       return "Completed";
     }
-    var indexWhere = list.indexWhere((element) => element.timer==getTodayTime());
-    if(indexWhere>=0){
-      var cashTaskBean = list[indexWhere];
-      return (cashTaskBean.currentPro??0)>=(cashTaskBean.maxPro??0)?"Completed":"Cash Out";
-    }
+    // var indexWhere = list.indexWhere((element) => element.timer==getTodayTime());
+    // if(indexWhere>=0){
+    //   var cashTaskBean = list[indexWhere];
+    //   return (cashTaskBean.currentPro??0)>=(cashTaskBean.maxPro??0)?"Completed":"Cash Out";
+    // }
     return "Cash Out";
   }
 

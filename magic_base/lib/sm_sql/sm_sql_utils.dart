@@ -6,6 +6,7 @@ class SmSqlTable{
   static const String playInfoNormal="playInfoNormal";
   static const String playInfoB="playInfoB";
   static const String cashTaskB="cashTaskB";
+  static const String cashTaskB2="cashTaskB2";
   static const String tba="tba";
 }
 
@@ -22,15 +23,19 @@ class SmSqlUtils{
 
   Future<Database> openDB() async => await openDatabase(
     "scratchMagic.db",
-    version: 2,
+    version: 3,
     onCreate: (db,version)async{
       db.execute('CREATE TABLE ${SmSqlTable.playInfoNormal} (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, currentPro INTEGER, playedNum INTEGER, unlock INTEGER, time INTEGER)');
 
       _createVersion2DB(db);
+      _createVersion3DB(db);
     },
     onUpgrade: (db,oldVersion,newVersion){
       if(newVersion==2){
         _createVersion2DB(db);
+      }
+      if(newVersion==3){
+        _createVersion3DB(db);
       }
     }
   );
@@ -39,6 +44,10 @@ class SmSqlUtils{
     db.execute('CREATE TABLE ${SmSqlTable.playInfoB} (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, currentPro INTEGER, playedNum INTEGER, unlock INTEGER, time INTEGER)');
     db.execute('CREATE TABLE ${SmSqlTable.cashTaskB} (id INTEGER PRIMARY KEY AUTOINCREMENT, taskType INTEGER, cashType INTEGER, cashMoney INTEGER, currentPro INTEGER, maxPro INTEGER, completeStatus INTEGER,maxDays INTEGER,timer TEXT,account TEXT)');
     db.execute('CREATE TABLE ${SmSqlTable.tba} (id INTEGER PRIMARY KEY AUTOINCREMENT, dataMap TEXT)');
+  }
+
+  _createVersion3DB(db){
+    db.execute('CREATE TABLE ${SmSqlTable.cashTaskB2} (id INTEGER PRIMARY KEY AUTOINCREMENT, taskType INTEGER,taskKey TEXT, cashType INTEGER, cashMoney INTEGER, currentPro INTEGER, maxPro INTEGER, completeStatus INTEGER, account TEXT)');
   }
 
   insertTbaMap(Map<String,dynamic> map)async{

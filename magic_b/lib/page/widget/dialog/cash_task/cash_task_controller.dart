@@ -9,33 +9,22 @@ import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class CashTaskController extends SmBaseController{
 
-  @override
-  void onInit() {
-    super.onInit();
-    TbaUtils.instance.pointEvent(pointType: PointType.sm_cash_task_pop);
-  }
-
   String getDescStr(CashTaskBean cashTaskBean){
     switch(cashTaskBean.taskType){
-      case TaskType.card: return "Scratch ${cashTaskBean.maxPro??0} cards for ${cashTaskBean.maxDays??0} consecutive days";
-      case TaskType.wheel: return "Play ${cashTaskBean.maxPro??0} Wheel for ${cashTaskBean.maxDays??0} consecutive days";
-      case TaskType.bubble: return "Collect ${cashTaskBean.maxPro??0} Cash Pops for ${cashTaskBean.maxDays??0} consecutive days";
+      case TaskType.card: return "Scratch ${cashTaskBean.maxPro??0} cards";
+      case TaskType.wheel: return "Play ${cashTaskBean.maxPro??0} Wheel";
+      case TaskType.bubble: return "Collect ${cashTaskBean.maxPro??0} Cash Pops";
       default: return "";
     }
   }
 
-  String getProStr(List<CashTaskBean> list){
-    var current = list.map((item) => (item.currentPro??0)).reduce((a, b) => a + b);
-    return "$current/${list.first.maxPro??0}";
-  }
+  String getProStr(CashTaskBean taskBean)=>"${taskBean.currentPro??0}/${taskBean.maxPro??0}";
 
   clickGo(bool fromHome,CashTaskBean cashTaskBean){
     //pop_from:card、wheel、pop
     TbaUtils.instance.pointEvent(
       pointType: PointType.sm_cash_task_pop_c,
-      data: {
-        "pop_from":cashTaskBean.taskType==TaskType.card?"card":cashTaskBean.taskType==TaskType.wheel?"wheel":"pop"
-      },
+      data: {"pop_from":cashTaskBean.taskKey},
     );
     SmRoutersUtils.instance.offPage();
     if(fromHome){

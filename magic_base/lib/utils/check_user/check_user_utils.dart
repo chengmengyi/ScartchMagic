@@ -34,10 +34,10 @@ class CheckUserUtils{
   }
 
   checkUser(){
-    // if(kDebugMode){
-    //   buyUser=true;
-    //   return;
-    // }
+    if(kDebugMode){
+      buyUser=true;
+      return;
+    }
     if(localBuyUser.read()){
       logPrint("check_user--->local is buy");
       buyUser=true;

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/page/play/play_child/play_8/play8_bean.dart';
 import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
+import 'package:magic_b/page/widget/dialog/no_reward/no_reward_dialog.dart';
 import 'package:magic_b/utils/cash_task/cash_task_utils.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
@@ -142,11 +143,20 @@ class Play8ChildController extends SmBaseController with GetTickerProviderStateM
           arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)}
       );
     }else{
-      update(["result_fail"]);
-      Future.delayed(const Duration(milliseconds: 2000),(){
-        _initYourList();
-        resetPlay();
-      });
+      // update(["result_fail"]);
+      // Future.delayed(const Duration(milliseconds: 2000),(){
+      //   _initYourList();
+      //   resetPlay();
+      // });
+
+      SmRoutersUtils.instance.showDialog(
+        widget: NoRewardDialog(
+          dismiss: (){
+            _initYourList();
+            resetPlay();
+          },
+        ),
+      );
     }
   }
 

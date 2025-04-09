@@ -6,6 +6,7 @@ import 'package:magic_base/utils/tba/ad_pos.dart';
 import 'package:magic_base/utils/tba/install_event.dart';
 import 'package:magic_base/utils/tba/point_event.dart';
 import 'package:magic_base/utils/tba/session_event.dart';
+import 'package:magic_base/utils/tba/sql_event.dart';
 
 StorageHep<bool> installUpload=StorageHep<bool>(key: "installUpload", defaultValue: false);
 
@@ -27,6 +28,7 @@ class TbaUtils{
     }
     SessionEvent().upload();
     pointEvent(pointType: PointType.sm_session);
+    SqlEvent().upload();
   }
 
   adEvent(MaxAd maxAd,MaxAdBean? maxAdBean,AdPos adPos){

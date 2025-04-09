@@ -198,7 +198,7 @@ class CashChild extends SmBaseTagWidget<CashChildController>{
                             smController.clickCashOut(bean,home);
                           },
                           child: SmTextWidget(
-                            text: smController.getBtnStr(bean.list),
+                            text: smController.getBtnStr(bean.taskBean),
                             size: 14.sp,
                             color: "#FFFFFF",
                             fontWeight: FontWeight.bold,
@@ -217,7 +217,7 @@ class CashChild extends SmBaseTagWidget<CashChildController>{
                 ],
               ),
               SizedBox(height: 4.h,),
-              bean.list.isEmpty?Stack(
+              null==bean.taskBean?Stack(
                 alignment: Alignment.centerRight,
                 children: [
                   LayoutBuilder(
@@ -267,7 +267,7 @@ class CashChild extends SmBaseTagWidget<CashChildController>{
                   SmImageWidget(imageName: "b_coins",width: 24.w,height: 24.w,),
                 ],
               ):
-              _taskListWidget(bean.list),
+              _taskListWidget(bean.taskBean!),
             ],
           ),
         )
@@ -275,7 +275,7 @@ class CashChild extends SmBaseTagWidget<CashChildController>{
     ),
   );
 
-  _taskListWidget(List<CashTaskBean> list)=>Row(
+  _taskListWidget(CashTaskBean taskBean)=>Row(
     children: [
       SmImageWidget(imageName: "icon_box2",width: 32.w,height: 32.h,),
       SizedBox(width: 8.w,),
@@ -295,58 +295,44 @@ class CashChild extends SmBaseTagWidget<CashChildController>{
               child: Row(
                 children: [
                   Expanded(
-                    child: SmTextWidget(text: smController.getTitleStr(list), size: 12.sp, color: "#FFFFFF"),
+                    child: SmTextWidget(text: smController.getTitleStr(taskBean), size: 12.sp, color: "#FFFFFF"),
                   ),
-                  SmTextWidget(text: smController.getTaskProStr(list), size: 12.sp, color: "#FFE32E",fontWeight: FontWeight.bold,),
-                  SizedBox(width: 20.w,),
-                  Container(
-                    width: 16.w,
-                    height: 16.w,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: "#140A5D".toSmColor(),
-                        borderRadius: BorderRadius.circular(2.w)
-                    ),
-                    child: Visibility(
-                      visible: smController.completeCurrentPro(list),
-                      child: SmImageWidget(imageName: "gou",width: 16.w,height: 16.w,),
-                    ),
-                  )
+                  SmTextWidget(text: smController.getTaskProStr(taskBean), size: 12.sp, color: "#FFE32E",fontWeight: FontWeight.bold,),
                 ],
               ),
             ),
-            Container(
-              width: double.infinity,
-              height: 20.h,
-              padding: EdgeInsets.only(left: 4.w,right: 4.w),
-              margin: EdgeInsets.only(top: 2.h,bottom: 2.h),
-              decoration: BoxDecoration(
-                  color: "#3231A0".toSmColor(),
-                  borderRadius: BorderRadius.circular(4.w)
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: SmTextWidget(text: "Play Game ${list.first.maxDays??0} days", size: 12.sp, color: "#FFFFFF"),
-                  ),
-                  SmTextWidget(text: smController.getDaysProStr(list), size: 12.sp, color: "#FFE32E",fontWeight: FontWeight.bold,),
-                  SizedBox(width: 20.w,),
-                  Container(
-                    width: 16.w,
-                    height: 16.w,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: "#140A5D".toSmColor(),
-                        borderRadius: BorderRadius.circular(2.w)
-                    ),
-                    child: Visibility(
-                      visible: smController.completeCurrentDays(list),
-                      child: SmImageWidget(imageName: "gou",width: 16.w,height: 16.w,),
-                    ),
-                  )
-                ],
-              ),
-            ),
+            // Container(
+            //   width: double.infinity,
+            //   height: 20.h,
+            //   padding: EdgeInsets.only(left: 4.w,right: 4.w),
+            //   margin: EdgeInsets.only(top: 2.h,bottom: 2.h),
+            //   decoration: BoxDecoration(
+            //       color: "#3231A0".toSmColor(),
+            //       borderRadius: BorderRadius.circular(4.w)
+            //   ),
+            //   child: Row(
+            //     children: [
+            //       Expanded(
+            //         child: SmTextWidget(text: "Play Game ${list.first.maxDays??0} days", size: 12.sp, color: "#FFFFFF"),
+            //       ),
+            //       SmTextWidget(text: smController.getDaysProStr(list), size: 12.sp, color: "#FFE32E",fontWeight: FontWeight.bold,),
+            //       SizedBox(width: 20.w,),
+            //       Container(
+            //         width: 16.w,
+            //         height: 16.w,
+            //         alignment: Alignment.center,
+            //         decoration: BoxDecoration(
+            //             color: "#140A5D".toSmColor(),
+            //             borderRadius: BorderRadius.circular(2.w)
+            //         ),
+            //         child: Visibility(
+            //           visible: smController.completeCurrentDays(list),
+            //           child: SmImageWidget(imageName: "gou",width: 16.w,height: 16.w,),
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       )

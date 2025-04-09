@@ -167,9 +167,11 @@ class CardChildController extends SmBaseController{
     if(!kDebugMode){
       return;
     }
-    // InfoHep.instance.updateCoins(-700);
+    // InfoHep.instance.updateCoins(700);
     // BSqlUtils.instance.deleteTask();
     // BSqlUtils.instance.updateCashTaskPro(TaskType.card);
-    AdUtils.instance.test();
+    // AdUtils.instance.test();
+
+    BSqlUtils.instance.updateCashTaskPro(TaskType.wheel);
   }
 }

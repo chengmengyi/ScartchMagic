@@ -41,6 +41,7 @@ _initApp()async{
   //init b
   BValueHep.instance.initValue();
   BSqlUtils.instance.queryPlayList();
+  BSqlUtils.instance.checkVersion2HasTask();
   AdUtils.instance.initAd();
 
   CheckUserUtils.instance.initCheck();

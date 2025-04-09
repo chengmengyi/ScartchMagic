@@ -78,10 +78,8 @@ class InputAccountDialog extends SmBaseDialog<InputAccountController>{
         ),
         child:  TextField(
           enabled: true,
-          maxLength: 20,
           textAlign: TextAlign.center,
           controller: smController.textEditingController,
-          keyboardType: TextInputType.number,
           style: TextStyle(
             fontSize: 14.sp,
             color: Colors.white,

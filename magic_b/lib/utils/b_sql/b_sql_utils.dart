@@ -62,9 +62,6 @@ class BSqlUtils{
     }
     await db.update(SmSqlTable.playInfoB, newMap,where: '"id" = ?',whereArgs: [id]);
     EventInfo(eventCode: EventCode.updateLevelPro);
-    // if(playedNum+1>=10){
-    //   EventInfo(eventCode: EventCode.updateHomeList);
-    // }
     EventInfo(eventCode: EventCode.updateHomeList);
 
     var queryPlayList = await BSqlUtils.instance.queryPlayList();
@@ -107,132 +104,111 @@ class BSqlUtils{
     EventInfo(eventCode: EventCode.updateHomeList);
   }
 
-  //返回的是包含今日的提现进度，最多两条
-  Future<List<CashTaskBean>> queryCashTaskListByMoneyAndType(int money,int cashType)async{
+  Future<CashTaskBean?> queryCashTaskListByMoneyAndType(int money,int cashType)async{
     var db = await SmSqlUtils.instance.openDB();
-    var list = await db.query(SmSqlTable.cashTaskB,where: '"cashMoney" = ? AND "cashType" = ?', whereArgs: [money,cashType]);
+    var list = await db.query(SmSqlTable.cashTaskB2,where: '"cashMoney" = ? AND "cashType" = ?', whereArgs: [money,cashType]);
     if(list.isEmpty){
-      return [];
+      return null;
     }
-    List<CashTaskBean> cashTaskList=[];
-    var indexWhere = list.indexWhere((element) => element["timer"]==getTodayTime());
-    if(indexWhere<0){
-      cashTaskList.add(CashTaskBean.fromJson(list.last));
-      cashTaskList.add(CashTaskBean());
-    }else{
-      if(list.length>=2){
-        cashTaskList.add(CashTaskBean.fromJson(list[list.length-2]));
-        cashTaskList.add(CashTaskBean.fromJson(list.last));
-      }else{
-        cashTaskList.add(CashTaskBean.fromJson(list.last));
-      }
-    }
-    return cashTaskList;
+    return CashTaskBean.fromJson(list.first);
   }
 
   Future<void> insertCashTask(int money,int cashType,String account,int taskType)async{
     var db = await SmSqlUtils.instance.openDB();
     var taskBean = CashTaskBean(
       taskType: taskType,
+      taskKey: TaskKey.card1Number,
       cashType: cashType,
       cashMoney: money,
       currentPro: 0,
-      maxPro: BValueHep.instance.getMaxProByTaskType(taskType),
-      maxDays: BValueHep.instance.getMaxDaysByTaskType(taskType),
-      timer: getTodayTime(),
+      maxPro: BValueHep.instance.getMaxProByTaskKey(TaskKey.card1Number),
       completeStatus: 0,
       account: account,
     );
-    await db.insert(SmSqlTable.cashTaskB, taskBean.toJson());
+    await db.insert(SmSqlTable.cashTaskB2, taskBean.toJson());
   }
 
   Future<void> updateCashTaskPro(int taskType)async{
     var db = await SmSqlUtils.instance.openDB();
-    var list = await db.query(SmSqlTable.cashTaskB,where: '"taskType" = ?', whereArgs: [taskType]);
+    var list = await db.query(SmSqlTable.cashTaskB2,where: '"taskType" = ?', whereArgs: [taskType]);
     print("kk==updateCashTaskPro===${list}");
-
-    // return;
-
     if(list.isEmpty){
       return;
     }
-    var todayTime = getTodayTime();
-    var groupByMap = groupBy(list, (p0) => p0["cashType"]);
-    for(var keys in groupByMap.keys){
-      var value = groupByMap[keys]??[];
-      var indexWhere = value.indexWhere((element) => element["timer"]==todayTime);
-      //此提现类型中有今天的数据，更新进度
-      if(indexWhere>=0){
-        var map = value[indexWhere];
-        var newMap = Map<String,Object>.from(map);
-        var currentPro = map["currentPro"] as int;
-        newMap["currentPro"]=currentPro+1;
-        await db.update(SmSqlTable.cashTaskB, newMap,where: "id = ?",whereArgs: [map["id"]]);
-      }else{ //此提现类型中没有今天的数据，插入一条进入数据
-        var map = value.first;
-        var newMap = Map<String,Object>.from(map);
-        newMap["currentPro"]=1;
-        newMap["timer"]=todayTime;
-        newMap.remove("id");
-        await db.insert(SmSqlTable.cashTaskB, newMap);
-      }
-    }
-    //判断是否跳转到下一个任务
-    _checkToNextCashTask(db,taskType);
-  }
-
-  //判断是否跳转到下一个任务
-  Future<void> _checkToNextCashTask(Database db,int taskType)async{
-    var list = await db.query(SmSqlTable.cashTaskB,where: '"taskType" = ?', whereArgs: [taskType]);
-
-    if(list.isEmpty){
-      return;
-    }
-    var group = groupBy(list, (p0) => p0["cashType"]);
-    print("kk==_checkToNextCashTask===${group}");
-    for (var keys in group.keys) {
-      var value = group[keys]??[];
-      if(value.isNotEmpty){
-        var firstMap = Map<String,Object>.from(value.first);
-        var maxDays = firstMap["maxDays"] as int;
-        if(value.length>=maxDays){
-          var allDaysPro=value.sublist(value.length-maxDays,value.length).map((e) => e["currentPro"] as int).toList().reduce((value, element) => value+element);
-          var maxPro = firstMap["maxPro"] as int;
-          print("kk====${keys}===${allDaysPro}==${maxPro}");
-          if(allDaysPro>=maxPro){
-            //删除指定类型的所有数据
-            await db.delete(SmSqlTable.cashTaskB,where: '"taskType" = ?',whereArgs: [taskType]);
-            //完成了所有任务
-            if(taskType==TaskType.bubble){
-              firstMap["completeStatus"]=1;
-              firstMap.remove("id");
-            }else{ //完成了此项任务，开启下一项任务
-              var nextTaskType = _getNextTaskType(taskType);
-              firstMap.remove("id");
-              firstMap["taskType"]=nextTaskType;
-              firstMap["currentPro"]=0;
-              firstMap["maxPro"]=BValueHep.instance.getMaxProByTaskType(nextTaskType);
-              firstMap["maxDays"]=BValueHep.instance.getMaxDaysByTaskType(nextTaskType);
-              firstMap["timer"]=getTodayTime();
-            }
-            await db.insert(SmSqlTable.cashTaskB, firstMap);
-          }
+    for (var value in list) {
+      var newMap = Map<String,Object>.from(value);
+      var currentPro = newMap["currentPro"] as int;
+      var maxPro = newMap["maxPro"] as int;
+      var taskKey = newMap["taskKey"] as String;
+      //已完成当前任务
+      if(currentPro>=maxPro-1){
+        var nextTaskKey = _getNextTaskKey(taskKey);
+        //已完成所有任务
+        if(nextTaskKey.isEmpty){
+          newMap["completeStatus"]=1;
+        }else{ //跳转到下一个任务
+          newMap["taskKey"]=nextTaskKey;
+          newMap["taskType"]=_getNextTaskTypeByKey(taskKey);
+          newMap["currentPro"]=0;
+          newMap["maxPro"]=BValueHep.instance.getMaxProByTaskKey(nextTaskKey);
         }
+      }else{
+        newMap["currentPro"]=currentPro+1;
       }
+      await db.update(SmSqlTable.cashTaskB2, newMap,where: "id = ?",whereArgs: [value["id"]]);
     }
     EventInfo(eventCode: EventCode.updateCashTaskList);
   }
 
-  int _getNextTaskType(int currentTaskType){
-    switch(currentTaskType){
-      case TaskType.card: return TaskType.wheel;
-      case TaskType.wheel: return TaskType.bubble;
-      default: return TaskType.card;
+  String _getNextTaskKey(String currentTaskKey){
+    switch(currentTaskKey){
+      case TaskKey.card1Number: return TaskKey.bubble1Number;
+      case TaskKey.bubble1Number: return TaskKey.wheel1Number;
+      case TaskKey.wheel1Number: return TaskKey.card2Number;
+      case TaskKey.card2Number: return TaskKey.bubble2Number;
+      case TaskKey.bubble2Number: return TaskKey.wheel2Number;
+      case TaskKey.wheel2Number: return TaskKey.card3Number;
+      case TaskKey.card3Number: return TaskKey.bubble3Number;
+      case TaskKey.bubble3Number: return TaskKey.wheel3Number;
+      default: return "";
     }
   }
 
-  Future<void> deleteTask()async{
+  int _getNextTaskTypeByKey(String currentTaskKey){
+    switch(currentTaskKey){
+      case TaskKey.card1Number:
+      case TaskKey.card2Number:
+      case TaskKey.card3Number:
+        return TaskType.bubble;
+      case TaskKey.bubble1Number:
+      case TaskKey.bubble2Number:
+      case TaskKey.bubble3Number:
+        return TaskType.wheel;
+      case TaskKey.wheel1Number:
+      case TaskKey.wheel2Number:
+        return TaskType.card;
+      default: return -1;
+    }
+  }
+
+  // Future<void> deleteTask()async{
+  //   var db = await SmSqlUtils.instance.openDB();
+  //   await db.delete(SmSqlTable.cashTaskB);
+  // }
+
+  checkVersion2HasTask()async{
     var db = await SmSqlUtils.instance.openDB();
-    await db.delete(SmSqlTable.cashTaskB);
+    var list = await db.query(SmSqlTable.cashTaskB);
+    print(list);
+    //[{id: 1, taskType: 1, cashType: 0, cashMoney: 1000, currentPro: 0, maxPro: 50, completeStatus: 0, maxDays: 2, timer: 2025-2-9, account: 5555666}]
+    if(list.isNotEmpty){
+      for (var map in list) {
+        var cashMoney = map["cashMoney"] as int;
+        var cashType = map["cashType"] as int;
+        var account = map["account"] as String;
+        await insertCashTask(cashMoney, cashType, account, TaskType.card);
+      }
+      await db.delete(SmSqlTable.cashTaskB);
+    }
   }
 }

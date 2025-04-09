@@ -14,7 +14,8 @@ enum AdPos{
   stmag_box_rv,
   stmag_box_int,
   stmag_wheel_rv,
-  stmag_wheel_int
+  stmag_wheel_int,
+  stmag_card_failed_int,
 }
 
 enum PointType{
@@ -77,5 +78,7 @@ enum PointType{
   stmag_ad_impression_fail,
   stmag_ad_impression,
   sm_daily_wheel_pop_close,
-  sm_daily_pop_close
+  sm_daily_pop_close,
+  sm_failed_pop,
+  sm_failed_pop_c,
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:magic_b/enums/play_result_status.dart';
 import 'package:magic_b/page/page/play/play_child/play_big/big_your_bean.dart';
 import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
+import 'package:magic_b/page/widget/dialog/no_reward/no_reward_dialog.dart';
 import 'package:magic_b/page/widget/dialog/up_level_dialog/up_level_dialog.dart';
 import 'package:magic_b/utils/auto_scratch_utils.dart';
 import 'package:magic_b/utils/b_sql/b_sql_utils.dart';
@@ -125,11 +126,19 @@ class PlayBigChildController extends SmBaseController with GetTickerProviderStat
           arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)}
       );
     }else{
-      update(["result_fail"]);
-      Future.delayed(const Duration(milliseconds: 2000),(){
-        _initWinningNumList();
-        resetPlay();
-      });
+      // update(["result_fail"]);
+      // Future.delayed(const Duration(milliseconds: 2000),(){
+      //   _initWinningNumList();
+      //   resetPlay();
+      // });
+      SmRoutersUtils.instance.showDialog(
+        widget: NoRewardDialog(
+          dismiss: (){
+            _initWinningNumList();
+            resetPlay();
+          },
+        ),
+      );
     }
   }
 

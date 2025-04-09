@@ -122,36 +122,49 @@ class ValueBean {
 
 class WtdTask {
   WtdTask({
-      this.cardNumber, 
-      this.cardDay, 
-      this.wheelNumber, 
-      this.wheelDay, 
-      this.bubbleNumber, 
-      this.bubbleDay,});
+      this.card1Number,
+      this.bubble1Number,
+      this.wheel1Number,
+      this.card2Number,
+      this.bubble2Number,
+      this.wheel2Number,
+      this.card3Number,
+      this.bubble3Number,
+      this.wheel3Number,
+  });
 
   WtdTask.fromJson(dynamic json) {
-    cardNumber = json['card_number'];
-    cardDay = json['card_day'];
-    wheelNumber = json['wheel_number'];
-    wheelDay = json['wheel_day'];
-    bubbleNumber = json['bubble_number'];
-    bubbleDay = json['bubble_day'];
+    card1Number = json['card1_number'];
+    bubble1Number = json['bubble1_number'];
+    wheel1Number = json['wheel1_number'];
+    card2Number = json['card2_number'];
+    bubble2Number = json['bubble2_number'];
+    wheel2Number = json['wheel2_number'];
+    card3Number = json['card3_number'];
+    bubble3Number = json['bubble3_number'];
+    wheel3Number = json['wheel3_number'];
   }
-  int? cardNumber;
-  int? cardDay;
-  int? wheelNumber;
-  int? wheelDay;
-  int? bubbleNumber;
-  int? bubbleDay;
+  int? card1Number;
+  int? bubble1Number;
+  int? wheel1Number;
+  int? card2Number;
+  int? bubble2Number;
+  int? wheel2Number;
+  int? card3Number;
+  int? bubble3Number;
+  int? wheel3Number;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['card_number'] = cardNumber;
-    map['card_day'] = cardDay;
-    map['wheel_number'] = wheelNumber;
-    map['wheel_day'] = wheelDay;
-    map['bubble_number'] = bubbleNumber;
-    map['bubble_day'] = bubbleDay;
+    map['card1_number'] = card1Number;
+    map['bubble1_number'] = bubble1Number;
+    map['wheel1_number'] = wheel1Number;
+    map['card2_number'] = card2Number;
+    map['bubble2_number'] = bubble2Number;
+    map['wheel2_number'] = wheel2Number;
+    map['card3_number'] = card3Number;
+    map['bubble3_number'] = bubble3Number;
+    map['wheel3_number'] = wheel3Number;
     return map;
   }
 
