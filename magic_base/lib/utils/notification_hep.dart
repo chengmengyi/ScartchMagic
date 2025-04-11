@@ -19,14 +19,50 @@ class NotificationHep{
 
   initNotification()async{
     List<LocalNotificationConfig> workList=[];
-    workList.add(LocalNotificationConfig(type: NotificationType.jiange1, title: "Your Cash is on the Way! 🚀", body: "You’re one step away from getting your cash!", intervalMinute: kDebugMode?1:30,));
-    workList.add(LocalNotificationConfig(type: NotificationType.jiange2, title: "Payout Complete! 💸", body: "\$1000 has been sent. Check your account!", intervalMinute: kDebugMode?1:60,));
-    workList.add(LocalNotificationConfig(type: NotificationType.jiange3, title: "Congrats! You Cashed Out! 🎊", body: "Verify now to receive your cash!", intervalMinute: kDebugMode?1:50,));
+    workList.add(
+        LocalNotificationConfig(
+          type: NotificationType.jiange1,
+          title: "Your Cash is on the Way! 🚀",
+          body: "You’re one step away from getting your cash!",
+          loopNum: 48,
+          singleAddMinute: kDebugMode?1:60,
+        )
+    );
+    workList.add(
+        LocalNotificationConfig(
+          type: NotificationType.jiange2,
+          title: "Payout Complete! 💸",
+          body: "\$1000 has been sent. Check your account!",
+          loopNum: 48,
+          singleAddMinute: kDebugMode?1:60,
+        )
+    );
+    workList.add(
+        LocalNotificationConfig(
+          type: NotificationType.jiange3,
+          title: "Congrats! You Cashed Out! 🎊",
+          body: "Verify now to receive your cash!",
+          loopNum: 48,
+          singleAddMinute: kDebugMode?1:60,
+        )
+    );
     FlutterAndroidLocalNotification.instance.initAllNotification(
       fcmTopic: "c68card_fcm",
       workList: workList,
-      lockScreenNotification: LocalNotificationConfig(type: NotificationType.suoping, title: "Scratch to Earn", body: "💰Scratch. Win. Cash Out - Your Ticket to Instant Payouts", intervalMinute: 1),
-      serviceNotification: LocalNotificationConfig(type: NotificationType.guding, title: "One Scratch, Endless Luck!", body: "Scratch Cards = Daily Cash! Turn Moments into Money, Anytime, Anywhere!", intervalMinute: kDebugMode?1:30,),
+      lockScreenNotification: LocalNotificationConfig(
+        type: NotificationType.suoping,
+        title: "Scratch to Earn",
+        body: "💰Scratch. Win. Cash Out - Your Ticket to Instant Payouts",
+        loopNum: 0,
+        singleAddMinute: 0,
+      ),
+      serviceNotification: LocalNotificationConfig(
+        type: NotificationType.guding,
+        title: "One Scratch, Endless Luck!",
+        body: "Scratch Cards = Daily Cash! Turn Moments into Money, Anytime, Anywhere!",
+        loopNum: 0,
+        singleAddMinute: 0,
+      ),
       callback: LocalNotificationCallback(
         clickNotificationCallback: (type){
           _clickNotification(type);

@@ -289,10 +289,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_android_local_notification
-      sha256: "95137cd16b13c242e1dd04323444fe1bf2a2d40104cea4f3b833ea944be72bed"
+      sha256: d5ad2d190e2694a63bc653759119d9865fdaefa051f844126eb2738899f8ab54
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.3"
+    version: "0.0.4"
   flutter_app_lifecycle:
     dependency: transitive
     description:

@@ -149,6 +149,13 @@
             </list>
           </value>
         </entry>
+        <entry key="cupertino_icons">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.8/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="dbus">
           <value>
             <list>
@@ -481,8 +488,8 @@
         <entry key="path_provider_foundation">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.1/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.0/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.1/lib" />
             </list>
           </value>
         </entry>
@@ -678,8 +685,8 @@
         <entry key="url_launcher_ios">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.2/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.1/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.2/lib" />
             </list>
           </value>
         </entry>
@@ -693,8 +700,8 @@
         <entry key="url_launcher_macos">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_macos-3.2.2/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_macos-3.2.1/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_macos-3.2.2/lib" />
             </list>
           </value>
         </entry>
@@ -722,8 +729,8 @@
         <entry key="uuid">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/uuid-4.5.1/lib" />
               <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/uuid-3.0.7/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/uuid-4.5.1/lib" />
             </list>
           </value>
         </entry>
@@ -814,6 +821,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/clock-1.1.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/collection-1.18.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/crypto-3.0.3/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.8/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dbus-0.7.10/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dio-5.3.3/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/event_bus-2.0.0/lib" />
