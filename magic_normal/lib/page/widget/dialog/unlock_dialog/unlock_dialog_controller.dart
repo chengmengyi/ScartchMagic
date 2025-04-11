@@ -36,6 +36,8 @@ class UnlockDialogController extends SmBaseController{
           onAdDisplayFailedCallback: (MaxAd ad, MaxError error){
             showToast("show ad fail, please try again");
           },
+          onAdRevenuePaidCallback: (MaxAd maxAd,MaxAdBean? maxAdBean){
+          },
         ),
       );
     }else{

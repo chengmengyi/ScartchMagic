@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter_tba_info/flutter_tba_info.dart';
 import 'package:magic_base/utils/data.dart';
 import 'package:magic_base/utils/dio/dio_result.dart';
@@ -19,7 +17,7 @@ class BaseEvent{
     "bath" : await FlutterTbaInfo.instance.getNetworkType(),
     "dupe" : await FlutterTbaInfo.instance.getBundleId(),
     "margaret" : await FlutterTbaInfo.instance.getOperator(),
-    "shall" : Platform.isAndroid?"quirt":"batik",
+    "shall" : "quirt",
     "ethel" : await FlutterTbaInfo.instance.getGaid(),
     "charon" : DateTime.now().millisecondsSinceEpoch,
     "anxious" : await FlutterTbaInfo.instance.getSystemLanguage(),

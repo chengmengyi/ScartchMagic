@@ -1,4 +1,5 @@
 
+import 'package:magic_b/utils/local_data.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/sm_router/all_routers_name.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
@@ -7,7 +8,7 @@ import 'package:magic_base/utils/voice/voice_utils.dart';
 
 class SetController extends SmBaseController{
   toPrivacy(){
-    SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.privacyA);
+    SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.privacyB,arguments: {"url":privacyUrl,"title":"Privacy Policy"});
   }
 
   toEmail()async{

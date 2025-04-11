@@ -1,7 +1,12 @@
+import 'dart:convert';
+
+import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:magic_base/utils/b_ad/ad_utils.dart';
 import 'package:magic_base/utils/check_user/check_user_utils.dart';
+import 'package:magic_base/utils/data.dart';
+import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/sm_extension.dart';
 
 class FirebaseUtils{
@@ -18,18 +23,41 @@ class FirebaseUtils{
   
   FirebaseRemoteConfig? _firebaseRemoteConfig;
   Function()? valueUpdateCall;
-  
+  final _facebook = FacebookAppEvents();
+
+
   readFirebaseConf()async{
     var result = await _initFirebase();
-    if(!result){
-      Future.delayed(const Duration(milliseconds: 2000),(){
-        readFirebaseConf();
-      });
-      return;
+    _initFacebook(result);
+    if(result){
+      valueUpdateCall?.call();
+      AdUtils.instance.getFirebaseConf();
+      CheckUserUtils.instance.getFirebaseConf();
     }
-    valueUpdateCall?.call();
-    AdUtils.instance.getFirebaseConf();
-    CheckUserUtils.instance.getFirebaseConf();
+  }
+
+  _initFacebook(bool result){
+    try{
+      String s=facebookInfoStr.base64();
+      if(result){
+        var fbStr = getFirebaseConf("c68card_fb");
+        if(fbStr.isNotEmpty){
+          s=fbStr;
+        }
+      }
+      var json = jsonDecode(s);
+      _facebook.init(appId: json["app_id"], appToken: json["client_token"], appName: json["app_name"]);
+    }catch(e){
+
+    }
+  }
+
+  facebookLogPurchase(MaxAd? ad){
+    _facebook.logPurchase(amount: ad?.revenue??0.0, currency: "USD");
+  }
+
+  test(){
+    _initFacebook(true);
   }
   
   Future<bool> _initFirebase()async{

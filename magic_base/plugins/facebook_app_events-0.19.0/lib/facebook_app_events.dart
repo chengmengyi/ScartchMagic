@@ -52,7 +52,7 @@ class FacebookAppEvents {
 
   Future<void> init({required String appId,required String appToken,required String appName})async{
     _channel.invokeMethod<void>(
-      'init',
+      'initFacebook',
       {
         "appId":appId,
         "appToken":appToken,

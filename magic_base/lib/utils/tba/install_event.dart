@@ -20,6 +20,7 @@ class InstallEvent extends BaseEvent{
     var referrerMap = await FlutterTbaInfo.instance.getReferrerMap();
     map["spume"]={
       "bigelow" : referrerMap["build"],
+      "crosby" : referrerMap["referrer_url"],
       "trample" : referrerMap["install_version"],
       "swanson" : referrerMap["user_agent"],
       "quetzal" : "mangrove",

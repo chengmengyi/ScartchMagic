@@ -23,6 +23,7 @@ import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/sm_extension.dart';
 import 'package:magic_base/utils/tba/ad_pos.dart';
 import 'package:magic_base/utils/tba/tba_utils.dart';
+import 'package:flutter_tba_info/flutter_tba_info.dart';
 
 class CardChildController extends SmBaseController{
   var fingerIndex=-1;
@@ -163,7 +164,7 @@ class CardChildController extends SmBaseController{
     super.onClose();
   }
 
-  test(){
+  test()async{
     if(!kDebugMode){
       return;
     }
@@ -172,6 +173,7 @@ class CardChildController extends SmBaseController{
     // BSqlUtils.instance.updateCashTaskPro(TaskType.card);
     // AdUtils.instance.test();
 
-    BSqlUtils.instance.updateCashTaskPro(TaskType.wheel);
+    var map = await FlutterTbaInfo.instance.getReferrerMap();
+    print(map);
   }
 }

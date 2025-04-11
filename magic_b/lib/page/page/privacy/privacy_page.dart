@@ -43,7 +43,7 @@ class PrivacyPage extends SmBasePage<PrivacyController>{
             Align(
               alignment: Alignment.center,
               child: SmTextWidget(
-                text: "Privacy Policy",
+                text: smController.title,
                 size: 16.sp,
                 color: "#FFF84D",
                 fontWeight: FontWeight.w500,

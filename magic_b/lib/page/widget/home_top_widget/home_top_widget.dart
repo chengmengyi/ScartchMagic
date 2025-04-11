@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:magic_b/utils/local_data.dart';
 import 'package:magic_base/base_widget/sm_base_widget.dart';
 import 'package:magic_base/base_widget/sm_image_widget.dart';
+import 'package:magic_base/sm_router/all_routers_name.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
 import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_b/page/widget/coins_widget/coins_widget.dart';
@@ -39,6 +41,13 @@ class HomeTopWidget extends SmBaseWidget<HomeTopController>{
               SizedBox(width: 10.w,),
               LevelWidget(isHome: true,),
               const Spacer(),
+              InkWell(
+                onTap: (){
+                  SmRoutersUtils.instance.toNextPage(routersName: AllRoutersName.privacyB,arguments: {"url":h5GameUrl,"title":"Game"});
+                },
+                child: SmImageWidget(imageName: "game",width: 36.w,height: 36.w,),
+              ),
+              SizedBox(width: 6.w,),
               Visibility(
                 visible: showSetIcon,
                 child: InkWell(

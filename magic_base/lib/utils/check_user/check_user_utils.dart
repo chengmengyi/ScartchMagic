@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:magic_base/utils/check_user/request_adjust.dart';
 import 'package:magic_base/utils/check_user/request_cloak.dart';
+import 'package:magic_base/utils/check_user/request_referrer.dart';
 import 'package:magic_base/utils/firebase/firebase_utils.dart';
+import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/sm_extension.dart';
 import 'package:magic_base/utils/storage/storage_hep.dart';
 import 'package:magic_base/utils/tba/ad_pos.dart';
@@ -26,11 +28,13 @@ class CheckUserUtils{
   var buyUser=false,_adjustOn="1";
   final RequestCloak _requestCloak=RequestCloak();
   final RequestAdjust _requestAdjust=RequestAdjust();
+  final RequestReferrer _requestReferrer=RequestReferrer();
 
   initCheck(){
     TbaUtils.instance.pointEvent(pointType: PointType.sm_cloak_req);
     _requestCloak.init();
     _requestAdjust.init();
+    _requestReferrer.init();
   }
 
   checkUser(){
@@ -62,4 +66,9 @@ class CheckUserUtils{
       _adjustOn=conf;
     }
   }
+
+  uploadAfRevenue(MaxAd? ad,String id, AdPos adPos){
+    _requestAdjust.uploadAdRevenue(ad, id, adPos);
+  }
+
 }

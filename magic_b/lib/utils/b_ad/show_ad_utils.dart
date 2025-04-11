@@ -3,6 +3,7 @@ import 'package:magic_base/utils/b_ad/ad_utils.dart';
 import 'package:magic_base/utils/b_ad/load_ad.dart';
 import 'package:magic_base/utils/b_ad/max_ad_bean.dart';
 import 'package:magic_base/utils/b_ad/show_ad_result_listener.dart';
+import 'package:magic_base/utils/check_user/check_user_utils.dart';
 import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/sm_extension.dart';
 import 'package:magic_base/utils/tba/ad_pos.dart';
@@ -52,6 +53,9 @@ class ShowAdUtils{
             closeAd.call(true);
             TbaUtils.instance.pointEvent(pointType: PointType.stmag_ad_impression_fail,data: {"ad_pos_id":adPos.name});
           },
+          onAdRevenuePaidCallback: (MaxAd maxAd,MaxAdBean? maxAdBean){
+            CheckUserUtils.instance.uploadAfRevenue(maxAd, maxAdBean?.id??"", adPos);
+          },
         ),
       );
       return;
@@ -78,6 +82,9 @@ class ShowAdUtils{
           onAdDisplayFailedCallback: (MaxAd ad, MaxError error){
             TbaUtils.instance.pointEvent(pointType: PointType.stmag_ad_impression_fail);
             closeAd.call();
+          },
+          onAdRevenuePaidCallback: (MaxAd maxAd,MaxAdBean? maxAdBean){
+            CheckUserUtils.instance.uploadAfRevenue(maxAd, maxAdBean?.id??"", AdPos.stmag_launch);
           },
         ),
       );

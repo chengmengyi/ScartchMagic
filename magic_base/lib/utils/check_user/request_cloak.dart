@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter_tba_info/flutter_tba_info.dart';
-import 'package:magic_base/utils/check_user/check_user_utils.dart';
 import 'package:magic_base/utils/data.dart';
 import 'package:magic_base/utils/dio/dio_utils.dart';
 import 'package:magic_base/utils/sm_extension.dart';
@@ -13,7 +10,7 @@ class RequestCloak{
 
   init()async{
     var bundleId = await FlutterTbaInfo.instance.getBundleId();
-    var os = Platform.isAndroid?"quirt":"batik";
+    var os = "quirt";
     var appVersion = await FlutterTbaInfo.instance.getAppVersion();
     var distinctId = await FlutterTbaInfo.instance.getDistinctId();
     var clientTs = DateTime.now().millisecondsSinceEpoch;

@@ -9,6 +9,7 @@ import 'package:magic_b/utils/local_notification/local_notification_utils.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
+import 'package:magic_base/utils/notification_hep.dart';
 import 'package:magic_base/utils/sm_export.dart';
 import 'package:magic_base/utils/tba/ad_pos.dart';
 import 'package:magic_base/utils/tba/tba_utils.dart';
@@ -40,15 +41,14 @@ class HomeController extends SmBaseController with GetTickerProviderStateMixin{
       }
     });
     AppTrackingTransparency.requestTrackingAuthorization();
+    NotificationHep.instance.initNotification();
   }
 
   @override
   void onReady() {
     super.onReady();
-    LocalNotificationUtils.instance.initLocalNotification();
     VoiceUtils.instance.playBgMp3();
     InfoHep.instance.notFirstLaunchAppShowCommentDialog();
-    LocalNotificationUtils.instance.checkClickNotificationShowTab();
   }
 
   clickTab(index,{fromOldUser=false}){

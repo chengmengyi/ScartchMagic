@@ -81,4 +81,5 @@ enum PointType{
   sm_daily_pop_close,
   sm_failed_pop,
   sm_failed_pop_c,
+  sm_notification_c,
 }

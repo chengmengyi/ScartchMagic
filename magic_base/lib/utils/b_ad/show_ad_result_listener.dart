@@ -5,9 +5,11 @@ class ShowAdResultListener{
   final Function(MaxAd ad,MaxAdBean? maxAdBean) onAdDisplayedCallback;
   final Function(MaxAd ad) onAdHiddenCallback;
   final Function(MaxAd ad, MaxError error) onAdDisplayFailedCallback;
+  final Function(MaxAd ad,MaxAdBean? maxAdBean) onAdRevenuePaidCallback;
   ShowAdResultListener({
     required this.onAdDisplayedCallback,
     required this.onAdHiddenCallback,
     required this.onAdDisplayFailedCallback,
+    required this.onAdRevenuePaidCallback,
   });
 }

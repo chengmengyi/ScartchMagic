@@ -15,6 +15,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 import java.util.Currency
+import android.content.Context
 
 /** FacebookAppEventsPlugin */
 class FacebookAppEventsPlugin: FlutterPlugin, MethodCallHandler {
@@ -23,16 +24,18 @@ class FacebookAppEventsPlugin: FlutterPlugin, MethodCallHandler {
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
   private lateinit var channel : MethodChannel
-  private lateinit var appEventsLogger: AppEventsLogger
-  private lateinit var anonymousId: String
+  private var appEventsLogger: AppEventsLogger?=null
+//  private lateinit var anonymousId: String
+private lateinit var mContext:Context
 
   private val logTag = "FacebookAppEvents"
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter.oddbit.id/facebook_app_events")
     channel.setMethodCallHandler(this)
-    appEventsLogger = AppEventsLogger.newLogger(flutterPluginBinding.applicationContext)
-    anonymousId = AppEventsLogger.getAnonymousAppDeviceGUID(flutterPluginBinding.applicationContext)
+    mContext=flutterPluginBinding.applicationContext
+//    appEventsLogger = AppEventsLogger.newLogger(flutterPluginBinding.applicationContext)
+//    anonymousId = AppEventsLogger.getAnonymousAppDeviceGUID(flutterPluginBinding.applicationContext)
   }
 
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
@@ -41,110 +44,124 @@ class FacebookAppEventsPlugin: FlutterPlugin, MethodCallHandler {
 
   override fun onMethodCall(call: MethodCall, result: Result) {
     when (call.method) {
-      "clearUserData" -> handleClearUserData(call, result)
-      "setUserData" -> handleSetUserData(call, result)
-      "clearUserID" -> handleClearUserId(call, result)
-      "flush" -> handleFlush(call, result)
-      "getApplicationId" -> handleGetApplicationId(call, result)
-      "logEvent" -> handleLogEvent(call, result)
-      "logPushNotificationOpen" -> handlePushNotificationOpen(call, result)
-      "setUserID" -> handleSetUserId(call, result)
-      "setAutoLogAppEventsEnabled" -> handleSetAutoLogAppEventsEnabled(call, result)
-      "setDataProcessingOptions" -> handleSetDataProcessingOptions(call, result)
-      "getAnonymousId" -> handleGetAnonymousId(call, result)
+//      "clearUserData" -> handleClearUserData(call, result)
+//      "setUserData" -> handleSetUserData(call, result)
+//      "clearUserID" -> handleClearUserId(call, result)
+//      "flush" -> handleFlush(call, result)
+//      "getApplicationId" -> handleGetApplicationId(call, result)
+//      "logEvent" -> handleLogEvent(call, result)
+//      "logPushNotificationOpen" -> handlePushNotificationOpen(call, result)
+//      "setUserID" -> handleSetUserId(call, result)
+//      "setAutoLogAppEventsEnabled" -> handleSetAutoLogAppEventsEnabled(call, result)
+//      "setDataProcessingOptions" -> handleSetDataProcessingOptions(call, result)
+//      "getAnonymousId" -> handleGetAnonymousId(call, result)
+      "initFacebook" -> initFacebook(call, result)
       "logPurchase" -> handlePurchased(call, result)
-      "setAdvertiserTracking" -> handleSetAdvertiserTracking(call, result)
+//      "setAdvertiserTracking" -> handleSetAdvertiserTracking(call, result)
 
       else -> result.notImplemented()
     }
   }
 
-  private fun handleClearUserData(call: MethodCall, result: Result) {
-    AppEventsLogger.clearUserData()
-    result.success(null)
+  private fun initFacebook(call: MethodCall, result: Result) {
+    val parameters = call.arguments as? Map<String, Any>
+    val appId = (parameters?.get("appId") as? String)?:""
+    val token = (parameters?.get("appToken") as? String)?:""
+    Log.e("qwer","kk====initFacebook==appId=$appId,,,token=$token")
+    FacebookSdk.setApplicationId(appId)
+    FacebookSdk.setClientToken(token)
+    FacebookSdk.sdkInitialize(mContext)
+    appEventsLogger = AppEventsLogger.newLogger(mContext)
+    result.success(true)
   }
 
- private fun handleSetUserData(call: MethodCall, result: Result) {
-    val parameters = call.argument("parameters") as? Map<String, Object>
-    val parameterBundle = createBundleFromMap(parameters)
 
-    AppEventsLogger.setUserData(
-      parameterBundle?.getString("email"),
-      parameterBundle?.getString("firstName"),
-      parameterBundle?.getString("lastName"),
-      parameterBundle?.getString("phone"),
-      parameterBundle?.getString("dateOfBirth"),
-      parameterBundle?.getString("gender"),
-      parameterBundle?.getString("city"),
-      parameterBundle?.getString("state"),
-      parameterBundle?.getString("zip"),
-      parameterBundle?.getString("country")
-    )
-
-    result.success(null)
-  }
-
-  private fun handleClearUserId(call: MethodCall, result: Result) {
-    AppEventsLogger.clearUserID()
-    result.success(null)
-  }
-
-  private fun handleFlush(call: MethodCall, result: Result) {
-    appEventsLogger.flush()
-    result.success(null)
-  }
-
-  private fun handleGetApplicationId(call: MethodCall, result: Result) {
-    result.success(appEventsLogger.applicationId)
-  }
- private fun handleGetAnonymousId(call: MethodCall, result: Result) {
-    result.success(anonymousId)
-  }
-  //not an android implementation as of yet
-  private fun handleSetAdvertiserTracking(call: MethodCall, result: Result) {
-    result.success(null);
-  }
-
-  private fun handleLogEvent(call: MethodCall, result: Result) {
-    val eventName = call.argument("name") as? String
-    val parameters = call.argument("parameters") as? Map<String, Object>
-    val valueToSum = call.argument("_valueToSum") as? Double
-
-    if (valueToSum != null && parameters != null) {
-      val parameterBundle = createBundleFromMap(parameters)
-      appEventsLogger.logEvent(eventName, valueToSum, parameterBundle)
-    } else if (valueToSum != null) {
-      appEventsLogger.logEvent(eventName, valueToSum)
-    } else if (parameters != null) {
-      val parameterBundle = createBundleFromMap(parameters)
-      appEventsLogger.logEvent(eventName, parameterBundle)
-    } else {
-      appEventsLogger.logEvent(eventName)
-    }
-
-    result.success(null)
-  }
-
-  private fun handlePushNotificationOpen(call: MethodCall, result: Result) {
-    val action = call.argument("action") as? String
-    val payload = call.argument("payload") as? Map<String, Object>
-    val payloadBundle = createBundleFromMap(payload)!!
-
-    if (action != null) {
-      appEventsLogger.logPushNotificationOpen(payloadBundle, action)
-    } else {
-      appEventsLogger.logPushNotificationOpen(payloadBundle)
-    }
-
-    result.success(null)
-  }
-
-  private fun handleSetUserId(call: MethodCall, result: Result) {
-    val id = call.arguments as String
-    AppEventsLogger.setUserID(id)
-    result.success(null)
-  }
-
+//  private fun handleClearUserData(call: MethodCall, result: Result) {
+//    AppEventsLogger.clearUserData()
+//    result.success(null)
+//  }
+//
+// private fun handleSetUserData(call: MethodCall, result: Result) {
+//    val parameters = call.argument("parameters") as? Map<String, Object>
+//    val parameterBundle = createBundleFromMap(parameters)
+//
+//    AppEventsLogger.setUserData(
+//      parameterBundle?.getString("email"),
+//      parameterBundle?.getString("firstName"),
+//      parameterBundle?.getString("lastName"),
+//      parameterBundle?.getString("phone"),
+//      parameterBundle?.getString("dateOfBirth"),
+//      parameterBundle?.getString("gender"),
+//      parameterBundle?.getString("city"),
+//      parameterBundle?.getString("state"),
+//      parameterBundle?.getString("zip"),
+//      parameterBundle?.getString("country")
+//    )
+//
+//    result.success(null)
+//  }
+//
+//  private fun handleClearUserId(call: MethodCall, result: Result) {
+//    AppEventsLogger.clearUserID()
+//    result.success(null)
+//  }
+//
+//  private fun handleFlush(call: MethodCall, result: Result) {
+//    appEventsLogger.flush()
+//    result.success(null)
+//  }
+//
+//  private fun handleGetApplicationId(call: MethodCall, result: Result) {
+//    result.success(appEventsLogger.applicationId)
+//  }
+// private fun handleGetAnonymousId(call: MethodCall, result: Result) {
+//    result.success(anonymousId)
+//  }
+//  //not an android implementation as of yet
+//  private fun handleSetAdvertiserTracking(call: MethodCall, result: Result) {
+//    result.success(null);
+//  }
+//
+//  private fun handleLogEvent(call: MethodCall, result: Result) {
+//    val eventName = call.argument("name") as? String
+//    val parameters = call.argument("parameters") as? Map<String, Object>
+//    val valueToSum = call.argument("_valueToSum") as? Double
+//
+//    if (valueToSum != null && parameters != null) {
+//      val parameterBundle = createBundleFromMap(parameters)
+//      appEventsLogger.logEvent(eventName, valueToSum, parameterBundle)
+//    } else if (valueToSum != null) {
+//      appEventsLogger.logEvent(eventName, valueToSum)
+//    } else if (parameters != null) {
+//      val parameterBundle = createBundleFromMap(parameters)
+//      appEventsLogger.logEvent(eventName, parameterBundle)
+//    } else {
+//      appEventsLogger.logEvent(eventName)
+//    }
+//
+//    result.success(null)
+//  }
+//
+//  private fun handlePushNotificationOpen(call: MethodCall, result: Result) {
+//    val action = call.argument("action") as? String
+//    val payload = call.argument("payload") as? Map<String, Object>
+//    val payloadBundle = createBundleFromMap(payload)!!
+//
+//    if (action != null) {
+//      appEventsLogger.logPushNotificationOpen(payloadBundle, action)
+//    } else {
+//      appEventsLogger.logPushNotificationOpen(payloadBundle)
+//    }
+//
+//    result.success(null)
+//  }
+//
+//  private fun handleSetUserId(call: MethodCall, result: Result) {
+//    val id = call.arguments as String
+//    AppEventsLogger.setUserID(id)
+//    result.success(null)
+//  }
+//
   private fun createBundleFromMap(parameterMap: Map<String, Any>?): Bundle? {
     if (parameterMap == null) {
       return null
@@ -174,21 +191,21 @@ class FacebookAppEventsPlugin: FlutterPlugin, MethodCallHandler {
     }
     return bundle
   }
-
-  private fun handleSetAutoLogAppEventsEnabled(call: MethodCall, result: Result) {
-    val enabled = call.arguments as Boolean
-    FacebookSdk.setAutoLogAppEventsEnabled(enabled)
-    result.success(null)
-  }
-
-  private fun handleSetDataProcessingOptions(call: MethodCall, result: Result) {
-    val options = call.argument("options") as? ArrayList<String> ?: arrayListOf()
-    val country = call.argument("country") as? Int ?: 0
-    val state = call.argument("state") as? Int ?: 0
-
-    FacebookSdk.setDataProcessingOptions(options.toTypedArray(), country, state)
-    result.success(null)
-  }
+//
+//  private fun handleSetAutoLogAppEventsEnabled(call: MethodCall, result: Result) {
+//    val enabled = call.arguments as Boolean
+//    FacebookSdk.setAutoLogAppEventsEnabled(enabled)
+//    result.success(null)
+//  }
+//
+//  private fun handleSetDataProcessingOptions(call: MethodCall, result: Result) {
+//    val options = call.argument("options") as? ArrayList<String> ?: arrayListOf()
+//    val country = call.argument("country") as? Int ?: 0
+//    val state = call.argument("state") as? Int ?: 0
+//
+//    FacebookSdk.setDataProcessingOptions(options.toTypedArray(), country, state)
+//    result.success(null)
+//  }
 
   private fun handlePurchased(call: MethodCall, result: Result) {
     var amount = (call.argument("amount") as? Double)?.toBigDecimal()
@@ -196,7 +213,7 @@ class FacebookAppEventsPlugin: FlutterPlugin, MethodCallHandler {
     val parameters = call.argument("parameters") as? Map<String, Object>
     val parameterBundle = createBundleFromMap(parameters) ?: Bundle()
 
-    appEventsLogger.logPurchase(amount, currency, parameterBundle)
+    appEventsLogger?.logPurchase(amount, currency, parameterBundle)
     result.success(null)
   }
 }

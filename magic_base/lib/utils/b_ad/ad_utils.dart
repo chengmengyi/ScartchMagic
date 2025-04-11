@@ -1,14 +1,11 @@
 import 'dart:convert';
-
-import 'package:adjust_sdk/adjust.dart';
-import 'package:adjust_sdk/adjust_ad_revenue.dart';
-import 'package:adjust_sdk/adjust_config.dart';
 import 'package:applovin_max/applovin_max.dart';
 import 'package:flutter/foundation.dart';
 import 'package:magic_base/utils/b_ad/conf_ad_bean.dart';
 import 'package:magic_base/utils/b_ad/load_ad.dart';
 import 'package:magic_base/utils/b_ad/max_ad_bean.dart';
 import 'package:magic_base/utils/b_ad/show_ad_result_listener.dart';
+import 'package:magic_base/utils/check_user/check_user_utils.dart';
 import 'package:magic_base/utils/data.dart';
 import 'package:magic_base/utils/firebase/firebase_utils.dart';
 import 'package:magic_base/utils/sm_extension.dart';
@@ -37,10 +34,12 @@ class AdUtils{
   var adShowing=false;
   ShowAdResultListener? _showAdResultListener;
 
-  // final _facebook = FacebookAppEvents();
-
   initAd()async{
     await AppLovinMAX.initialize(maxKeyBase64.base64());
+
+    if(kDebugMode){
+      AppLovinMAX.showMediationDebugger();
+    }
 
     // var json = jsonDecode(localAdStr.base64());
     // var showNum = json["idnmrhft"]??100;
@@ -117,7 +116,7 @@ class AdUtils{
         },
 
         onAdRevenuePaidCallback: (MaxAd ad){
-          _onAdRevenuePaidByAdjust(ad);
+          _showAdResultListener?.onAdRevenuePaidCallback.call(ad,_getMaxAdBeanById(AdType.interstitial,ad.adUnitId));
         }
       )
     );
@@ -154,20 +153,20 @@ class AdUtils{
             _showAdResultListener?.onAdHiddenCallback.call(ad);
           },
           onAdRevenuePaidCallback: (MaxAd ad){
-            _onAdRevenuePaidByAdjust(ad);
+            _showAdResultListener?.onAdRevenuePaidCallback.call(ad,_getMaxAdBeanById(AdType.interstitial,ad.adUnitId));
           }
         )
     );
   }
 
-  _onAdRevenuePaidByAdjust(MaxAd ad){
-    var adjustAdRevenue = AdjustAdRevenue(AdjustConfig.AdRevenueSourceAppLovinMAX,);
-    adjustAdRevenue.setRevenue(ad.revenue, "USD");
-    adjustAdRevenue.adRevenueNetwork=ad.networkName;
-    adjustAdRevenue.adRevenueUnit=ad.adUnitId;
-    adjustAdRevenue.adRevenuePlacement=ad.placement;
-    Adjust.trackAdRevenueNew(adjustAdRevenue);
-  }
+  // _onAdRevenuePaidByAdjust(MaxAd ad){
+  //   var adjustAdRevenue = AdjustAdRevenue(AdjustConfig.AdRevenueSourceAppLovinMAX,);
+  //   adjustAdRevenue.setRevenue(ad.revenue, "USD");
+  //   adjustAdRevenue.adRevenueNetwork=ad.networkName;
+  //   adjustAdRevenue.adRevenueUnit=ad.adUnitId;
+  //   adjustAdRevenue.adRevenuePlacement=ad.placement;
+  //   Adjust.trackAdRevenueNew(adjustAdRevenue);
+  // }
 
   bool checkHasCache(AdType adType){
     if(_oneLoadAd?.checkCache(adType)==true){
