@@ -71,7 +71,7 @@ class SmMyApp extends StatelessWidget {
     list.addAll(SmNormalRoutersList.list);
     list.addAll(SmBRoutersList.list);
     return GetMaterialApp(
-      title: 'ScratchMagic',
+      title: 'ScratchMagicWin',
       enableLog: true,
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.system,

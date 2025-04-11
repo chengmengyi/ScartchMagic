@@ -25,7 +25,7 @@ class NotificationHep{
           title: "Your Cash is on the Way! 🚀",
           body: "You’re one step away from getting your cash!",
           loopNum: 48,
-          singleAddMinute: kDebugMode?1:60,
+          singleAddMinute: 60,
         )
     );
     workList.add(
@@ -34,7 +34,7 @@ class NotificationHep{
           title: "Payout Complete! 💸",
           body: "\$1000 has been sent. Check your account!",
           loopNum: 48,
-          singleAddMinute: kDebugMode?1:60,
+          singleAddMinute: 60,
         )
     );
     workList.add(
@@ -43,7 +43,7 @@ class NotificationHep{
           title: "Congrats! You Cashed Out! 🎊",
           body: "Verify now to receive your cash!",
           loopNum: 48,
-          singleAddMinute: kDebugMode?1:60,
+          singleAddMinute: 60,
         )
     );
     FlutterAndroidLocalNotification.instance.initAllNotification(

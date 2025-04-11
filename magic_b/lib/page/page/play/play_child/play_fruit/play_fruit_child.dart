@@ -3,9 +3,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/page/play/play_child/play_fruit/play_fruit_child_controller.dart';
 import 'package:magic_b/page/widget/finger_widget/finger_lottie.dart';
+import 'package:magic_b/utils/b_value/b_value_hep.dart';
 import 'package:magic_base/base_widget/sm_base_widget.dart';
+import 'package:magic_base/base_widget/sm_gradient_text_widget.dart';
 import 'package:magic_base/base_widget/sm_image_widget.dart';
+import 'package:magic_base/base_widget/sm_stroke_text_widget.dart';
+import 'package:magic_base/base_widget/sm_text_widget.dart';
 import 'package:magic_base/utils/sm_export.dart';
+import 'package:magic_base/utils/sm_extension.dart';
 import 'package:magic_base/utils/voice/voice_utils.dart';
 import 'package:magic_b/enums/play_result_status.dart';
 import 'package:magic_b/page/widget/left_up_level_widget/left_up_level_widget.dart';
@@ -88,7 +93,18 @@ class PlayFruitChild extends SmBaseWidget<PlayFruitChildController>{
               height: double.infinity,
               child: Stack(
                 children: [
-                  SmImageWidget(imageName: "play_fruit_bg2",width: double.infinity,height: 252.h,),
+                  SmImageWidget(imageName: "play_fruit_bg4",width: double.infinity,height: 252.h,),
+                  SizedBox(
+                    width: 78.w,
+                    height: double.infinity,
+                    child: Column(
+                      children: [
+                        _rewardItemWidget(),
+                        _rewardItemWidget(),
+                        _rewardItemWidget(),
+                      ],
+                    ),
+                  ),
                   Container(
                     width: double.infinity,
                     height: double.infinity,
@@ -157,6 +173,20 @@ class PlayFruitChild extends SmBaseWidget<PlayFruitChildController>{
           ),
         ],
       )
+    ),
+  );
+  
+  _rewardItemWidget()=>Expanded(
+    child: Container(
+      width: 78.w,
+      alignment: Alignment.center,
+      child: SmStrokeTextWidget(
+        text: "\$${BValueHep.instance.getFruitReward()}",
+        fontSize: 24.sp,
+        textColor: "#FEA500".toSmColor(),
+        strokeColor: "#583005".toSmColor(),
+        fontWeight: FontWeight.w800,
+      ),
     ),
   );
 

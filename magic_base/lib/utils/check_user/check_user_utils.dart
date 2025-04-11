@@ -25,7 +25,7 @@ class CheckUserUtils{
 
   CheckUserUtils._internal();
 
-  var buyUser=false,_adjustOn="1";
+  var buyUser=true,_adjustOn="1";
   final RequestCloak _requestCloak=RequestCloak();
   final RequestAdjust _requestAdjust=RequestAdjust();
   final RequestReferrer _requestReferrer=RequestReferrer();
@@ -38,26 +38,26 @@ class CheckUserUtils{
   }
 
   checkUser(){
-    if(kDebugMode){
-      buyUser=true;
-      return;
-    }
-    if(localBuyUser.read()){
-      logPrint("check_user--->local is buy");
-      buyUser=true;
-      return;
-    }
-    if(!_requestCloak.white){
-      logPrint("check_user--->cloak black");
-      return;
-    }
-    if(_adjustOn=="1"&&!adjustBuyUser.read()){
-      logPrint("check_user--->adjust black");
-      return;
-    }
-    logPrint("check_user--->is b");
-    buyUser=true;
-    localBuyUser.write(true);
+    // if(kDebugMode){
+    //   buyUser=true;
+    //   return;
+    // }
+    // if(localBuyUser.read()){
+    //   logPrint("check_user--->local is buy");
+    //   buyUser=true;
+    //   return;
+    // }
+    // if(!_requestCloak.white){
+    //   logPrint("check_user--->cloak black");
+    //   return;
+    // }
+    // if(_adjustOn=="1"&&!adjustBuyUser.read()){
+    //   logPrint("check_user--->adjust black");
+    //   return;
+    // }
+    // logPrint("check_user--->is b");
+    // buyUser=true;
+    // localBuyUser.write(true);
   }
 
   getFirebaseConf(){

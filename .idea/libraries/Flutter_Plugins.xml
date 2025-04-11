@@ -31,7 +31,6 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_app_lifecycle-0.0.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_remote_config_web-1.6.13" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/in_app_review-2.0.9" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_android_local_notification-0.0.3" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/fluttertoast-8.0.9" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.2" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher-6.3.1" />
@@ -41,6 +40,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_remote_config-5.0.4" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/webview_flutter-4.7.0" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_messaging_web-3.8.13" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_android_local_notification-0.0.5" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

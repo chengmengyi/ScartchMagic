@@ -7,6 +7,7 @@ import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
 import 'package:magic_b/utils/info_hep.dart';
 import 'package:magic_b/utils/local_notification/local_notification_utils.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
+import 'package:magic_base/utils/app_lifecycle_hep.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
 import 'package:magic_base/utils/notification_hep.dart';
@@ -28,6 +29,7 @@ class HomeController extends SmBaseController with GetTickerProviderStateMixin{
   @override
   void onInit() {
     super.onInit();
+    AppLifecycleHep.instance.add();
     wheelChance=wheelChanceNum.read();
     moneyLottieController=AnimationController(
       vsync: this,

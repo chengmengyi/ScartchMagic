@@ -51,6 +51,19 @@ class VoiceUtils{
     }
   }
 
+
+  appLifecycle(bool back){
+    if(playBg.read()){
+      if(back&&_bgAudioPlayer.state==PlayerState.playing){
+        _bgAudioPlayer.pause();
+      }
+      if(!back&&_bgAudioPlayer.state==PlayerState.paused){
+        _bgAudioPlayer.resume();
+      }
+    }
+
+  }
+
   setPlayOrStopVoice(){
     playVoice.write(!playVoice.read());
   }
