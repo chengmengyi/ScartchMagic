@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:magic_b/enums/play_result_status.dart';
 import 'package:magic_b/page/page/play/play_child/play_8/play_8_child_controller.dart';
+import 'package:magic_b/page/widget/finger_widget/finger_lottie.dart';
 import 'package:magic_b/page/widget/play_fail_widget/play_fail_widget.dart';
 import 'package:magic_base/base_widget/sm_base_widget.dart';
 import 'package:magic_base/base_widget/sm_gradient_text_widget.dart';
@@ -122,6 +123,7 @@ class Play8Child extends SmBaseWidget<Play8ChildController>{
                     smController.updateIconOffset(details);
                   },
                   onScratchStart: (){
+                    smController.hideGuaGuideFinger();
                     EventInfo(eventCode: EventCode.canClickOtherBtn,boolValue: false);
                     VoiceUtils.instance.playVoiceMp3();
                   },
@@ -210,7 +212,16 @@ class Play8Child extends SmBaseWidget<Play8ChildController>{
                     ),
                   ),
                 ),
-                _goldWidget()
+                _goldWidget(),
+                GetBuilder<Play8ChildController>(
+                  id: "showFruitFingerGuide",
+                  builder: (_)=>Offstage(
+                    offstage: !smController.showFruitFingerGuide,
+                    child: IgnorePointer(
+                      child: FingerLottie(),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

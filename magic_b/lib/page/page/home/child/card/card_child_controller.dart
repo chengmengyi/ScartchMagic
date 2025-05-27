@@ -49,16 +49,16 @@ class CardChildController extends SmBaseController{
   }
 
   clickItem(PlayInfoBean bean){
-    fingerIndex=-1;
-    update(["list"]);
-    if((bean.time??0)>0){
-      showToast("No scratch card, please go to the next level！");
-      return;
-    }
-    if(bean.unlock!=1){
-      showToast("Complete the previous level to unlock");
-      return;
-    }
+    // fingerIndex=-1;
+    // update(["list"]);
+    // if((bean.time??0)>0){
+    //   showToast("No scratch card, please go to the next level！");
+    //   return;
+    // }
+    // if(bean.unlock!=1){
+    //   showToast("Complete the previous level to unlock");
+    //   return;
+    // }
     var playType = PlayType.values.firstWhere((element) => element.name==bean.type);
     SmRoutersUtils.instance.toNextPage(
       routersName: AllRoutersName.playB,

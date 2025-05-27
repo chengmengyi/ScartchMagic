@@ -97,6 +97,9 @@ class HomeController extends SmBaseController with GetTickerProviderStateMixin{
         update(["money_lottie"]);
         moneyLottieController..reset()..forward();
         break;
+      case EventCode.toCashChild:
+        clickTab(2);
+        break;
     }
   }
 }

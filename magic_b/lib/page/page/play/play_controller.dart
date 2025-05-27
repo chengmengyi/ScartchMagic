@@ -119,6 +119,9 @@ class PlayController extends SmBaseController with GetTickerProviderStateMixin{
         showWheelFinger=wheelChance>0;
         update(["bottom","wheelFingerGuide"]);
         break;
+      case EventCode.toCashChild:
+        clickTab(2);
+        break;
     }
   }
 

@@ -278,8 +278,7 @@
         <entry key="flutter_android_local_notification">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_android_local_notification-0.0.5/lib" />
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_android_local_notification-0.0.4/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_android_local_notification-0.0.6/lib" />
             </list>
           </value>
         </entry>
@@ -839,8 +838,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_remote_config_platform_interface-1.4.41/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_remote_config_web-1.6.13/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/fixnum-1.1.1/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_android_local_notification-0.0.4/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_android_local_notification-0.0.5/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_android_local_notification-0.0.6/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_app_lifecycle-0.0.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_broadcasts-0.4.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_lints-3.0.2/lib" />

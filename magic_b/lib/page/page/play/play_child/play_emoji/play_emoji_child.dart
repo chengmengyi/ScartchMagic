@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/page/play/play_child/play_emoji/play_emoji_child_controller.dart';
+import 'package:magic_b/page/widget/finger_widget/finger_lottie.dart';
 import 'package:magic_base/base_widget/sm_base_widget.dart';
 import 'package:magic_base/base_widget/sm_gradient_text_widget.dart';
 import 'package:magic_base/base_widget/sm_image_widget.dart';
@@ -90,6 +91,7 @@ class PlayEmojiChild extends SmBaseWidget<PlayEmojiChildController>{
             smController.updateIconOffset(details);
           },
           onScratchStart: (){
+            smController.hideGuaGuideFinger();
             EventInfo(eventCode: EventCode.canClickOtherBtn,boolValue: false);
             VoiceUtils.instance.playVoiceMp3();
           },
@@ -177,6 +179,15 @@ class PlayEmojiChild extends SmBaseWidget<PlayEmojiChildController>{
           ),
         ),
         _goldWidget(),
+        GetBuilder<PlayEmojiChildController>(
+          id: "showFruitFingerGuide",
+          builder: (_)=>Offstage(
+            offstage: !smController.showFruitFingerGuide,
+            child: IgnorePointer(
+              child: FingerLottie(),
+            ),
+          ),
+        ),
       ],
     ),
   );

@@ -37,7 +37,12 @@ class HomeTopWidget extends SmBaseWidget<HomeTopController>{
           Row(
             children: [
               SizedBox(width: 12.w,),
-              CoinsWidget(),
+              InkWell(
+                onTap: (){
+                  smController.toCash();
+                },
+                child: CoinsWidget(),
+              ),
               SizedBox(width: 10.w,),
               LevelWidget(isHome: true,),
               const Spacer(),

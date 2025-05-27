@@ -54,14 +54,13 @@ class PlayFruitChildController extends SmBaseController with GetTickerProviderSt
     super.onReady();
     _initRewardList();
     autoScratchUtils=AutoScratchUtils(globalKey);
+    showGuaGuideFinger();
   }
 
   clickOpen()async{
     if(!_canClick){
       return;
     }
-    updateFruitFinger();
-    hideRevealAllFinger();
     GuideUtils.instance.clickRevealAll();
     _canClick=false;
     autoScratchUtils?.startAuto(
@@ -92,6 +91,7 @@ class PlayFruitChildController extends SmBaseController with GetTickerProviderSt
       EventInfo(eventCode: EventCode.keyAnimatorStart,dynamicValue: offset);
       return;
     }
+    await Future.delayed(const Duration(milliseconds: 1000));
     _checkResult();
   }
 
@@ -126,8 +126,9 @@ class PlayFruitChildController extends SmBaseController with GetTickerProviderSt
       SmRoutersUtils.instance.showDialog(
         widget: IncentDialog(
           incentType: IncentType.card,
-          money: fruitReward,
+          money: firstGetGuaKaReward.read()?BValueHep.instance.getNewPrize():fruitReward,
           dismissDialog: (addNum){
+            firstGetGuaKaReward.write(false);
             InfoHep.instance.updateCoins(addNum);
             InfoHep.instance.updatePlayedCardNum();
             _initRewardList();
@@ -166,7 +167,7 @@ class PlayFruitChildController extends SmBaseController with GetTickerProviderSt
     autoScratchUtils?.stopWhile=false;
     iconOffset=null;
     update(["gold_icon"]);
-
+    showGuaGuideFinger();
     EventInfo(eventCode: EventCode.updateUpLevelText);
   }
 
@@ -206,7 +207,23 @@ class PlayFruitChildController extends SmBaseController with GetTickerProviderSt
     }
   }
 
+  showGuaGuideFinger(){
+    if(!showFruitFingerGuide){
+      showFruitFingerGuide=true;
+      update(["showFruitFingerGuide"]);
+    }
+  }
+
+  hideGuaGuideFinger(){
+    if(showFruitFingerGuide){
+      showFruitFingerGuide=false;
+      update(["showFruitFingerGuide"]);
+    }
+  }
+
   hideRevealAllFinger(){
+    updateFruitFinger();
+    hideGuaGuideFinger();
     EventInfo(eventCode: EventCode.canClickOtherBtn,boolValue: false);
     if(showRevealAllFinger){
       showRevealAllFinger=false;
@@ -238,7 +255,7 @@ class PlayFruitChildController extends SmBaseController with GetTickerProviderSt
   _initAnimator(){
     scaleController=AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       lowerBound: 1,
       upperBound: 1.2,
     )

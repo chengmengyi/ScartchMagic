@@ -26,7 +26,7 @@ import 'package:magic_base/utils/tba/ad_pos.dart';
 import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class PlayTigerChildController extends SmBaseController with GetTickerProviderStateMixin{
-  var win=false,_canClick=true,prizeBorderIndex=-1,hideKeyIcon=false,playResultStatus=PlayResultStatus.init;
+  var win=false,_canClick=true,prizeBorderIndex=-1,hideKeyIcon=false,playResultStatus=PlayResultStatus.init,showFruitFingerGuide=false;
   Timer? _timer;
   final PlayType _playType=PlayType.playtiger;
   final key = GlobalKey<ScratcherState>();
@@ -52,6 +52,7 @@ class PlayTigerChildController extends SmBaseController with GetTickerProviderSt
     super.onReady();
     _initYourList();
     autoScratchUtils=AutoScratchUtils(globalKey);
+    showGuaGuideFinger();
   }
 
   clickOpen(){
@@ -87,6 +88,7 @@ class PlayTigerChildController extends SmBaseController with GetTickerProviderSt
       EventInfo(eventCode: EventCode.keyAnimatorStart,dynamicValue: offset);
       return;
     }
+    await Future.delayed(const Duration(milliseconds: 1000));
     _checkResult();
   }
 
@@ -158,9 +160,24 @@ class PlayTigerChildController extends SmBaseController with GetTickerProviderSt
     hideKeyIcon=false;
     autoScratchUtils?.stopWhile=false;
     iconOffset=null;
+    showGuaGuideFinger();
     update(["gold_icon"]);
   }
 
+
+  showGuaGuideFinger(){
+    if(!showFruitFingerGuide){
+      showFruitFingerGuide=true;
+      update(["showFruitFingerGuide"]);
+    }
+  }
+
+  hideGuaGuideFinger(){
+    if(showFruitFingerGuide){
+      showFruitFingerGuide=false;
+      update(["showFruitFingerGuide"]);
+    }
+  }
 
   _initYourList(){
     yourList.clear();
@@ -224,7 +241,7 @@ class PlayTigerChildController extends SmBaseController with GetTickerProviderSt
   _initAnimator(){
     scaleController=AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       lowerBound: 1,
       upperBound: 1.2,
     )

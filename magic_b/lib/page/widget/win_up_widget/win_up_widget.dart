@@ -23,7 +23,7 @@ class WinUpWidget extends SmBaseWidget<WinUpWidgetController>{
     alignment: Alignment.topCenter,
     children: [
       SmGradientTextWidget(
-        text: "${BValueHep.instance.getMaxWin(playType.name)}",
+        text: "\$${BValueHep.instance.getMaxWin(playType.name)}",
         size: 24.sp,
         colors: [
           "#FBCE01".toSmColor(),

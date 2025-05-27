@@ -14,4 +14,5 @@ class BStorageName{
   static const String countMoney="countMoneyB";
   static const String hasShowedGoodComment="hasShowedGoodCommentB";
   static const String hasCreateCash="hasCreateCash";
+  static const String firstGetGuaKaReward="firstGetGuaKaReward";
 }

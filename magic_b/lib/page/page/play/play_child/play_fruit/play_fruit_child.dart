@@ -163,10 +163,7 @@ class PlayFruitChild extends SmBaseWidget<PlayFruitChildController>{
             id: "showFruitFingerGuide",
             builder: (_)=>Offstage(
               offstage: !smController.showFruitFingerGuide,
-              child: GestureDetector(
-                onPanStart: (d){
-                  smController.updateFruitFinger();
-                },
+              child: IgnorePointer(
                 child: FingerLottie(),
               ),
             ),

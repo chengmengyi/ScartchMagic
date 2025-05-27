@@ -104,6 +104,8 @@ class BValueHep{
     }
   }
 
+  int getNewPrize()=>_valueBean?.newPrize??134;
+
   bool checkHasKey(){
     // if(kDebugMode){
     //   return true;
@@ -126,9 +128,9 @@ class BValueHep{
   }
 
   bool checkShowIntAd(AdType adType){
-    // if(kDebugMode){
-    //   return false;
-    // }
+    if(kDebugMode){
+      return false;
+    }
     if(adType==AdType.reward){
       return true;
     }

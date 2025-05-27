@@ -27,7 +27,7 @@ import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class PlayEmojiChildController extends SmBaseController with GetTickerProviderStateMixin{
   final key = GlobalKey<ScratcherState>();
-  var win=false,_canClick=true,prizeBorderIndex=-1,hideKeyIcon=false,playResultStatus=PlayResultStatus.init;
+  var win=false,_canClick=true,prizeBorderIndex=-1,hideKeyIcon=false,playResultStatus=PlayResultStatus.init,showFruitFingerGuide=false;
   Timer? _timer;
   final PlayType _playType=PlayType.playemoji;
   List<EmojiBean> emojiList=[];
@@ -63,6 +63,7 @@ class PlayEmojiChildController extends SmBaseController with GetTickerProviderSt
     super.onReady();
     _initEmojiList();
     autoScratchUtils=AutoScratchUtils(globalKey);
+    showGuaGuideFinger();
   }
 
 
@@ -99,6 +100,7 @@ class PlayEmojiChildController extends SmBaseController with GetTickerProviderSt
       EventInfo(eventCode: EventCode.keyAnimatorStart,dynamicValue: offset);
       return;
     }
+    await Future.delayed(const Duration(milliseconds: 1000));
     _checkResult();
   }
 
@@ -166,9 +168,23 @@ class PlayEmojiChildController extends SmBaseController with GetTickerProviderSt
     hideKeyIcon=false;
     autoScratchUtils?.stopWhile=false;
     iconOffset=null;
+    showGuaGuideFinger();
     update(["gold_icon"]);
   }
 
+  showGuaGuideFinger(){
+    if(!showFruitFingerGuide){
+      showFruitFingerGuide=true;
+      update(["showFruitFingerGuide"]);
+    }
+  }
+
+  hideGuaGuideFinger(){
+    if(showFruitFingerGuide){
+      showFruitFingerGuide=false;
+      update(["showFruitFingerGuide"]);
+    }
+  }
 
   _initEmojiList(){
     for (var value in emojiList) {
@@ -257,7 +273,7 @@ class PlayEmojiChildController extends SmBaseController with GetTickerProviderSt
   _initAnimator(){
     scaleController=AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       lowerBound: 1,
       upperBound: 1.2,
     )

@@ -37,7 +37,12 @@ class PlayTopWidget extends SmBaseWidget<PlayTopController>{
                 child: SmImageWidget(imageName: "icon_home",width: 36.w,height: 36.h,),
               ),
               SizedBox(width: 10.w,),
-              CoinsWidget(),
+              InkWell(
+                onTap: (){
+                  smController.toCash();
+                },
+                child: CoinsWidget(),
+              ),
               SizedBox(width: 10.w,),
               LevelWidget(isHome: false,),
             ],

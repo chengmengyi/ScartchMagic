@@ -23,7 +23,7 @@ import 'package:magic_base/utils/tba/ad_pos.dart';
 import 'package:magic_base/utils/tba/tba_utils.dart';
 
 class PlayBigChildController extends SmBaseController with GetTickerProviderStateMixin{
-  var _win=false,_canClick=true,hideKeyIcon=false,playResultStatus=PlayResultStatus.init;
+  var _win=false,_canClick=true,hideKeyIcon=false,playResultStatus=PlayResultStatus.init,showFruitFingerGuide=false;
   List<int> winningNumList=[];
   List<BigYourBean> yourNumList=[];
   final key = GlobalKey<ScratcherState>();
@@ -46,6 +46,7 @@ class PlayBigChildController extends SmBaseController with GetTickerProviderStat
     super.onReady();
     _initWinningNumList();
     autoScratchUtils=AutoScratchUtils(globalKey);
+    showGuaGuideFinger();
   }
 
   clickOpen(){
@@ -81,6 +82,7 @@ class PlayBigChildController extends SmBaseController with GetTickerProviderStat
       EventInfo(eventCode: EventCode.keyAnimatorStart,dynamicValue: offset);
       return;
     }
+    await Future.delayed(const Duration(milliseconds: 1000));
     _checkResult();
   }
 
@@ -151,7 +153,22 @@ class PlayBigChildController extends SmBaseController with GetTickerProviderStat
     hideKeyIcon=false;
     autoScratchUtils?.stopWhile=false;
     iconOffset=null;
+    showGuaGuideFinger();
     update(["gold_icon"]);
+  }
+
+  showGuaGuideFinger(){
+    if(!showFruitFingerGuide){
+      showFruitFingerGuide=true;
+      update(["showFruitFingerGuide"]);
+    }
+  }
+
+  hideGuaGuideFinger(){
+    if(showFruitFingerGuide){
+      showFruitFingerGuide=false;
+      update(["showFruitFingerGuide"]);
+    }
   }
 
   _initWinningNumList(){
@@ -217,7 +234,7 @@ class PlayBigChildController extends SmBaseController with GetTickerProviderStat
   _initAnimator(){
     scaleController=AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       lowerBound: 1,
       upperBound: 1.2,
     )
