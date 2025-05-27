@@ -41,9 +41,9 @@ class SmSqlUtils{
         _createVersion3DB(db);
       }
       print("kk====newVersion====${newVersion}");
-      // if(newVersion==4){
-      //   _createVersion4DB(db);
-      // }
+      if(newVersion==4){
+        _createVersion4DB(db);
+      }
     }
   );
 
@@ -58,7 +58,7 @@ class SmSqlUtils{
   }
 
   _createVersion4DB(db){
-    db.execute('CREATE TABLE ${SmSqlTable.newPlayInfoB} (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, currentPro INTEGER, playedNum INTEGER, unlock INTEGER, time INTEGER)');
+    db.execute('CREATE TABLE ${SmSqlTable.newPlayInfoB} (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, hasNum INTEGER,playedNum INTEGER)');
   }
 
   insertTbaMap(Map<String,dynamic> map)async{

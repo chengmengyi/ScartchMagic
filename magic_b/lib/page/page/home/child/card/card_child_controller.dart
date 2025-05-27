@@ -84,45 +84,45 @@ class CardChildController extends SmBaseController{
       element.maxWin=BValueHep.instance.getMaxWin(element.type);
     }
     update(["list"]);
-    var indexWhere = playList.indexWhere((element) => (element.time??0)>0);
-    if(indexWhere>=0&&null==_timer){
-      var bean = playList[indexWhere];
-      if((bean.time??0)-DateTime.now().millisecondsSinceEpoch<=0){
-        _timer?.cancel();
-        _timer=null;
-        BSqlUtils.instance.resetPlayTime(bean.type??"");
-        return;
-      }
-      _timer=Timer.periodic(const Duration(milliseconds: 1000), (timer) {
-        var hasTimer = playList.indexWhere((element) => (element.time??0)>0)>=0;
-        if(!hasTimer){
-          _timer?.cancel();
-          _timer=null;
-          return;
-        }
-        update(["list"]);
-      });
-    }
+    // var indexWhere = playList.indexWhere((element) => (element.time??0)>0);
+    // if(indexWhere>=0&&null==_timer){
+    //   var bean = playList[indexWhere];
+    //   if((bean.time??0)-DateTime.now().millisecondsSinceEpoch<=0){
+    //     _timer?.cancel();
+    //     _timer=null;
+    //     BSqlUtils.instance.resetPlayTime(bean.type??"");
+    //     return;
+    //   }
+    //   _timer=Timer.periodic(const Duration(milliseconds: 1000), (timer) {
+    //     var hasTimer = playList.indexWhere((element) => (element.time??0)>0)>=0;
+    //     if(!hasTimer){
+    //       _timer?.cancel();
+    //       _timer=null;
+    //       return;
+    //     }
+    //     update(["list"]);
+    //   });
+    // }
   }
 
-  String getRefreshTimerStr(PlayInfoBean bean){
-    var i = (bean.time??0)-DateTime.now().millisecondsSinceEpoch;
-    if(i<=0){
-      return "";
-    }
-    return formatDuration(i);
-  }
+  // String getRefreshTimerStr(PlayInfoBean bean){
+  //   var i = (bean.time??0)-DateTime.now().millisecondsSinceEpoch;
+  //   if(i<=0){
+  //     return "";
+  //   }
+  //   return formatDuration(i);
+  // }
 
-  double getRefreshTimerEndAngle(PlayInfoBean bean){
-    var pro = (3600000-((bean.time??0)-DateTime.now().millisecondsSinceEpoch))/3600000;
-    if(pro>=1.0){
-      return 270;
-    }else if(pro<=0){
-      return -90;
-    }else{
-      return pro*360-90;
-    }
-  }
+  // double getRefreshTimerEndAngle(PlayInfoBean bean){
+  //   var pro = (3600000-((bean.time??0)-DateTime.now().millisecondsSinceEpoch))/3600000;
+  //   if(pro>=1.0){
+  //     return 270;
+  //   }else if(pro<=0){
+  //     return -90;
+  //   }else{
+  //     return pro*360-90;
+  //   }
+  // }
 
   @override
   bool smRegisterEvent() => true;

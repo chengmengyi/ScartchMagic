@@ -22,18 +22,18 @@ class BSqlUtils{
 
   Future<List<PlayInfoBean>> queryPlayList()async{
     var db = await SmSqlUtils.instance.openDB();
-    var list = await db.query(SmSqlTable.playInfoB);
+    var list = await db.query(SmSqlTable.newPlayInfoB);
     if(list.isEmpty){
       var defaultList=[
-        PlayInfoBean(type: PlayType.playfruit.name,currentPro: 0,playedNum: 0,unlock: 1,time: 0),
-        PlayInfoBean(type: PlayType.playbig.name,currentPro: 0,playedNum: 0,unlock: 0,time: 0),
-        PlayInfoBean(type: PlayType.playtiger.name,currentPro: 0,playedNum: 0,unlock: 0,time: 0),
-        PlayInfoBean(type: PlayType.play7.name,currentPro: 0,playedNum: 0,unlock: 0,time: 0),
-        PlayInfoBean(type: PlayType.playemoji.name,currentPro: 0,playedNum: 0,unlock: 0,time: 0),
-        PlayInfoBean(type: PlayType.play8.name,currentPro: 0,playedNum: 0,unlock: 0,time: 0),
+        PlayInfoBean(type: PlayType.playfruit.name,hasNum: 10,playedNum: 0,),
+        PlayInfoBean(type: PlayType.playbig.name,hasNum: 10,playedNum: 0,),
+        PlayInfoBean(type: PlayType.playtiger.name,hasNum: 10,playedNum: 0,),
+        PlayInfoBean(type: PlayType.play7.name,hasNum: 10,playedNum: 0,),
+        PlayInfoBean(type: PlayType.playemoji.name,hasNum: 10,playedNum: 0,),
+        PlayInfoBean(type: PlayType.play8.name,hasNum: 10,playedNum: 0,),
       ];
       for (var value in defaultList) {
-        db.insert(SmSqlTable.playInfoB, value.toJson());
+        db.insert(SmSqlTable.newPlayInfoB, value.toJson());
       }
       return defaultList;
     }
@@ -46,21 +46,16 @@ class BSqlUtils{
   ///return  >0升级了 =0没升级
   Future<int> updatePlayedNumInfo(PlayType playType)async{
     var db = await SmSqlUtils.instance.openDB();
-    var list = await db.query(SmSqlTable.playInfoB,where: '"type" = ? ', whereArgs: [playType.name]);
+    var list = await db.query(SmSqlTable.newPlayInfoB,where: '"type" = ? ', whereArgs: [playType.name]);
     if(list.isEmpty){
       return 0;
     }
     var map = list.first;
     var id = map["id"];
     var playedNum = map["playedNum"] as int;
-    var currentPro = map["currentPro"] as int;
     var newMap = Map<String, Object?>.from(map);
     newMap["playedNum"]=playedNum+1;
-    newMap["currentPro"]=currentPro+1;
-    if(currentPro+1>=10){
-      newMap["time"]=DateTime.now().millisecondsSinceEpoch+60*60*1000;
-    }
-    await db.update(SmSqlTable.playInfoB, newMap,where: '"id" = ?',whereArgs: [id]);
+    await db.update(SmSqlTable.newPlayInfoB, newMap,where: '"id" = ?',whereArgs: [id]);
     EventInfo(eventCode: EventCode.updateLevelPro);
     EventInfo(eventCode: EventCode.updateHomeList);
 
@@ -75,34 +70,34 @@ class BSqlUtils{
     return 0;
   }
 
-  Future<void> unlockNextPlay(String nextPlay)async{
-    var db = await SmSqlUtils.instance.openDB();
-    var list = await db.query(SmSqlTable.playInfoB,where: '"type" = ? ', whereArgs: [nextPlay]);
-    if(list.isEmpty){
-      return;
-    }
-    var map = list.first;
-    var id = map["id"];
-    var newMap = Map<String, Object?>.from(map);
-    newMap["unlock"]=1;
-    await db.update(SmSqlTable.playInfoB, newMap,where: '"id" = ?',whereArgs: [id]);
-    EventInfo(eventCode: EventCode.updateHomeList,strValue: nextPlay);
-  }
+  // Future<void> unlockNextPlay(String nextPlay)async{
+  //   var db = await SmSqlUtils.instance.openDB();
+  //   var list = await db.query(SmSqlTable.playInfoB,where: '"type" = ? ', whereArgs: [nextPlay]);
+  //   if(list.isEmpty){
+  //     return;
+  //   }
+  //   var map = list.first;
+  //   var id = map["id"];
+  //   var newMap = Map<String, Object?>.from(map);
+  //   newMap["unlock"]=1;
+  //   await db.update(SmSqlTable.playInfoB, newMap,where: '"id" = ?',whereArgs: [id]);
+  //   EventInfo(eventCode: EventCode.updateHomeList,strValue: nextPlay);
+  // }
 
-  Future<void> resetPlayTime(String playType)async{
-    var db = await SmSqlUtils.instance.openDB();
-    var list = await db.query(SmSqlTable.playInfoB,where: '"type" = ? ', whereArgs: [playType]);
-    if(list.isEmpty){
-      return;
-    }
-    var map = list.first;
-    var id = map["id"];
-    var newMap = Map<String, Object?>.from(map);
-    newMap["time"]=0;
-    newMap["currentPro"]=0;
-    await db.update(SmSqlTable.playInfoB, newMap,where: '"id" = ?',whereArgs: [id]);
-    EventInfo(eventCode: EventCode.updateHomeList);
-  }
+  // Future<void> resetPlayTime(String playType)async{
+  //   var db = await SmSqlUtils.instance.openDB();
+  //   var list = await db.query(SmSqlTable.playInfoB,where: '"type" = ? ', whereArgs: [playType]);
+  //   if(list.isEmpty){
+  //     return;
+  //   }
+  //   var map = list.first;
+  //   var id = map["id"];
+  //   var newMap = Map<String, Object?>.from(map);
+  //   newMap["time"]=0;
+  //   newMap["currentPro"]=0;
+  //   await db.update(SmSqlTable.playInfoB, newMap,where: '"id" = ?',whereArgs: [id]);
+  //   EventInfo(eventCode: EventCode.updateHomeList);
+  // }
 
   Future<CashTaskBean?> queryCashTaskListByMoneyAndType(int money,int cashType)async{
     var db = await SmSqlUtils.instance.openDB();

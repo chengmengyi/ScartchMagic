@@ -8,13 +8,13 @@ import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
 class UnlockDialogController extends SmBaseController{
 
   spendMoneyUnlock(String playType)async{
-    if(coins.read()<5000){
-      showToast("Insufficient gold coins");
-      return;
-    }
-    InfoHep.instance.updateCoins(-5000);
-    await BSqlUtils.instance.unlockNextPlay(playType);
-    SmRoutersUtils.instance.offPage();
+    // if(coins.read()<5000){
+    //   showToast("Insufficient gold coins");
+    //   return;
+    // }
+    // InfoHep.instance.updateCoins(-5000);
+    // await BSqlUtils.instance.unlockNextPlay(playType);
+    // SmRoutersUtils.instance.offPage();
   }
 
   watchAdUnlock(String playType)async{

@@ -5,34 +5,26 @@ enum PlayType{
 class PlayInfoBean {
   PlayInfoBean({
     this.type,
-    this.currentPro,
-    this.playedNum,
+    this.hasNum,
     this.maxWin,
-    this.unlock,
-    this.time,
+    this.playedNum,
   });
 
   PlayInfoBean.fromJson(dynamic json) {
     type = json['type'];
-    currentPro = json['currentPro'];
+    hasNum = json['hasNum'];
     playedNum = json['playedNum'];
-    unlock = json['unlock'];
-    time = json['time'];
   }
   String? type;
-  int? currentPro;
-  int? playedNum;
+  int? hasNum;
   int? maxWin;
-  int? unlock;
-  int? time;
+  int? playedNum;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['type'] = type;
-    map['currentPro'] = currentPro;
+    map['hasNum'] = hasNum;
     map['playedNum'] = playedNum;
-    map['unlock'] = unlock;
-    map['time'] = time;
     return map;
   }
 
