@@ -219,7 +219,7 @@
     },
     {
       "name": "flutter_android_local_notification",
-      "rootUri": "file:///Users/a68/.pub-cache/hosted/pub.dev/flutter_android_local_notification-0.0.5",
+      "rootUri": "file:///Users/a68/.pub-cache/hosted/pub.dev/flutter_android_local_notification-0.0.6",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -656,7 +656,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2025-04-11T09:31:33.358265Z",
+  "generated": "2025-05-27T07:10:07.509782Z",
   "generator": "pub",
   "generatorVersion": "3.3.3"
 }
