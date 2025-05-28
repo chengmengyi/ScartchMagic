@@ -1,0 +1,1 @@
+ /Users/a68/StudioProjects/scratch_magic/.dart_tool/flutter_build/f3a8524b52277196bc2f619c21d0a0b9/native_assets.yaml: 
