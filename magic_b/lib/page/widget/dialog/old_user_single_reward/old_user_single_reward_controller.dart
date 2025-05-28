@@ -46,7 +46,13 @@ class OldUserSingleRewardController extends SmBaseController{
 
 
   clickClose(){
-    SmRoutersUtils.instance.offPage();
-    GuideUtils.instance.updateOldStep(OldGuideStep.completed);
+    ShowAdUtils.instance.showAd(
+      adPos: AdPos.stmag_close_int,
+      adType: AdType.interstitial,
+      closeAd: (showFail){
+        SmRoutersUtils.instance.offPage();
+        GuideUtils.instance.updateOldStep(OldGuideStep.completed);
+      },
+    );
   }
 }

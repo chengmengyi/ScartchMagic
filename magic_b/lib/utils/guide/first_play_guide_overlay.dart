@@ -142,7 +142,7 @@ class FirstPlayGuideOverlay extends StatelessWidget{
               Transform(
                   alignment: Alignment.center,
                   transform: Matrix4.identity()..rotateZ(8.0 * (pi / 180.0)),
-                  child: SmTextWidget(text: "0/10", size: 14.sp, color: "#FFFEF8",fontWeight: FontWeight.w600,)
+                  child: SmTextWidget(text: "10/10", size: 14.sp, color: "#FFFEF8",fontWeight: FontWeight.w600,)
               ),
             ],
           ),

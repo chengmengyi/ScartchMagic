@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/page/play/play_child/play_7/play7_bean.dart';
+import 'package:magic_b/page/widget/dialog/big_win/bigwin_dialog.dart';
+import 'package:magic_b/page/widget/dialog/cash_win/cashwin_dialog.dart';
 import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
 import 'package:magic_b/page/widget/dialog/no_reward/no_reward_dialog.dart';
 import 'package:magic_b/utils/cash_task/cash_task_utils.dart';
@@ -133,21 +135,18 @@ class Play7ChildController extends SmBaseController with GetTickerProviderStateM
       return;
     }
     var bigReward=yourList.map((item) => item.reward).reduce((a, b) => a + b);
-    SmRoutersUtils.instance.showDialog(
-        widget: IncentDialog(
-          incentType: IncentType.card,
-          money: bigReward,
-          dismissDialog: (addNum){
-            InfoHep.instance.updateCoins(addNum);
-            _initYourNumList();
-            resetPlay();
-          },
-        ),
-        arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)}
+
+    InfoHep.instance.checkShowRewardDialog(
+      playType: _playType,
+      reward: bigReward,
+      dismissDialog: (addNum){
+        _initYourNumList();
+        resetPlay();
+      },
     );
   }
 
-  resetPlay(){
+  resetPlay()async{
     InfoHep.instance.updateBoxProgress();
     playResultStatus=PlayResultStatus.init;
     update(["result_fail"]);
@@ -159,6 +158,10 @@ class Play7ChildController extends SmBaseController with GetTickerProviderStateM
     iconOffset=null;
     showGuaGuideFinger();
     update(["gold_icon"]);
+    var hasPlayNum = await BSqlUtils.instance.getCardHasPlayNum(_playType);
+    if(hasPlayNum<=0){
+      SmRoutersUtils.instance.offPage();
+    }
   }
 
 

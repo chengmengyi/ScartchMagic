@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:magic_b/page/widget/dialog/big_win/bigwin_dialog.dart';
+import 'package:magic_b/page/widget/dialog/cash_win/cashwin_dialog.dart';
 import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
 import 'package:magic_b/page/widget/dialog/no_reward/no_reward_dialog.dart';
 import 'package:magic_b/utils/b_storage/b_storage_hep.dart';
@@ -123,27 +125,15 @@ class PlayFruitChildController extends SmBaseController with GetTickerProviderSt
       if(currentGuideStep.read()==GuideStep.showFruitFingerGuide){
         GuideUtils.instance.updateGuideStep(GuideStep.firstGetReward);
       }
-      SmRoutersUtils.instance.showDialog(
-        widget: IncentDialog(
-          incentType: IncentType.card,
-          money: firstGetGuaKaReward.read()?BValueHep.instance.getNewPrize():fruitReward,
-          dismissDialog: (addNum){
-            firstGetGuaKaReward.write(false);
-            InfoHep.instance.updateCoins(addNum);
-            InfoHep.instance.updatePlayedCardNum();
-            _initRewardList();
-            resetPlay();
-          },
-        ),
-        arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)}
+      InfoHep.instance.checkShowRewardDialog(
+        playType: _playType,
+        reward: fruitReward,
+        dismissDialog: (addNum){
+          _initRewardList();
+          resetPlay();
+        },
       );
     }else{
-      // update(["result_fail"]);
-      // Future.delayed(const Duration(milliseconds: 2000),(){
-      //   InfoHep.instance.updatePlayedCardNum();
-      //   _initRewardList();
-      //   resetPlay();
-      // });
       SmRoutersUtils.instance.showDialog(
         widget: NoRewardDialog(
           dismiss: (){
@@ -156,7 +146,7 @@ class PlayFruitChildController extends SmBaseController with GetTickerProviderSt
     }
   }
 
-  resetPlay(){
+  resetPlay()async{
     InfoHep.instance.updateBoxProgress();
     playResultStatus=PlayResultStatus.init;
     update(["result_fail"]);
@@ -169,6 +159,10 @@ class PlayFruitChildController extends SmBaseController with GetTickerProviderSt
     update(["gold_icon"]);
     showGuaGuideFinger();
     EventInfo(eventCode: EventCode.updateUpLevelText);
+    var hasPlayNum = await BSqlUtils.instance.getCardHasPlayNum(_playType);
+    if(hasPlayNum<=0){
+      SmRoutersUtils.instance.offPage();
+    }
   }
 
   _initRewardList(){

@@ -29,10 +29,10 @@ packages:
     dependency: transitive
     description:
       name: applovin_max
-      sha256: "1130bd1dcba563033595b86dbaf4e53a2711bb6c936996819ce4fabcdb2ac9c6"
+      sha256: c1f52747f4f8d36a4476786b1fa05ee1e281ee91f7714a640b2a707345900c46
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "4.4.0"
   appsflyer_sdk:
     dependency: transitive
     description:

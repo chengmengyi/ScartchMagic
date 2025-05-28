@@ -80,7 +80,7 @@ class CashTaskDialog extends SmBaseDialog<CashTaskController>{
           alignment: Alignment.topRight,
           child: InkWell(
             onTap: (){
-              SmRoutersUtils.instance.offPage();
+              smController.clickClose();
             },
             child: SmImageWidget(imageName: "close",width: 32.w,height: 32.h,),
           ),

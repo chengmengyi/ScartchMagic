@@ -115,82 +115,73 @@ class CardChild extends SmBaseTagWidget<CardChildController>{
                     )
                   ],
                 ),
-                // Stack(
-                //   alignment: Alignment.center,
-                //   children: [
-                //     SmImageWidget(
-                //       imageName: bean.unlock==1?"free_btn":"lock",
-                //       width: 128.w,
-                //       height: 48.h,
-                //     ),
-                //     bean.unlock==1?
-                //     SmTextWidget(
-                //       text: "Play",
-                //       size: 18.sp,
-                //       color: "#FFFFFF",
-                //       fontWeight: FontWeight.w700,
-                //       shadows: [
-                //         Shadow(
-                //             color: "#0C5500".toSmColor(),
-                //             blurRadius: 2.w,
-                //             offset: Offset(0,0.5.w)
-                //         )
-                //       ],
-                //     ):
-                //     SmTextWidget(
-                //       text: "Level ${index+1}",
-                //       size: 16.sp,
-                //       color: "#FFFFFF",
-                //       fontWeight: FontWeight.w700,
-                //     ),
-                //   ],
-                // ),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SmImageWidget(
+                      imageName: "free_btn",
+                      width: 128.w,
+                      height: 48.h,
+                    ),
+                    SmTextWidget(
+                      text: "Play",
+                      size: 18.sp,
+                      color: "#FFFFFF",
+                      fontWeight: FontWeight.w700,
+                      shadows: [
+                        Shadow(
+                            color: "#0C5500".toSmColor(),
+                            blurRadius: 2.w,
+                            offset: Offset(0,0.5.w)
+                        )
+                      ],
+                    )
+                  ],
+                ),
                 SizedBox(height: 16.h,),
               ],
             ),
           ),
-          // (bean.time??0)>0?
-          // Container(
-          //   width: double.infinity,
-          //   height: double.infinity,
-          //   alignment: Alignment.center,
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(16.w),
-          //     color: "#000000".toSmColor().withOpacity(0.6),
-          //   ),
-          //   child: Column(
-          //     mainAxisSize: MainAxisSize.min,
-          //     children: [
-          //       Stack(
-          //         alignment: Alignment.center,
-          //         children: [
-          //           Container(
-          //             width: 50.w,
-          //             height: 50.w,
-          //             decoration: BoxDecoration(
-          //                 borderRadius: BorderRadius.circular(50.w),
-          //                 border: Border.all(
-          //                   width: 1.w,
-          //                   color: "#FFFFFF".toSmColor(),
-          //                 )
-          //             ),
-          //           ),
-          //           CustomPaint(
-          //               size: Size(100.w, 100.w),
-          //               painter: SmSectorPainter(
-          //                 startAngle: -90,
-          //                 endAngle: smController.getRefreshTimerEndAngle(bean),
-          //                 color: "#FFFFFF".toSmColor(),
-          //               )
-          //           ),
-          //         ],
-          //       ),
-          //       SmTextWidget(text: "Refresh in", size: 18.sp, color: "#FFFFFF",fontWeight: FontWeight.w600,),
-          //       SmTextWidget(text: smController.getRefreshTimerStr(bean), size: 18.sp, color: "#FFFFFF",fontWeight: FontWeight.w600,),
-          //     ],
-          //   ),
-          // ):
-          // Container(),
+          (bean.secondsNum??0)>0?
+          Container(
+            width: double.infinity,
+            height: 28.h,
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(top: 40.h),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.w),
+              color: "#000000".toSmColor().withOpacity(0.8),
+            ),
+            child: RichText(
+              //The next card 180 second
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "The next card ",
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: "#FFFFFF".toSmColor(),
+                    )
+                  ),
+                  TextSpan(
+                      text: smController.getRefreshTimerStr(bean),
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: "#F3FC01".toSmColor(),
+                      )
+                  ),
+                  TextSpan(
+                      text: " second",
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: "#FFFFFF".toSmColor(),
+                      )
+                  ),
+                ]
+              ),
+            ),
+          ):
+          Container(),
           Stack(
             alignment: Alignment.center,
             children: [

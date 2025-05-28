@@ -42,7 +42,7 @@ class SetDialog extends SmBaseDialog<SetController>{
       SizedBox(height: 20.h,),
       InkWell(
         onTap: (){
-          SmRoutersUtils.instance.offPage();
+          smController.clickClose();
         },
         child: const Icon(Icons.close,color: Colors.white,),
       )

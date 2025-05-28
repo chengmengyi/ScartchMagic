@@ -26,7 +26,6 @@ class SmSqlUtils{
     "scratchMagic.db",
     version: 4,
     onCreate: (db,version)async{
-      print("kk====onCreate====${version}");
       db.execute('CREATE TABLE ${SmSqlTable.playInfoNormal} (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, currentPro INTEGER, playedNum INTEGER, unlock INTEGER, time INTEGER)');
 
       _createVersion2DB(db);
@@ -40,7 +39,6 @@ class SmSqlUtils{
       if(newVersion==3){
         _createVersion3DB(db);
       }
-      print("kk====newVersion====${newVersion}");
       if(newVersion==4){
         _createVersion4DB(db);
       }
@@ -58,7 +56,7 @@ class SmSqlUtils{
   }
 
   _createVersion4DB(db){
-    db.execute('CREATE TABLE ${SmSqlTable.newPlayInfoB} (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, hasNum INTEGER,playedNum INTEGER)');
+    db.execute('CREATE TABLE ${SmSqlTable.newPlayInfoB} (id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT, hasNum INTEGER,playedNum INTEGER, secondsNum INTEGER)');
   }
 
   insertTbaMap(Map<String,dynamic> map)async{

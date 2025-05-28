@@ -25,12 +25,12 @@ class BSqlUtils{
     var list = await db.query(SmSqlTable.newPlayInfoB);
     if(list.isEmpty){
       var defaultList=[
-        PlayInfoBean(type: PlayType.playfruit.name,hasNum: 10,playedNum: 0,),
-        PlayInfoBean(type: PlayType.playbig.name,hasNum: 10,playedNum: 0,),
-        PlayInfoBean(type: PlayType.playtiger.name,hasNum: 10,playedNum: 0,),
-        PlayInfoBean(type: PlayType.play7.name,hasNum: 10,playedNum: 0,),
-        PlayInfoBean(type: PlayType.playemoji.name,hasNum: 10,playedNum: 0,),
-        PlayInfoBean(type: PlayType.play8.name,hasNum: 10,playedNum: 0,),
+        PlayInfoBean(type: PlayType.playfruit.name,hasNum: 10,playedNum: 0,secondsNum: 0),
+        PlayInfoBean(type: PlayType.playbig.name,hasNum: 10,playedNum: 0,secondsNum: 0),
+        PlayInfoBean(type: PlayType.playtiger.name,hasNum: 10,playedNum: 0,secondsNum: 0),
+        PlayInfoBean(type: PlayType.play7.name,hasNum: 10,playedNum: 0,secondsNum: 0),
+        PlayInfoBean(type: PlayType.playemoji.name,hasNum: 10,playedNum: 0,secondsNum: 0),
+        PlayInfoBean(type: PlayType.play8.name,hasNum: 10,playedNum: 0,secondsNum: 0),
       ];
       for (var value in defaultList) {
         db.insert(SmSqlTable.newPlayInfoB, value.toJson());
@@ -53,8 +53,12 @@ class BSqlUtils{
     var map = list.first;
     var id = map["id"];
     var playedNum = map["playedNum"] as int;
+    var hasNum = map["hasNum"] as int;
     var newMap = Map<String, Object?>.from(map);
     newMap["playedNum"]=playedNum+1;
+    if(hasNum>0){
+      newMap["hasNum"]=hasNum-1;
+    }
     await db.update(SmSqlTable.newPlayInfoB, newMap,where: '"id" = ?',whereArgs: [id]);
     EventInfo(eventCode: EventCode.updateLevelPro);
     EventInfo(eventCode: EventCode.updateHomeList);
@@ -68,6 +72,16 @@ class BSqlUtils{
       return allPlayedNum~/10;
     }
     return 0;
+  }
+
+  Future<int> getCardHasPlayNum(PlayType playType)async{
+    var db = await SmSqlUtils.instance.openDB();
+    var list = await db.query(SmSqlTable.newPlayInfoB,where: '"type" = ? ', whereArgs: [playType.name]);
+    if(list.isEmpty){
+      return 0;
+    }
+    var hasNum = list.first["hasNum"] as int;
+    return hasNum;
   }
 
   // Future<void> unlockNextPlay(String nextPlay)async{
@@ -84,20 +98,31 @@ class BSqlUtils{
   //   EventInfo(eventCode: EventCode.updateHomeList,strValue: nextPlay);
   // }
 
-  // Future<void> resetPlayTime(String playType)async{
-  //   var db = await SmSqlUtils.instance.openDB();
-  //   var list = await db.query(SmSqlTable.playInfoB,where: '"type" = ? ', whereArgs: [playType]);
-  //   if(list.isEmpty){
-  //     return;
-  //   }
-  //   var map = list.first;
-  //   var id = map["id"];
-  //   var newMap = Map<String, Object?>.from(map);
-  //   newMap["time"]=0;
-  //   newMap["currentPro"]=0;
-  //   await db.update(SmSqlTable.playInfoB, newMap,where: '"id" = ?',whereArgs: [id]);
-  //   EventInfo(eventCode: EventCode.updateHomeList);
-  // }
+  Future<void> addPlayNum(String playType,{int addNum=1})async{
+    var db = await SmSqlUtils.instance.openDB();
+    var list = await db.query(SmSqlTable.newPlayInfoB,where: '"type" = ? ', whereArgs: [playType]);
+    if(list.isEmpty){
+      return;
+    }
+    var map = list.first;
+    var id = map["id"];
+    var hasNum = map["hasNum"] as int;
+    var newMap = Map<String, Object?>.from(map);
+    if(hasNum<10){
+      newMap["hasNum"]=hasNum+addNum;
+      newMap["secondsNum"]=0;
+    }
+    await db.update(SmSqlTable.newPlayInfoB, newMap,where: '"id" = ?',whereArgs: [id]);
+  }
+
+  Future<void> savePlayInfo(PlayInfoBean bean)async{
+    var db = await SmSqlUtils.instance.openDB();
+    var list = await db.query(SmSqlTable.newPlayInfoB,where: '"type" = ? ', whereArgs: [bean.type]);
+    if(list.isEmpty){
+      return;
+    }
+    await db.update(SmSqlTable.newPlayInfoB, bean.toJson(),where: '"id" = ?',whereArgs: [list.first["id"]]);
+  }
 
   Future<CashTaskBean?> queryCashTaskListByMoneyAndType(int money,int cashType)async{
     var db = await SmSqlUtils.instance.openDB();
@@ -192,18 +217,17 @@ class BSqlUtils{
   // }
 
   checkVersion2HasTask()async{
-    var db = await SmSqlUtils.instance.openDB();
-    var list = await db.query(SmSqlTable.cashTaskB);
-    print(list);
-    //[{id: 1, taskType: 1, cashType: 0, cashMoney: 1000, currentPro: 0, maxPro: 50, completeStatus: 0, maxDays: 2, timer: 2025-2-9, account: 5555666}]
-    if(list.isNotEmpty){
-      for (var map in list) {
-        var cashMoney = map["cashMoney"] as int;
-        var cashType = map["cashType"] as int;
-        var account = map["account"] as String;
-        await insertCashTask(cashMoney, cashType, account, TaskType.card);
-      }
-      await db.delete(SmSqlTable.cashTaskB);
-    }
+    // var db = await SmSqlUtils.instance.openDB();
+    // var list = await db.query(SmSqlTable.cashTaskB);
+    // //[{id: 1, taskType: 1, cashType: 0, cashMoney: 1000, currentPro: 0, maxPro: 50, completeStatus: 0, maxDays: 2, timer: 2025-2-9, account: 5555666}]
+    // if(list.isNotEmpty){
+    //   for (var map in list) {
+    //     var cashMoney = map["cashMoney"] as int;
+    //     var cashType = map["cashType"] as int;
+    //     var account = map["account"] as String;
+    //     await insertCashTask(cashMoney, cashType, account, TaskType.card);
+    //   }
+    //   await db.delete(SmSqlTable.cashTaskB);
+    // }
   }
 }

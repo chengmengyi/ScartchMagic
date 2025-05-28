@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/page/play/play_child/play_emoji/emoji_bean.dart';
+import 'package:magic_b/page/widget/dialog/big_win/bigwin_dialog.dart';
+import 'package:magic_b/page/widget/dialog/cash_win/cashwin_dialog.dart';
 import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
 import 'package:magic_b/page/widget/dialog/no_reward/no_reward_dialog.dart';
 import 'package:magic_b/utils/cash_task/cash_task_utils.dart';
@@ -129,17 +131,13 @@ class PlayEmojiChildController extends SmBaseController with GetTickerProviderSt
     playResultStatus=win?PlayResultStatus.success:PlayResultStatus.fail;
     if(playResultStatus==PlayResultStatus.success){
       var tigerReward = emojiList.map((item) => item.reward).reduce((a, b) => a + b);
-      SmRoutersUtils.instance.showDialog(
-          widget: IncentDialog(
-            incentType: IncentType.card,
-            money: tigerReward,
-            dismissDialog: (addNum){
-              InfoHep.instance.updateCoins(addNum);
-              _initEmojiList();
-              resetPlay();
-            },
-          ),
-          arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)}
+      InfoHep.instance.checkShowRewardDialog(
+        playType: _playType,
+        reward: tigerReward,
+        dismissDialog: (addNum){
+          _initEmojiList();
+          resetPlay();
+        },
       );
     }else{
       // update(["result_fail"]);
@@ -158,7 +156,7 @@ class PlayEmojiChildController extends SmBaseController with GetTickerProviderSt
     }
   }
 
-  resetPlay(){
+  resetPlay()async{
     InfoHep.instance.updateBoxProgress();
     prizeBorderIndex=-1;
     playResultStatus=PlayResultStatus.init;
@@ -170,6 +168,10 @@ class PlayEmojiChildController extends SmBaseController with GetTickerProviderSt
     iconOffset=null;
     showGuaGuideFinger();
     update(["gold_icon"]);
+    var hasPlayNum = await BSqlUtils.instance.getCardHasPlayNum(_playType);
+    if(hasPlayNum<=0){
+      SmRoutersUtils.instance.offPage();
+    }
   }
 
   showGuaGuideFinger(){

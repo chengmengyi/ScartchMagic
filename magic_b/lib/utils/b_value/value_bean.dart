@@ -16,6 +16,7 @@ class ValueBean {
       this.winupNumber, 
       this.checkReward,
       this.boxPrize,
+      this.bigWin,
   });
 
   ValueBean.fromJson(dynamic json) {
@@ -25,6 +26,12 @@ class ValueBean {
       intadPoint = [];
       json['intad_point'].forEach((v) {
         intadPoint?.add(IntadPoint.fromJson(v));
+      });
+    }
+    if (json['big_win'] != null) {
+      bigWin = [];
+      json['big_win'].forEach((v) {
+        bigWin?.add(BigWin.fromJson(v));
       });
     }
     if (json['float_prize'] != null) {
@@ -72,6 +79,7 @@ class ValueBean {
   List<int>? winupNumber;
   List<int>? checkReward;
   List<Prize>? boxPrize;
+  List<BigWin>? bigWin;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -79,6 +87,9 @@ class ValueBean {
     map['new_prize'] = newPrize;
     if (intadPoint != null) {
       map['intad_point'] = intadPoint?.map((v) => v.toJson()).toList();
+    }
+    if (bigWin != null) {
+      map['big_win'] = bigWin?.map((v) => v.toJson()).toList();
     }
     if (floatPrize != null) {
       map['float_prize'] = floatPrize?.map((v) => v.toJson()).toList();
@@ -221,6 +232,32 @@ class Prize {
     final map = <String, dynamic>{};
     map['first_number'] = firstNumber;
     map['prize'] = prize;
+    map['end_number'] = endNumber;
+    return map;
+  }
+
+}
+
+
+class BigWin {
+  BigWin({
+    this.firstNumber,
+    this.winNumber,
+    this.endNumber,});
+
+  BigWin.fromJson(dynamic json) {
+    firstNumber = json['first_number'];
+    winNumber = json['win_number'];
+    endNumber = json['end_number'];
+  }
+  int? firstNumber;
+  int? winNumber;
+  int? endNumber;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['first_number'] = firstNumber;
+    map['win_number'] = winNumber;
     map['end_number'] = endNumber;
     return map;
   }

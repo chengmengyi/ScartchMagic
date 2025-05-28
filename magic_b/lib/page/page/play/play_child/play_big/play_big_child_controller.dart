@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:magic_b/enums/play_result_status.dart';
 import 'package:magic_b/page/page/play/play_child/play_big/big_your_bean.dart';
+import 'package:magic_b/page/widget/dialog/big_win/bigwin_dialog.dart';
+import 'package:magic_b/page/widget/dialog/cash_win/cashwin_dialog.dart';
 import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
 import 'package:magic_b/page/widget/dialog/no_reward/no_reward_dialog.dart';
 import 'package:magic_b/page/widget/dialog/up_level_dialog/up_level_dialog.dart';
@@ -99,6 +101,7 @@ class PlayBigChildController extends SmBaseController with GetTickerProviderStat
           addNum: maxWin,
           call: (){
             InfoHep.instance.updateCoins(maxWin,showLottie: false);
+            InfoHep.instance.updatePlayedCardNum();
             Utils.toNextPlay(_playType);
           },
         ),
@@ -115,17 +118,14 @@ class PlayBigChildController extends SmBaseController with GetTickerProviderStat
           bigReward+=element.reward;
         }
       }
-      SmRoutersUtils.instance.showDialog(
-          widget: IncentDialog(
-            incentType: IncentType.card,
-            money: bigReward,
-            dismissDialog: (addNum){
-              InfoHep.instance.updateCoins(addNum);
-              _initWinningNumList();
-              resetPlay();
-            },
-          ),
-          arguments: {"sourceFrom":Utils.getSourceFromByPlayType(_playType)}
+
+      InfoHep.instance.checkShowRewardDialog(
+        playType: _playType,
+        reward: bigReward,
+        dismissDialog: (addNum){
+          _initWinningNumList();
+          resetPlay();
+        },
       );
     }else{
       // update(["result_fail"]);
@@ -144,7 +144,7 @@ class PlayBigChildController extends SmBaseController with GetTickerProviderStat
     }
   }
 
-  resetPlay(){
+  resetPlay()async{
     InfoHep.instance.updateBoxProgress();
     playResultStatus=PlayResultStatus.init;
     update(["result_fail"]);
@@ -155,6 +155,10 @@ class PlayBigChildController extends SmBaseController with GetTickerProviderStat
     iconOffset=null;
     showGuaGuideFinger();
     update(["gold_icon"]);
+    var hasPlayNum = await BSqlUtils.instance.getCardHasPlayNum(_playType);
+    if(hasPlayNum<=0){
+      SmRoutersUtils.instance.offPage();
+    }
   }
 
   showGuaGuideFinger(){

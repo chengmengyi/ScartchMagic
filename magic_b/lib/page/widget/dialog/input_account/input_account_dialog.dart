@@ -38,6 +38,15 @@ class InputAccountDialog extends SmBaseDialog<InputAccountController>{
             ],
           ),
         ),
+        Align(
+          alignment: Alignment.topRight,
+          child: InkWell(
+            onTap: (){
+              smController.clickClose();
+            },
+            child: SmImageWidget(imageName: "close",width: 32.w,height: 32.h,),
+          ),
+        ),
       ],
     ),
   );

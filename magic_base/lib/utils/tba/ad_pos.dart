@@ -16,6 +16,11 @@ enum AdPos{
   stmag_wheel_rv,
   stmag_wheel_int,
   stmag_card_failed_int,
+  stmag_bigwin_rv,
+  stmag_bigwin_int,
+  stmag_cashwin_int,
+  stmag_close_int,
+  stmag_getcard_rv,
 }
 
 enum PointType{
@@ -82,4 +87,12 @@ enum PointType{
   sm_failed_pop,
   sm_failed_pop_c,
   sm_notification_c,
+  sm_bigwin_pop,
+  sm_bigwin_c,
+  sm_bigwin_pop_close,
+  sm_cashwin_pop,
+  sm_cashwin_c,
+  sm_cashwin_pop_close,
+  more_card_pop,
+  more_card_pop_c,
 }

@@ -1,6 +1,12 @@
 import 'package:in_app_review/in_app_review.dart';
+import 'package:magic_b/page/widget/dialog/big_win/bigwin_dialog.dart';
+import 'package:magic_b/page/widget/dialog/cash_win/cashwin_dialog.dart';
 import 'package:magic_b/page/widget/dialog/good_comment/comment_success/comment_success_dialog.dart';
 import 'package:magic_b/page/widget/dialog/good_comment/good_comment/good_comment_dialog.dart';
+import 'package:magic_b/page/widget/dialog/incent/incent_dialog.dart';
+import 'package:magic_b/utils/b_sql/play_info_bean.dart';
+import 'package:magic_b/utils/b_value/b_value_hep.dart';
+import 'package:magic_b/utils/utils.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
@@ -31,7 +37,7 @@ class InfoHep{
     }else{
       EventInfo(eventCode: EventCode.updateCoins,intValue: addNum);
     }
-    if(firstGetMoney.read()){
+    if(firstGetMoney.read()){   InfoHep.instance.updatePlayedCardNum();
       firstGetMoney.write(false);
       _showGoodCommentDialog();
     }
@@ -61,6 +67,53 @@ class InfoHep{
       return;
     }
     _showGoodCommentDialog();
+  }
+
+  checkShowRewardDialog({
+    required PlayType playType,
+    required int reward,
+    required Function(int addNum) dismissDialog,
+}){
+    if(firstGetGuaKaReward.read()){
+      SmRoutersUtils.instance.showDialog(
+          widget: IncentDialog(
+            incentType: IncentType.card,
+            money: BValueHep.instance.getNewPrize(),
+            dismissDialog: (addNum){
+              firstGetGuaKaReward.write(false);
+              updateCoins(addNum);
+              updatePlayedCardNum();
+              dismissDialog.call(addNum);
+            },
+          ),
+          arguments: {"sourceFrom":Utils.getSourceFromByPlayType(playType)}
+      );
+    }else{
+      var showBigWin = BValueHep.instance.checkShowBigWin(reward);
+      if(showBigWin){
+        SmRoutersUtils.instance.showDialog(
+            widget: BigwinDialog(
+              addNum: reward,
+              dismissDialog: (addNum){
+                updateCoins(addNum);
+                updatePlayedCardNum();
+                dismissDialog.call(addNum);
+              },
+            )
+        );
+      }else{
+        SmRoutersUtils.instance.showDialog(
+            widget: CashwinDialog(
+              addNum: reward,
+              dismissDialog: (addNum){
+                updateCoins(addNum);
+                updatePlayedCardNum();
+                dismissDialog.call(addNum);
+              },
+            )
+        );
+      }
+    }
   }
 
   _showGoodCommentDialog(){

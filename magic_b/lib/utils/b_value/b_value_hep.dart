@@ -138,13 +138,13 @@ class BValueHep{
     if(list.isEmpty){
       return false;
     }
-    var userCoins = coins.read();
+    var playNum = playedCardNum.read();
     var last = list.last;
-    if(hasCreateCash.read()||userCoins>=(last.endNumber??1000)){
+    if(hasCreateCash.read()||playNum>=(last.endNumber??1000)){
       return Random().nextInt(100)<(last.point??5);
     }
     for (var value in list) {
-      if(userCoins>=(value.firstNumber??0)&&userCoins<(value.endNumber??0)){
+      if(playNum>=(value.firstNumber??0)&&playNum<(value.endNumber??0)){
         return Random().nextInt(100)<(value.point??5);
       }
     }
@@ -221,6 +221,27 @@ class BValueHep{
       return 80;
     }
     return 20;
+  }
+
+
+  bool checkShowBigWin(int reward){
+    var list = _valueBean?.bigWin??[];
+    if(list.isEmpty){
+      return false;
+    }
+    var userCoins = coins.read();
+    var last = list.last;
+    if(userCoins>=(last.endNumber??1000)){
+      var winNumber = list.last.winNumber??1;
+      return reward>=winNumber;
+    }
+    for (var value in list) {
+      if(userCoins>=(value.firstNumber??0)&&userCoins<(value.endNumber??0)){
+        var winNumber = value.winNumber??1;
+        return reward>=winNumber;
+      }
+    }
+    return false;
   }
 
   int getTigerReward() => _randomReward(_valueBean?.cardTiger?.prize??[]);

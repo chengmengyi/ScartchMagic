@@ -1,7 +1,9 @@
+import 'package:magic_b/utils/b_ad/show_ad_utils.dart';
 import 'package:magic_b/utils/cash_task/cash_list_bean.dart';
 import 'package:magic_b/utils/cash_task/cash_task_utils.dart';
 import 'package:magic_base/base_widget/sm_base_controller.dart';
 import 'package:magic_base/sm_router/sm_routers_utils.dart';
+import 'package:magic_base/utils/b_ad/load_ad.dart';
 import 'package:magic_base/utils/event/event_code.dart';
 import 'package:magic_base/utils/event/event_info.dart';
 import 'package:magic_base/utils/tba/ad_pos.dart';
@@ -32,5 +34,15 @@ class CashTaskController extends SmBaseController{
     }else{
       EventInfo(eventCode: EventCode.updatePlayPageTabIndex,intValue: 0);
     }
+  }
+  
+  clickClose(){
+    ShowAdUtils.instance.showAd(
+      adPos: AdPos.stmag_close_int,
+      adType: AdType.interstitial,
+      closeAd: (showFail){
+        SmRoutersUtils.instance.offPage();
+      },
+    );
   }
 }
