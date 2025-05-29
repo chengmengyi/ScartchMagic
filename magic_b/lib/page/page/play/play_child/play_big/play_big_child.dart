@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:magic_b/enums/play_result_status.dart';
 import 'package:magic_b/page/page/play/play_child/play_big/play_big_child_controller.dart';
 import 'package:magic_b/page/widget/finger_widget/finger_lottie.dart';
+import 'package:magic_b/page/widget/guaka_guide_widget/guaka_guide_widget.dart';
 import 'package:magic_b/page/widget/left_up_level_widget/left_up_level_widget.dart';
 import 'package:magic_b/page/widget/play_bottom_widget/play_bottom_widget.dart';
 import 'package:magic_b/page/widget/play_fail_widget/play_fail_widget.dart';
@@ -173,7 +174,7 @@ class PlayBigChild extends SmBaseWidget<PlayBigChildController>{
                 builder: (_)=>Offstage(
                   offstage: !smController.showFruitFingerGuide,
                   child: IgnorePointer(
-                    child: FingerLottie(),
+                    child: GuaKaGuideWidegt(),
                   ),
                 ),
               ),

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:magic_b/page/page/play/play_child/play_fruit/play_fruit_child_controller.dart';
 import 'package:magic_b/page/widget/finger_widget/finger_lottie.dart';
+import 'package:magic_b/page/widget/guaka_guide_widget/guaka_guide_widget.dart';
 import 'package:magic_b/utils/b_value/b_value_hep.dart';
 import 'package:magic_base/base_widget/sm_base_widget.dart';
 import 'package:magic_base/base_widget/sm_gradient_text_widget.dart';
@@ -54,6 +55,10 @@ class PlayFruitChild extends SmBaseWidget<PlayFruitChildController>{
         SmImageWidget(imageName: "play_fruit_bg",width: double.infinity,height: double.infinity,),
         _playWidget(),
         _winUpToWidget(),
+        Align(
+          alignment: Alignment.topCenter,
+          child: SmTextWidget(text: "to win the shown prize", size: 16.sp, color: "#FFFFFFF",fontWeight: FontWeight.bold,).marginOnly(top: 113.h),
+        )
       ],
     ),
   );
@@ -164,7 +169,7 @@ class PlayFruitChild extends SmBaseWidget<PlayFruitChildController>{
             builder: (_)=>Offstage(
               offstage: !smController.showFruitFingerGuide,
               child: IgnorePointer(
-                child: FingerLottie(),
+                child: GuaKaGuideWidegt(),
               ),
             ),
           ),
